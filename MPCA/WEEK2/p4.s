@@ -11,6 +11,7 @@
           STR R3,[R1]
           ADD R1,R1,#4
           SUBs R2,R2,#1
-          BNE L1
+     Cancel
+© 2020 GitHub, Inc.      BNE L1
         
 .end
