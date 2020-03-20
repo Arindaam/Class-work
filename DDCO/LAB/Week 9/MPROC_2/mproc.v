@@ -1,0 +1,77 @@
+module nor5 (input wire [0:4] i, output wire o);
+	wire t;
+	or3 or3_0 (i[0], i[1], i[2], t);
+	nor3 nor3_0 (t, i[3], i[4], o);
+endmodule
+
+module ir (input wire clk, reset, load, input wire [15:0] din, output wire [15:0] dout);
+	dfrl dfrl_0 (clk, reset, load, din['h0], dout['h0]);
+	dfrl dfrl_1 (clk, reset, load, din['h1], dout['h1]);
+	dfrl dfrl_2 (clk, reset, load, din['h2], dout['h2]);
+	dfrl dfrl_3 (clk, reset, load, din['h3], dout['h3]);
+	dfrl dfrl_4 (clk, reset, load, din['h4], dout['h4]);
+	dfrl dfrl_5 (clk, reset, load, din['h5], dout['h5]);
+	dfrl dfrl_6 (clk, reset, load, din['h6], dout['h6]);
+	dfrl dfrl_7 (clk, reset, load, din['h7], dout['h7]);
+	dfrl dfrl_8 (clk, reset, load, din['h8], dout['h8]);
+	dfrl dfrl_9 (clk, reset, load, din['h9], dout['h9]);
+	dfrl dfrl_a (clk, reset, load, din['ha], dout['ha]);
+	dfrl dfrl_b (clk, reset, load, din['hb], dout['hb]);
+	dfrl dfrl_c (clk, reset, load, din['hc], dout['hc]);
+	dfrl dfrl_d (clk, reset, load, din['hd], dout['hd]);
+	dfrl dfrl_e (clk, reset, load, din['he], dout['he]);
+	dfrl dfrl_f (clk, reset, load, din['hf], dout['hf]);
+endmodule
+
+module control_logic (input wire clk, reset, input wire [15:0] cur_ins, output wire [2:0] rd_addr_a, rd_addr_b, wr_addr,
+	output wire [1:0] op, output wire sel, jump, pc_inc, load_ir, wr_reg);
+	
+	assign rd_addr_a[2:0] = cur_ins[2:0];
+	assign rd_addr_b[2:0] = cur_ins[5:3];
+	assign wr_addr[2:0]	  = cur_ins[8:6];
+	assign op[1:0]        = cur_ins[10:9];
+
+	wire alu_ins;
+	nor5 n1(cur_ins[15:11],alu_ins); 	
+
+	wire ld_ins,ld_ins_,s,w,u,f0,el,e0,ef,l0,fi;
+	wire wr_reg1,wr_reg2;
+	assign s = !cur_ins[14];
+	and2 a1(cur_ins[15],s,ld_ins);
+	invert i2(cur_ins[10],w);
+	invert i3(cur_ins[15],u);
+	and3 a3(cur_ins[14],u,ef,jump);
+	invert i4(ld_ins,ld_ins_);
+
+	dfsl d1(clk,reset,1'b1,fi,f0);
+	or2 o3(f0,el,pc_inc);
+
+	dfrl d2(clk,reset,1'b1,f0,e0);
+	and2 a4(ld_ins_,e0,ef);
+	and2 a5(ef,alu_ins,wr_reg1);
+	and2 a6(ld_ins,e0,el);
+	and2 a7(ld_ins,el,wr_reg2);
+	or2 o4(wr_reg1,wr_reg2,wr_reg);
+
+	nand2 n2(el,ld_ins,sel);
+	
+	dfrl d3(clk,reset,1'b1,el,l0);
+	or2 o5(lo,ef,fi);
+
+	assign load_ir = f0;
+
+// Copy your assignment 3 logic here and modify.
+
+endmodule
+
+module mproc (input wire clk, reset, input wire [15:0] d_in, output wire [6:0] addr, output wire [15:0] d_out);
+	wire pc_inc, cout, cout_, sub, sel, sel_addr; wire [2:0] rd_addr_a, rd_addr_b, wr_addr; wire [1:0] op; wire [8:0] _addr;
+	wire [15:0] cur_ins, d_out_a, d_out_b;
+
+	and2 and2_0 (jump, cout, sub);
+	pc pc_0 (clk, reset, pc_inc, 1'b0, sub, {8'b0, cur_ins[7:0]}, {_addr, addr});
+	ir ir_0 (clk, reset, load_ir, d_in, cur_ins);
+	control_logic control_logic_0 (clk, reset, cur_ins, rd_addr_a, rd_addr_b, wr_addr, op, sel, jump, pc_inc, load_ir, wr_reg);
+	reg_alu reg_alu_0 (clk, reset, sel, wr_reg, op, rd_addr_a, rd_addr_b, wr_addr, d_in, d_out_a, d_out_b, cout);
+	assign d_out = d_out_a;
+endmodule

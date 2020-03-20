@@ -1,0 +1,811 @@
+$date
+	Thu Nov 14 19:50:21 2019
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module tb $end
+$var wire 5 ! o [4:0] $end
+$var reg 16 " i [15:0] $end
+$scope module uut $end
+$var wire 16 # i [15:0] $end
+$var wire 4 $ s8 [3:0] $end
+$var wire 3 % s7 [2:0] $end
+$var wire 3 & s6 [2:0] $end
+$var wire 2 ' s5 [1:0] $end
+$var wire 2 ( s4 [1:0] $end
+$var wire 2 ) s3 [1:0] $end
+$var wire 2 * s2 [1:0] $end
+$var wire 2 + s1 [1:0] $end
+$var wire 5 , o [4:0] $end
+$scope module a1 $end
+$var wire 1 - cin $end
+$var wire 1 . i1 $end
+$var wire 1 / i2 $end
+$var wire 2 0 o [1:0] $end
+$upscope $end
+$scope module a2 $end
+$var wire 1 1 cin $end
+$var wire 1 2 i1 $end
+$var wire 1 3 i2 $end
+$var wire 2 4 o [1:0] $end
+$upscope $end
+$scope module a3 $end
+$var wire 1 5 cin $end
+$var wire 1 6 i1 $end
+$var wire 1 7 i2 $end
+$var wire 2 8 o [1:0] $end
+$upscope $end
+$scope module a4 $end
+$var wire 1 9 cin $end
+$var wire 1 : i1 $end
+$var wire 1 ; i2 $end
+$var wire 2 < o [1:0] $end
+$upscope $end
+$scope module a5 $end
+$var wire 1 = cin $end
+$var wire 1 > i1 $end
+$var wire 1 ? i2 $end
+$var wire 2 @ o [1:0] $end
+$upscope $end
+$scope module a6 $end
+$var wire 1 A cin $end
+$var wire 2 B i1 [1:0] $end
+$var wire 2 C i2 [1:0] $end
+$var wire 2 D t2 [1:0] $end
+$var wire 2 E t1 [1:0] $end
+$var wire 3 F o [2:0] $end
+$scope module f1 $end
+$var wire 1 A cin $end
+$var wire 1 G i1 $end
+$var wire 1 H i2 $end
+$var wire 2 I o [1:0] $end
+$upscope $end
+$scope module f2 $end
+$var wire 1 J cin $end
+$var wire 1 K i1 $end
+$var wire 1 L i2 $end
+$var wire 2 M o [1:0] $end
+$upscope $end
+$upscope $end
+$scope module a7 $end
+$var wire 1 N cin $end
+$var wire 2 O i1 [1:0] $end
+$var wire 2 P i2 [1:0] $end
+$var wire 2 Q t2 [1:0] $end
+$var wire 2 R t1 [1:0] $end
+$var wire 3 S o [2:0] $end
+$scope module f1 $end
+$var wire 1 N cin $end
+$var wire 1 T i1 $end
+$var wire 1 U i2 $end
+$var wire 2 V o [1:0] $end
+$upscope $end
+$scope module f2 $end
+$var wire 1 W cin $end
+$var wire 1 X i1 $end
+$var wire 1 Y i2 $end
+$var wire 2 Z o [1:0] $end
+$upscope $end
+$upscope $end
+$scope module a8 $end
+$var wire 3 [ i1 [2:0] $end
+$var wire 3 \ i2 [2:0] $end
+$var wire 2 ] t2 [1:0] $end
+$var wire 3 ^ t1 [2:0] $end
+$var wire 4 _ o [3:0] $end
+$scope module f21 $end
+$var wire 1 ` cin $end
+$var wire 2 a i1 [1:0] $end
+$var wire 2 b i2 [1:0] $end
+$var wire 2 c t2 [1:0] $end
+$var wire 2 d t1 [1:0] $end
+$var wire 3 e o [2:0] $end
+$scope module f1 $end
+$var wire 1 ` cin $end
+$var wire 1 f i1 $end
+$var wire 1 g i2 $end
+$var wire 2 h o [1:0] $end
+$upscope $end
+$scope module f2 $end
+$var wire 1 i cin $end
+$var wire 1 j i1 $end
+$var wire 1 k i2 $end
+$var wire 2 l o [1:0] $end
+$upscope $end
+$upscope $end
+$scope module f22 $end
+$var wire 1 m cin $end
+$var wire 1 n i1 $end
+$var wire 1 o i2 $end
+$var wire 2 p o [1:0] $end
+$upscope $end
+$upscope $end
+$scope module a9 $end
+$var wire 4 q i1 [3:0] $end
+$var wire 2 r i2 [1:0] $end
+$var wire 3 s t2 [2:0] $end
+$var wire 3 t t1 [2:0] $end
+$var wire 5 u o [4:0] $end
+$scope module f31 $end
+$var wire 1 v cin $end
+$var wire 2 w i1 [1:0] $end
+$var wire 2 x i2 [1:0] $end
+$var wire 2 y t2 [1:0] $end
+$var wire 2 z t1 [1:0] $end
+$var wire 3 { o [2:0] $end
+$scope module f1 $end
+$var wire 1 v cin $end
+$var wire 1 | i1 $end
+$var wire 1 } i2 $end
+$var wire 2 ~ o [1:0] $end
+$upscope $end
+$scope module f2 $end
+$var wire 1 !" cin $end
+$var wire 1 "" i1 $end
+$var wire 1 #" i2 $end
+$var wire 2 $" o [1:0] $end
+$upscope $end
+$upscope $end
+$scope module f32 $end
+$var wire 1 %" cin $end
+$var wire 2 &" i1 [1:0] $end
+$var wire 2 '" i2 [1:0] $end
+$var wire 2 (" t2 [1:0] $end
+$var wire 2 )" t1 [1:0] $end
+$var wire 3 *" o [2:0] $end
+$scope module f1 $end
+$var wire 1 %" cin $end
+$var wire 1 +" i1 $end
+$var wire 1 ," i2 $end
+$var wire 2 -" o [1:0] $end
+$upscope $end
+$scope module f2 $end
+$var wire 1 ." cin $end
+$var wire 1 /" i1 $end
+$var wire 1 0" i2 $end
+$var wire 2 1" o [1:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+b10 1"
+00"
+1/"
+1."
+b10 -"
+0,"
+1+"
+b100 *"
+b10 )"
+b10 ("
+b0 '"
+b11 &"
+1%"
+b10 $"
+1#"
+0""
+1!"
+b10 ~
+1}
+1|
+b100 {
+b10 z
+b10 y
+b11 x
+b1 w
+0v
+b10000 u
+b100 t
+b100 s
+b11 r
+b1101 q
+b11 p
+1o
+1n
+1m
+b10 l
+1k
+1j
+0i
+b1 h
+1g
+0f
+b101 e
+b1 d
+b10 c
+b11 b
+b10 a
+0`
+b1101 _
+b101 ^
+b11 ]
+b111 \
+b110 [
+b11 Z
+1Y
+1X
+1W
+b11 V
+1U
+1T
+b111 S
+b11 R
+b11 Q
+b11 P
+b11 O
+1N
+b11 M
+1L
+1K
+1J
+b10 I
+1H
+1G
+b110 F
+b10 E
+b11 D
+b11 C
+b11 B
+0A
+b11 @
+1?
+1>
+1=
+b11 <
+1;
+1:
+19
+b11 8
+17
+16
+15
+b11 4
+13
+12
+11
+b11 0
+1/
+1.
+1-
+b10000 ,
+b11 +
+b11 *
+b11 )
+b11 (
+b11 '
+b110 &
+b111 %
+b1101 $
+b1111111111111111 #
+b1111111111111111 "
+b10000 !
+$end
+#100
+1%"
+1!"
+0."
+b10 z
+b10 ~
+b100 t
+b100 {
+b10 y
+b10 $"
+b1 )"
+b1 -"
+1|
+0""
+b1100 !
+b1100 ,
+b1100 u
+b11 s
+b11 *"
+b1 ("
+b1 1"
+b1 w
+0+"
+0m
+1/"
+b1 ^
+b1 e
+b0 c
+b0 l
+b10 &"
+b1 d
+b1 h
+0k
+1f
+b1001 $
+b1001 _
+b1001 q
+b10 ]
+b10 p
+0j
+0g
+0J
+b1 a
+1n
+1o
+b0 b
+b1 E
+b1 I
+b101 &
+b101 F
+b101 [
+b10 D
+b10 M
+b10 Q
+b10 Z
+b100 %
+b100 S
+b100 \
+1W
+b10 R
+b10 V
+0H
+1L
+0T
+1X
+0Y
+b10 *
+b10 4
+b10 C
+b10 )
+b10 8
+b10 O
+1U
+b1 (
+b1 <
+b1 P
+03
+07
+0:
+09
+b1111010101101111 "
+b1111010101101111 #
+#200
+b1 ("
+b1 1"
+0."
+1+"
+0""
+b11 &"
+b11 ]
+b11 p
+b11 s
+b11 *"
+0|
+1m
+b1 )"
+b1 -"
+b0 w
+b10 c
+b10 l
+0f
+1j
+0%"
+b1100 $
+b1100 _
+b1100 q
+b10 a
+b11 D
+b11 M
+b100 ^
+b100 e
+0i
+b110 &
+b110 F
+b110 [
+1J
+b1110 !
+b1110 ,
+b1110 u
+b1 y
+b1 $"
+b0 d
+b0 h
+1k
+b10 E
+b10 I
+b10 t
+b10 {
+0!"
+b0 z
+b0 ~
+0g
+b11 Q
+b11 Z
+1H
+1T
+1Y
+b10 b
+1W
+b11 *
+b11 4
+b11 C
+b11 )
+b11 8
+b11 O
+1U
+0}
+b110 %
+b110 S
+b110 \
+b11 (
+b11 <
+b11 P
+b10 '
+b10 @
+b10 r
+b10 x
+b10 R
+b10 V
+13
+17
+1:
+19
+0=
+0N
+b11111111111111 "
+b11111111111111 #
+#300
+b1 z
+b1 ~
+b0 )"
+b0 -"
+1|
+0+"
+b1 w
+b0 s
+b0 *"
+b0 ("
+b0 1"
+0m
+b1 d
+b1 h
+0/"
+b1 ^
+b1 e
+b0 c
+b0 l
+b0 &"
+1f
+0j
+b1 $
+b1 _
+b1 q
+b0 ]
+b0 p
+0k
+b1 a
+b0 b
+0n
+0o
+b1 !
+b1 ,
+b1 u
+b1 &
+b1 F
+b1 [
+b0 D
+b0 M
+0J
+b0 %
+b0 S
+b0 \
+b0 Q
+b0 Z
+0W
+b1 t
+b1 {
+b0 y
+b0 $"
+b1 E
+b1 I
+b0 R
+b0 V
+0K
+0L
+0X
+0Y
+0#"
+1G
+0H
+0T
+0U
+b0 '
+b0 @
+b0 r
+b0 x
+b1 +
+b1 0
+b1 B
+b0 *
+b0 4
+b0 C
+b0 )
+b0 8
+b0 O
+b0 (
+b0 <
+b0 P
+0/
+0-
+02
+03
+01
+06
+07
+05
+0:
+0;
+09
+0>
+0?
+b1 "
+b1 #
+#400
+1."
+b1 ("
+b1 1"
+1+"
+0/"
+b1 &"
+b1 ]
+b1 p
+0m
+0|
+1""
+1n
+1k
+b10 s
+b10 *"
+b10 w
+0f
+b10 )"
+b10 -"
+b110 $
+b110 _
+b110 q
+b1 c
+b1 l
+0j
+b1 Q
+b1 Z
+1%"
+b10 ^
+b10 e
+0i
+1J
+b0 a
+1W
+b10 y
+b10 $"
+b1001 !
+b1001 ,
+b1001 u
+b0 d
+b0 h
+b10 E
+b10 I
+b100 &
+b100 F
+b100 [
+b10 D
+b10 M
+b101 t
+b101 {
+0!"
+b1 z
+b1 ~
+0g
+1K
+1H
+1#"
+b10 b
+1G
+b1 *
+b1 4
+b1 C
+1T
+1}
+b10 %
+b10 S
+b10 \
+b11 +
+b11 0
+b11 B
+b1 )
+b1 8
+b1 O
+b11 '
+b11 @
+b11 r
+b11 x
+b10 R
+b10 V
+1/
+1-
+12
+15
+1>
+1?
+1=
+1N
+b1111000100001111 "
+b1111000100001111 #
+#500
+b1 s
+b1 *"
+b0 ("
+b0 1"
+0."
+b1 )"
+b1 -"
+1!"
+b110 !
+b110 ,
+b110 u
+1%"
+0+"
+b10 z
+b10 ~
+b110 t
+b110 {
+b11 y
+b11 $"
+b0 &"
+b0 ]
+b0 p
+1|
+1""
+1j
+b11 w
+b10 a
+0n
+b11 $
+b11 _
+b11 q
+b1 c
+b1 l
+b10 &
+b10 F
+b10 [
+b1 D
+b1 M
+b11 ^
+b11 e
+b1 d
+b1 h
+0k
+1J
+b10 E
+b10 I
+1g
+b0 Q
+b0 Z
+0K
+0L
+b1 b
+0W
+1G
+1H
+0T
+1U
+b1 %
+b1 S
+b1 \
+b1 +
+b1 0
+b1 B
+b1 *
+b1 4
+b1 C
+b0 )
+b0 8
+b0 O
+b1 (
+b1 <
+b1 P
+b1 R
+b1 V
+0.
+0-
+02
+11
+05
+19
+0N
+b111100000100010 "
+b111100000100010 #
+#600
+1!"
+1%"
+0/"
+b10 z
+b10 ~
+b110 t
+b110 {
+b11 y
+b11 $"
+b1 ("
+b1 1"
+1."
+1|
+1""
+0m
+b1010 !
+b1010 ,
+b1010 u
+b10 s
+b10 *"
+b11 w
+b10 )"
+b10 -"
+b1 c
+b1 l
+b11 ^
+b11 e
+0i
+1+"
+b1 d
+b1 h
+b1 &"
+0j
+b111 $
+b111 _
+b111 q
+b1 ]
+b1 p
+1k
+0f
+b11 b
+b0 a
+1n
+b11 %
+b11 S
+b11 \
+b1 Q
+b1 Z
+1J
+b100 &
+b100 F
+b100 [
+b10 D
+b10 M
+b10 E
+b10 I
+1Y
+0K
+1L
+1T
+0U
+1G
+b11 *
+b11 4
+b11 C
+b1 )
+b1 8
+b1 O
+b10 (
+b10 <
+b10 P
+b1 +
+b1 0
+b1 B
+0/
+1-
+12
+13
+17
+1:
+b111101010111100 "
+b111101010111100 #
+#700
