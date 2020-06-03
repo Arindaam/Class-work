@@ -1,3 +1,5 @@
+SciLab Assignment
+
 Name : Arindaam Mandal SRN : PES1201800274
 
 Assignment 1: Gaussian Elimination LU Decomposition Gauss Jordan
