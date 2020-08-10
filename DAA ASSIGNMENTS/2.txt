@@ -1,0 +1,46 @@
+/*
+// Sample code to perform I/O:
+#include <stdio.h>
+
+int main(){
+	int num;
+	scanf("%d", &num);              			// Reading input from STDIN
+	printf("Input number is %d.\n", num);       // Writing output to STDOUT
+}
+
+// Warning: Printing unwanted or ill-formatted data to output will cause the test cases to fail
+*/
+
+// Write your code here
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+long long int cou(int n);
+int main()
+{
+	int n;
+	scanf("%d",&n);
+	if(n<3)
+	{
+			printf("0\n");
+	}
+	else
+	{
+		//long long int k=cou(n);
+		printf("%lld\n",cou(n));
+	}
+}
+long long int cou(int n)
+{
+	long int a[n+1];
+	for(int i=0;i<=n;i++)
+	{
+		a[i]=0;
+	}
+	for(int i=3;i<=n;i++)
+	{
+		a[i]=a[i-1]+a[i-2]+a[i-3]+pow(2,i-3);
+	}
+	return a[n];
+	
+}

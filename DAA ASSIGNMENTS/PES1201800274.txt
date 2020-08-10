@@ -1,0 +1,52 @@
+												DAA PROJECT REPORT
+												   INTRODUCTION
+
+Intal is a non-negative integer of arbitrary length stored as a null-terminated string of ASCII characters. For the purpose of this project, we have considered intals with max-size of 1000 characters. 
+Intal differs from the datatype integer with respect to the size of the datatype and the range of numbers it can hold. The datatype int occupies 2-4 bytes of memory which can store integers in the range -2147483648 to 2147483647. Long double occupies 12 bytes and can store integers from -2^96 - +2^96. However, intals have many advantages over these traditional data types: 
+
+1. Can store integers (in the form of strings) upto 10^1000.
+2. Can free up memory once computation is completed.
+3. Better to store as a char array rather than integer array due to smaller size of char data type.
+
+Intals can be used to perform arithmetic operations on large integers that cannot be stored in already existing datatypes in c.
+
+												     APPROACH 
+
+1) intal_add : Perform addition digit by digit and keep a track of the carry. Store the value in a new array from index 0 and reverse the array at the end of computation.
+
+2) intal_diff : Perform subtraction digit by digit keeping a track of the borrow. Store the value in a new array, remove the trailing zeroes after all the digits are done and reverse the array.
+
+3) intal_compare : Compare strlen of the two intals, if both are of the same length, compare the digits of the intal from the MSB bit and if we reach the null string return 0.
+
+4) intal_multiply : Multiply the LSB bit of intal 2 with the digits of intal1 bit by bit. Also keep a count of which bit of intal2 you are on, to add zeroes at the end. Add(intal_add) all the products.  
+
+5) intal_mod : Find substring of Intal1 which is length of Intal2 and if the substring is smaller, append another digit. Divide SUbstring by intal2 by continous subtraction(intal_diff) (max 100 times). 		       Append integers from intal1 and continue process till we reach end of intal1. Based on the Long Division method.
+
+6) intal_fibonacci : Initially Store the first and second fibonacci number. Keep a count of current fibonacci number. Keep adding(intal_add) and updating first and second fibonacci numbers till counter 			     reaches desired number.
+
+7) intal_factorial : A counter compares if we have reached the required number, if not we add(intal_add) 1 to the current number and multiply it to the product.
+
+8) intal_pow : The divide and conquer strategy is used here where we keep decreasing the power by n/2 if even and multiply(intal_mutliply) by the intal if the number is odd and divide the rest by 2. If 		       the power is 0 we return 1(intal).  
+
+9) intal_gcd : Euclid's algorithm used and the intal_mod function is used to do the same.
+ 
+10) intal_bincoeff : Since C(n,k)=C(n,n-k) if k>n/2, assigned the valued of k to n-k. The dp table was created using the recurrence relation given and C(n,k) was returned.
+
+11) intal_search : Use the intal_compare function to compare the key and the string. Returns index at the first occurence of the key.
+
+12) intal_max : The intal at index 0 is assigned as max. If we come across a larger intal in the array, max is updated and returned.
+
+13) intal_min :	The intal at index 0 is assigned as min. If we come across a smaller intal in the array, min is updated and returned.
+
+14) intal_sort : The mergesort algorithm is used. Dynamically allocated array of pointers are used to create the sorted arrays before the sorted arrays are merged. Intal_compare is used to compare the 			 strings for sorting the array.
+ 
+15) intal_binsearch : Binary search is done on an array of sorted intals. Middle index of the array is computed and based on the key, the required part of the array is searched for occurence of the 			      key.
+
+16) intal_coinrow : The recurrence relation was found to be dependent on the vaue of f(n-1) and f(n-2)[max(C(i)+f(i-2),f(i-1))]. Hence the dp table wsa created for only 3 values thus maintaning O(1) and 			    the value of f(n) was calculated.
+			
+												 FUTURE WORK
+
+1) Would like to extend this functionality for negative integers.
+2) Would like to make a division function taking into consideration the added challenge of dealing with floating point numbers.
+
+a) Would like to explore the possibility of converting large numbers into hexadecimal followed by intal computation and conversion back to intal deciaml as a possible approach to decrease the number of digits to deal with large numbers.											
