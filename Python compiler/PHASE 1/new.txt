@@ -1,0 +1,7 @@
+a=2
+b=3.0
+c=4-5+a+b
+if a==b:
+	a=b or c > True
+	d=2
+a=d

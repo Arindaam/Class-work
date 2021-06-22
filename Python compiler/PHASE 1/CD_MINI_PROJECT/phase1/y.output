@@ -1,0 +1,3300 @@
+Nonterminals useless in grammar
+
+    For_body
+    T_DOUBLE
+
+
+Terminals unused in grammar
+
+    T_DOT
+    T_DEDENT
+    T_LINE
+    T_ELIF
+    T_DEL
+    T_WHILE
+    T_LIST
+    T_SPLIT
+    T_MAP
+    T_APPEND
+    T_POP
+    T_INSERT
+    T_SEMI
+    T_LBRACE
+    T_RBRACE
+
+
+State 26 conflicts: 24 shift/reduce
+State 37 conflicts: 30 reduce/reduce
+State 39 conflicts: 30 reduce/reduce
+State 40 conflicts: 30 reduce/reduce
+State 41 conflicts: 2 shift/reduce, 30 reduce/reduce
+State 42 conflicts: 30 reduce/reduce
+State 43 conflicts: 30 reduce/reduce
+State 44 conflicts: 30 reduce/reduce
+State 45 conflicts: 30 reduce/reduce
+State 46 conflicts: 30 reduce/reduce
+State 109 conflicts: 2 shift/reduce
+State 110 conflicts: 2 shift/reduce
+State 111 conflicts: 2 shift/reduce
+State 112 conflicts: 2 shift/reduce
+State 136 conflicts: 1 shift/reduce
+State 137 conflicts: 24 shift/reduce
+
+
+Grammar
+
+    0 $accept: Translation_unit $end
+
+    1 Translation_unit: Stmt Translation_unit
+    2                 | %empty
+
+    3 Stmt: Simple_stmt
+    4     | Compound_stmt
+    5     | Assignment_stmt
+
+    6 Assignment_stmt: T_ID T_ASOP Exp
+    7                | error
+
+    8 Simple_stmt: Exp
+    9            | Print_stmt
+   10            | Jump_stmt
+
+   11 Compound_stmt: If_stmt
+   12              | For_stmt
+
+   13 Jump_stmt: T_BREAK
+   14          | T_CONTINUE
+
+   15 Print_stmt: T_PRINT T_LPAREN Param_list T_RPAREN
+
+   16 Param_list: Param_list T_COMMA Exp
+   17           | Exp
+
+   18 If_stmt: T_IF Exp T_COLON T_INDENT Stmt Else_stmt
+
+   19 Else_stmt: T_ELSE T_COLON T_INDENT Stmt
+   20          | %empty
+
+   21 For_stmt: T_FOR T_ID T_IN Iterable T_COLON T_INDENT Translation_unit
+
+   22 Iterable: T_LBRACKET Param_list T_RBRACKET
+   23         | T_RANGE T_LPAREN Param_list T_RPAREN
+
+   24 Exp: Or_Exp
+   25    | Primary_Exp
+   26    | Pow_Exp
+   27    | Mul_Exp
+   28    | Add_Exp
+   29    | Bit_Exp
+   30    | Rel_Exp
+   31    | Eq_Exp
+   32    | In_Exp
+   33    | And_Exp
+
+   34 Const: T_CINT
+   35      | T_CFLOAT
+   36      | T_CSTR
+   37      | T_TRUE
+   38      | T_FALSE
+   39      | T_NONE
+   40      | T_INPUT T_LPAREN T_RPAREN
+
+   41 Primary_Exp: T_ID
+   42            | Const
+   43            | T_RPAREN Exp T_LPAREN
+   44            | Iterable
+   45            | T_LEN T_LPAREN Iterable T_RPAREN
+   46            | T_INT T_LPAREN Exp T_RPAREN
+   47            | T_FLOAT T_LPAREN Exp T_RPAREN
+   48            | T_STR T_LPAREN Exp T_RPAREN
+
+   49 Unary_Exp: T_SUB Primary_Exp
+   50          | T_ADD Primary_Exp
+   51          | T_NOT Primary_Exp
+   52          | Primary_Exp
+
+   53 Pow_Exp: Unary_Exp
+   54        | Pow_Exp T_EPOP Unary_Exp
+
+   55 Mul_Exp: Pow_Exp
+   56        | Mul_Exp T_MUL Pow_Exp
+   57        | Mul_Exp T_DIV Pow_Exp
+   58        | Mul_Exp T_FDIV Pow_Exp
+   59        | Mul_Exp T_MOD Pow_Exp
+
+   60 Add_Exp: Mul_Exp
+   61        | Add_Exp T_ADD Mul_Exp
+   62        | Add_Exp T_SUB Mul_Exp
+
+   63 Bit_Exp: Add_Exp
+   64        | Bit_Exp T_XOR Add_Exp
+   65        | Bit_Exp T_BAND Add_Exp
+   66        | Bit_Exp T_BOR Add_Exp
+
+   67 Rel_Exp: Bit_Exp
+   68        | Rel_Exp T_G Bit_Exp
+   69        | Rel_Exp T_GE Bit_Exp
+   70        | Rel_Exp T_L Bit_Exp
+   71        | Rel_Exp T_LE Bit_Exp
+
+   72 Eq_Exp: Rel_Exp
+   73       | Eq_Exp T_EOP Rel_Exp
+   74       | Eq_Exp T_NEOP Rel_Exp
+
+   75 In_Exp: Eq_Exp
+   76       | In_Exp T_IN Eq_Exp
+
+   77 And_Exp: In_Exp
+   78        | And_Exp T_LAND In_Exp
+
+   79 Or_Exp: And_Exp
+   80       | Or_Exp T_LOR And_Exp
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    error (256) 7
+    T_DOT <val> (258)
+    T_DEDENT <val> (259)
+    T_LINE <val> (260)
+    T_INDENT <val> (261) 18 19 21
+    T_FALSE <val> (262) 38
+    T_NONE <val> (263) 39
+    T_TRUE <val> (264) 37
+    T_LAND <val> (265) 78
+    T_BREAK <val> (266) 13
+    T_CONTINUE <val> (267) 14
+    T_ELIF <val> (268)
+    T_DEL <val> (269)
+    T_ELSE <val> (270) 19
+    T_FOR <val> (271) 21
+    T_IF <val> (272) 18
+    T_IN <val> (273) 21 76
+    T_NOT <val> (274) 51
+    T_LOR <val> (275) 80
+    T_WHILE <val> (276)
+    T_INPUT <val> (277) 40
+    T_PRINT <val> (278) 15
+    T_INT <val> (279) 46
+    T_FLOAT <val> (280) 47
+    T_STR <val> (281) 48
+    T_LIST <val> (282)
+    T_SPLIT <val> (283)
+    T_MAP <val> (284)
+    T_APPEND <val> (285)
+    T_POP <val> (286)
+    T_INSERT <val> (287)
+    T_LEN <val> (288) 45
+    T_ID <ctype> (289) 6 21 41
+    T_CINT <val> (290) 34
+    T_CFLOAT <val> (291) 35
+    T_SEMI <val> (292)
+    T_COMMA <val> (293) 16
+    T_CSTR <val> (294) 36
+    T_EPOP <val> (295) 54
+    T_MUL <val> (296) 56
+    T_DIV <val> (297) 57
+    T_FDIV <val> (298) 58
+    T_MOD <val> (299) 59
+    T_ADD <val> (300) 50 61
+    T_SUB <val> (301) 49 62
+    T_ASOP <val> (302) 6
+    T_G <val> (303) 68
+    T_L <val> (304) 70
+    T_GE <val> (305) 69
+    T_LE <val> (306) 71
+    T_EOP <val> (307) 73
+    T_NEOP <val> (308) 74
+    T_XOR <val> (309) 64
+    T_BAND <val> (310) 65
+    T_BOR <val> (311) 66
+    T_LBRACE <val> (312)
+    T_RBRACE <val> (313)
+    T_LPAREN <val> (314) 15 23 40 43 45 46 47 48
+    T_RPAREN <val> (315) 15 23 40 43 45 46 47 48
+    T_LBRACKET <val> (316) 22
+    T_RBRACKET <val> (317) 22
+    T_RANGE <val> (318) 23
+    T_COLON <val> (319) 18 19 21
+
+
+Nonterminals, with rules where they appear
+
+    $accept (65)
+        on left: 0
+    Translation_unit (66)
+        on left: 1 2
+        on right: 0 1 21
+    Stmt (67)
+        on left: 3 4 5
+        on right: 1 18 19
+    Assignment_stmt (68)
+        on left: 6 7
+        on right: 5
+    Simple_stmt (69)
+        on left: 8 9 10
+        on right: 3
+    Compound_stmt (70)
+        on left: 11 12
+        on right: 4
+    Jump_stmt (71)
+        on left: 13 14
+        on right: 10
+    Print_stmt (72)
+        on left: 15
+        on right: 9
+    Param_list <ctype> (73)
+        on left: 16 17
+        on right: 15 16 22 23
+    If_stmt (74)
+        on left: 18
+        on right: 11
+    Else_stmt (75)
+        on left: 19 20
+        on right: 18
+    For_stmt (76)
+        on left: 21
+        on right: 12
+    Iterable <ctype> (77)
+        on left: 22 23
+        on right: 21 44 45
+    Exp <ctype> (78)
+        on left: 24 25 26 27 28 29 30 31 32 33
+        on right: 6 8 16 17 18 43 46 47 48
+    Const <ctype> (79)
+        on left: 34 35 36 37 38 39 40
+        on right: 42
+    Primary_Exp <ctype> (80)
+        on left: 41 42 43 44 45 46 47 48
+        on right: 25 49 50 51 52
+    Unary_Exp <ctype> (81)
+        on left: 49 50 51 52
+        on right: 53 54
+    Pow_Exp <ctype> (82)
+        on left: 53 54
+        on right: 26 54 55 56 57 58 59
+    Mul_Exp <ctype> (83)
+        on left: 55 56 57 58 59
+        on right: 27 56 57 58 59 60 61 62
+    Add_Exp <ctype> (84)
+        on left: 60 61 62
+        on right: 28 61 62 63 64 65 66
+    Bit_Exp <ctype> (85)
+        on left: 63 64 65 66
+        on right: 29 64 65 66 67 68 69 70 71
+    Rel_Exp <ctype> (86)
+        on left: 67 68 69 70 71
+        on right: 30 68 69 70 71 72 73 74
+    Eq_Exp <ctype> (87)
+        on left: 72 73 74
+        on right: 31 73 74 75 76
+    In_Exp <ctype> (88)
+        on left: 75 76
+        on right: 32 76 77 78
+    And_Exp <ctype> (89)
+        on left: 77 78
+        on right: 33 78 79 80
+    Or_Exp <ctype> (90)
+        on left: 79 80
+        on right: 24 80
+
+
+State 0
+
+    0 $accept: . Translation_unit $end
+
+    error       shift, and go to state 1
+    T_FALSE     shift, and go to state 2
+    T_NONE      shift, and go to state 3
+    T_TRUE      shift, and go to state 4
+    T_BREAK     shift, and go to state 5
+    T_CONTINUE  shift, and go to state 6
+    T_FOR       shift, and go to state 7
+    T_IF        shift, and go to state 8
+    T_NOT       shift, and go to state 9
+    T_INPUT     shift, and go to state 10
+    T_PRINT     shift, and go to state 11
+    T_INT       shift, and go to state 12
+    T_FLOAT     shift, and go to state 13
+    T_STR       shift, and go to state 14
+    T_LEN       shift, and go to state 15
+    T_ID        shift, and go to state 16
+    T_CINT      shift, and go to state 17
+    T_CFLOAT    shift, and go to state 18
+    T_CSTR      shift, and go to state 19
+    T_ADD       shift, and go to state 20
+    T_SUB       shift, and go to state 21
+    T_RPAREN    shift, and go to state 22
+    T_LBRACKET  shift, and go to state 23
+    T_RANGE     shift, and go to state 24
+
+    $end  reduce using rule 2 (Translation_unit)
+
+    Translation_unit  go to state 25
+    Stmt              go to state 26
+    Assignment_stmt   go to state 27
+    Simple_stmt       go to state 28
+    Compound_stmt     go to state 29
+    Jump_stmt         go to state 30
+    Print_stmt        go to state 31
+    If_stmt           go to state 32
+    For_stmt          go to state 33
+    Iterable          go to state 34
+    Exp               go to state 35
+    Const             go to state 36
+    Primary_Exp       go to state 37
+    Unary_Exp         go to state 38
+    Pow_Exp           go to state 39
+    Mul_Exp           go to state 40
+    Add_Exp           go to state 41
+    Bit_Exp           go to state 42
+    Rel_Exp           go to state 43
+    Eq_Exp            go to state 44
+    In_Exp            go to state 45
+    And_Exp           go to state 46
+    Or_Exp            go to state 47
+
+
+State 1
+
+    7 Assignment_stmt: error .
+
+    $default  reduce using rule 7 (Assignment_stmt)
+
+
+State 2
+
+   38 Const: T_FALSE .
+
+    $default  reduce using rule 38 (Const)
+
+
+State 3
+
+   39 Const: T_NONE .
+
+    $default  reduce using rule 39 (Const)
+
+
+State 4
+
+   37 Const: T_TRUE .
+
+    $default  reduce using rule 37 (Const)
+
+
+State 5
+
+   13 Jump_stmt: T_BREAK .
+
+    $default  reduce using rule 13 (Jump_stmt)
+
+
+State 6
+
+   14 Jump_stmt: T_CONTINUE .
+
+    $default  reduce using rule 14 (Jump_stmt)
+
+
+State 7
+
+   21 For_stmt: T_FOR . T_ID T_IN Iterable T_COLON T_INDENT Translation_unit
+
+    T_ID  shift, and go to state 48
+
+
+State 8
+
+   18 If_stmt: T_IF . Exp T_COLON T_INDENT Stmt Else_stmt
+
+    T_FALSE     shift, and go to state 2
+    T_NONE      shift, and go to state 3
+    T_TRUE      shift, and go to state 4
+    T_NOT       shift, and go to state 9
+    T_INPUT     shift, and go to state 10
+    T_INT       shift, and go to state 12
+    T_FLOAT     shift, and go to state 13
+    T_STR       shift, and go to state 14
+    T_LEN       shift, and go to state 15
+    T_ID        shift, and go to state 49
+    T_CINT      shift, and go to state 17
+    T_CFLOAT    shift, and go to state 18
+    T_CSTR      shift, and go to state 19
+    T_ADD       shift, and go to state 20
+    T_SUB       shift, and go to state 21
+    T_RPAREN    shift, and go to state 22
+    T_LBRACKET  shift, and go to state 23
+    T_RANGE     shift, and go to state 24
+
+    Iterable     go to state 34
+    Exp          go to state 50
+    Const        go to state 36
+    Primary_Exp  go to state 37
+    Unary_Exp    go to state 38
+    Pow_Exp      go to state 39
+    Mul_Exp      go to state 40
+    Add_Exp      go to state 41
+    Bit_Exp      go to state 42
+    Rel_Exp      go to state 43
+    Eq_Exp       go to state 44
+    In_Exp       go to state 45
+    And_Exp      go to state 46
+    Or_Exp       go to state 47
+
+
+State 9
+
+   51 Unary_Exp: T_NOT . Primary_Exp
+
+    T_FALSE     shift, and go to state 2
+    T_NONE      shift, and go to state 3
+    T_TRUE      shift, and go to state 4
+    T_INPUT     shift, and go to state 10
+    T_INT       shift, and go to state 12
+    T_FLOAT     shift, and go to state 13
+    T_STR       shift, and go to state 14
+    T_LEN       shift, and go to state 15
+    T_ID        shift, and go to state 49
+    T_CINT      shift, and go to state 17
+    T_CFLOAT    shift, and go to state 18
+    T_CSTR      shift, and go to state 19
+    T_RPAREN    shift, and go to state 22
+    T_LBRACKET  shift, and go to state 23
+    T_RANGE     shift, and go to state 24
+
+    Iterable     go to state 34
+    Const        go to state 36
+    Primary_Exp  go to state 51
+
+
+State 10
+
+   40 Const: T_INPUT . T_LPAREN T_RPAREN
+
+    T_LPAREN  shift, and go to state 52
+
+
+State 11
+
+   15 Print_stmt: T_PRINT . T_LPAREN Param_list T_RPAREN
+
+    T_LPAREN  shift, and go to state 53
+
+
+State 12
+
+   46 Primary_Exp: T_INT . T_LPAREN Exp T_RPAREN
+
+    T_LPAREN  shift, and go to state 54
+
+
+State 13
+
+   47 Primary_Exp: T_FLOAT . T_LPAREN Exp T_RPAREN
+
+    T_LPAREN  shift, and go to state 55
+
+
+State 14
+
+   48 Primary_Exp: T_STR . T_LPAREN Exp T_RPAREN
+
+    T_LPAREN  shift, and go to state 56
+
+
+State 15
+
+   45 Primary_Exp: T_LEN . T_LPAREN Iterable T_RPAREN
+
+    T_LPAREN  shift, and go to state 57
+
+
+State 16
+
+    6 Assignment_stmt: T_ID . T_ASOP Exp
+   41 Primary_Exp: T_ID .
+
+    T_ASOP  shift, and go to state 58
+
+    $default  reduce using rule 41 (Primary_Exp)
+
+
+State 17
+
+   34 Const: T_CINT .
+
+    $default  reduce using rule 34 (Const)
+
+
+State 18
+
+   35 Const: T_CFLOAT .
+
+    $default  reduce using rule 35 (Const)
+
+
+State 19
+
+   36 Const: T_CSTR .
+
+    $default  reduce using rule 36 (Const)
+
+
+State 20
+
+   50 Unary_Exp: T_ADD . Primary_Exp
+
+    T_FALSE     shift, and go to state 2
+    T_NONE      shift, and go to state 3
+    T_TRUE      shift, and go to state 4
+    T_INPUT     shift, and go to state 10
+    T_INT       shift, and go to state 12
+    T_FLOAT     shift, and go to state 13
+    T_STR       shift, and go to state 14
+    T_LEN       shift, and go to state 15
+    T_ID        shift, and go to state 49
+    T_CINT      shift, and go to state 17
+    T_CFLOAT    shift, and go to state 18
+    T_CSTR      shift, and go to state 19
+    T_RPAREN    shift, and go to state 22
+    T_LBRACKET  shift, and go to state 23
+    T_RANGE     shift, and go to state 24
+
+    Iterable     go to state 34
+    Const        go to state 36
+    Primary_Exp  go to state 59
+
+
+State 21
+
+   49 Unary_Exp: T_SUB . Primary_Exp
+
+    T_FALSE     shift, and go to state 2
+    T_NONE      shift, and go to state 3
+    T_TRUE      shift, and go to state 4
+    T_INPUT     shift, and go to state 10
+    T_INT       shift, and go to state 12
+    T_FLOAT     shift, and go to state 13
+    T_STR       shift, and go to state 14
+    T_LEN       shift, and go to state 15
+    T_ID        shift, and go to state 49
+    T_CINT      shift, and go to state 17
+    T_CFLOAT    shift, and go to state 18
+    T_CSTR      shift, and go to state 19
+    T_RPAREN    shift, and go to state 22
+    T_LBRACKET  shift, and go to state 23
+    T_RANGE     shift, and go to state 24
+
+    Iterable     go to state 34
+    Const        go to state 36
+    Primary_Exp  go to state 60
+
+
+State 22
+
+   43 Primary_Exp: T_RPAREN . Exp T_LPAREN
+
+    T_FALSE     shift, and go to state 2
+    T_NONE      shift, and go to state 3
+    T_TRUE      shift, and go to state 4
+    T_NOT       shift, and go to state 9
+    T_INPUT     shift, and go to state 10
+    T_INT       shift, and go to state 12
+    T_FLOAT     shift, and go to state 13
+    T_STR       shift, and go to state 14
+    T_LEN       shift, and go to state 15
+    T_ID        shift, and go to state 49
+    T_CINT      shift, and go to state 17
+    T_CFLOAT    shift, and go to state 18
+    T_CSTR      shift, and go to state 19
+    T_ADD       shift, and go to state 20
+    T_SUB       shift, and go to state 21
+    T_RPAREN    shift, and go to state 22
+    T_LBRACKET  shift, and go to state 23
+    T_RANGE     shift, and go to state 24
+
+    Iterable     go to state 34
+    Exp          go to state 61
+    Const        go to state 36
+    Primary_Exp  go to state 37
+    Unary_Exp    go to state 38
+    Pow_Exp      go to state 39
+    Mul_Exp      go to state 40
+    Add_Exp      go to state 41
+    Bit_Exp      go to state 42
+    Rel_Exp      go to state 43
+    Eq_Exp       go to state 44
+    In_Exp       go to state 45
+    And_Exp      go to state 46
+    Or_Exp       go to state 47
+
+
+State 23
+
+   22 Iterable: T_LBRACKET . Param_list T_RBRACKET
+
+    T_FALSE     shift, and go to state 2
+    T_NONE      shift, and go to state 3
+    T_TRUE      shift, and go to state 4
+    T_NOT       shift, and go to state 9
+    T_INPUT     shift, and go to state 10
+    T_INT       shift, and go to state 12
+    T_FLOAT     shift, and go to state 13
+    T_STR       shift, and go to state 14
+    T_LEN       shift, and go to state 15
+    T_ID        shift, and go to state 49
+    T_CINT      shift, and go to state 17
+    T_CFLOAT    shift, and go to state 18
+    T_CSTR      shift, and go to state 19
+    T_ADD       shift, and go to state 20
+    T_SUB       shift, and go to state 21
+    T_RPAREN    shift, and go to state 22
+    T_LBRACKET  shift, and go to state 23
+    T_RANGE     shift, and go to state 24
+
+    Param_list   go to state 62
+    Iterable     go to state 34
+    Exp          go to state 63
+    Const        go to state 36
+    Primary_Exp  go to state 37
+    Unary_Exp    go to state 38
+    Pow_Exp      go to state 39
+    Mul_Exp      go to state 40
+    Add_Exp      go to state 41
+    Bit_Exp      go to state 42
+    Rel_Exp      go to state 43
+    Eq_Exp       go to state 44
+    In_Exp       go to state 45
+    And_Exp      go to state 46
+    Or_Exp       go to state 47
+
+
+State 24
+
+   23 Iterable: T_RANGE . T_LPAREN Param_list T_RPAREN
+
+    T_LPAREN  shift, and go to state 64
+
+
+State 25
+
+    0 $accept: Translation_unit . $end
+
+    $end  shift, and go to state 65
+
+
+State 26
+
+    1 Translation_unit: Stmt . Translation_unit
+
+    error       shift, and go to state 1
+    T_FALSE     shift, and go to state 2
+    T_NONE      shift, and go to state 3
+    T_TRUE      shift, and go to state 4
+    T_BREAK     shift, and go to state 5
+    T_CONTINUE  shift, and go to state 6
+    T_FOR       shift, and go to state 7
+    T_IF        shift, and go to state 8
+    T_NOT       shift, and go to state 9
+    T_INPUT     shift, and go to state 10
+    T_PRINT     shift, and go to state 11
+    T_INT       shift, and go to state 12
+    T_FLOAT     shift, and go to state 13
+    T_STR       shift, and go to state 14
+    T_LEN       shift, and go to state 15
+    T_ID        shift, and go to state 16
+    T_CINT      shift, and go to state 17
+    T_CFLOAT    shift, and go to state 18
+    T_CSTR      shift, and go to state 19
+    T_ADD       shift, and go to state 20
+    T_SUB       shift, and go to state 21
+    T_RPAREN    shift, and go to state 22
+    T_LBRACKET  shift, and go to state 23
+    T_RANGE     shift, and go to state 24
+
+    $end        reduce using rule 2 (Translation_unit)
+    error       [reduce using rule 2 (Translation_unit)]
+    T_FALSE     [reduce using rule 2 (Translation_unit)]
+    T_NONE      [reduce using rule 2 (Translation_unit)]
+    T_TRUE      [reduce using rule 2 (Translation_unit)]
+    T_BREAK     [reduce using rule 2 (Translation_unit)]
+    T_CONTINUE  [reduce using rule 2 (Translation_unit)]
+    T_ELSE      reduce using rule 2 (Translation_unit)
+    T_FOR       [reduce using rule 2 (Translation_unit)]
+    T_IF        [reduce using rule 2 (Translation_unit)]
+    T_NOT       [reduce using rule 2 (Translation_unit)]
+    T_INPUT     [reduce using rule 2 (Translation_unit)]
+    T_PRINT     [reduce using rule 2 (Translation_unit)]
+    T_INT       [reduce using rule 2 (Translation_unit)]
+    T_FLOAT     [reduce using rule 2 (Translation_unit)]
+    T_STR       [reduce using rule 2 (Translation_unit)]
+    T_LEN       [reduce using rule 2 (Translation_unit)]
+    T_ID        [reduce using rule 2 (Translation_unit)]
+    T_CINT      [reduce using rule 2 (Translation_unit)]
+    T_CFLOAT    [reduce using rule 2 (Translation_unit)]
+    T_CSTR      [reduce using rule 2 (Translation_unit)]
+    T_ADD       [reduce using rule 2 (Translation_unit)]
+    T_SUB       [reduce using rule 2 (Translation_unit)]
+    T_RPAREN    [reduce using rule 2 (Translation_unit)]
+    T_LBRACKET  [reduce using rule 2 (Translation_unit)]
+    T_RANGE     [reduce using rule 2 (Translation_unit)]
+
+    Translation_unit  go to state 66
+    Stmt              go to state 26
+    Assignment_stmt   go to state 27
+    Simple_stmt       go to state 28
+    Compound_stmt     go to state 29
+    Jump_stmt         go to state 30
+    Print_stmt        go to state 31
+    If_stmt           go to state 32
+    For_stmt          go to state 33
+    Iterable          go to state 34
+    Exp               go to state 35
+    Const             go to state 36
+    Primary_Exp       go to state 37
+    Unary_Exp         go to state 38
+    Pow_Exp           go to state 39
+    Mul_Exp           go to state 40
+    Add_Exp           go to state 41
+    Bit_Exp           go to state 42
+    Rel_Exp           go to state 43
+    Eq_Exp            go to state 44
+    In_Exp            go to state 45
+    And_Exp           go to state 46
+    Or_Exp            go to state 47
+
+
+State 27
+
+    5 Stmt: Assignment_stmt .
+
+    $default  reduce using rule 5 (Stmt)
+
+
+State 28
+
+    3 Stmt: Simple_stmt .
+
+    $default  reduce using rule 3 (Stmt)
+
+
+State 29
+
+    4 Stmt: Compound_stmt .
+
+    $default  reduce using rule 4 (Stmt)
+
+
+State 30
+
+   10 Simple_stmt: Jump_stmt .
+
+    $default  reduce using rule 10 (Simple_stmt)
+
+
+State 31
+
+    9 Simple_stmt: Print_stmt .
+
+    $default  reduce using rule 9 (Simple_stmt)
+
+
+State 32
+
+   11 Compound_stmt: If_stmt .
+
+    $default  reduce using rule 11 (Compound_stmt)
+
+
+State 33
+
+   12 Compound_stmt: For_stmt .
+
+    $default  reduce using rule 12 (Compound_stmt)
+
+
+State 34
+
+   44 Primary_Exp: Iterable .
+
+    $default  reduce using rule 44 (Primary_Exp)
+
+
+State 35
+
+    8 Simple_stmt: Exp .
+
+    $default  reduce using rule 8 (Simple_stmt)
+
+
+State 36
+
+   42 Primary_Exp: Const .
+
+    $default  reduce using rule 42 (Primary_Exp)
+
+
+State 37
+
+   25 Exp: Primary_Exp .
+   52 Unary_Exp: Primary_Exp .
+
+    $end        reduce using rule 25 (Exp)
+    $end        [reduce using rule 52 (Unary_Exp)]
+    error       reduce using rule 25 (Exp)
+    error       [reduce using rule 52 (Unary_Exp)]
+    T_FALSE     reduce using rule 25 (Exp)
+    T_FALSE     [reduce using rule 52 (Unary_Exp)]
+    T_NONE      reduce using rule 25 (Exp)
+    T_NONE      [reduce using rule 52 (Unary_Exp)]
+    T_TRUE      reduce using rule 25 (Exp)
+    T_TRUE      [reduce using rule 52 (Unary_Exp)]
+    T_LAND      reduce using rule 52 (Unary_Exp)
+    T_BREAK     reduce using rule 25 (Exp)
+    T_BREAK     [reduce using rule 52 (Unary_Exp)]
+    T_CONTINUE  reduce using rule 25 (Exp)
+    T_CONTINUE  [reduce using rule 52 (Unary_Exp)]
+    T_ELSE      reduce using rule 25 (Exp)
+    T_ELSE      [reduce using rule 52 (Unary_Exp)]
+    T_FOR       reduce using rule 25 (Exp)
+    T_FOR       [reduce using rule 52 (Unary_Exp)]
+    T_IF        reduce using rule 25 (Exp)
+    T_IF        [reduce using rule 52 (Unary_Exp)]
+    T_IN        reduce using rule 52 (Unary_Exp)
+    T_NOT       reduce using rule 25 (Exp)
+    T_NOT       [reduce using rule 52 (Unary_Exp)]
+    T_LOR       reduce using rule 52 (Unary_Exp)
+    T_INPUT     reduce using rule 25 (Exp)
+    T_INPUT     [reduce using rule 52 (Unary_Exp)]
+    T_PRINT     reduce using rule 25 (Exp)
+    T_PRINT     [reduce using rule 52 (Unary_Exp)]
+    T_INT       reduce using rule 25 (Exp)
+    T_INT       [reduce using rule 52 (Unary_Exp)]
+    T_FLOAT     reduce using rule 25 (Exp)
+    T_FLOAT     [reduce using rule 52 (Unary_Exp)]
+    T_STR       reduce using rule 25 (Exp)
+    T_STR       [reduce using rule 52 (Unary_Exp)]
+    T_LEN       reduce using rule 25 (Exp)
+    T_LEN       [reduce using rule 52 (Unary_Exp)]
+    T_ID        reduce using rule 25 (Exp)
+    T_ID        [reduce using rule 52 (Unary_Exp)]
+    T_CINT      reduce using rule 25 (Exp)
+    T_CINT      [reduce using rule 52 (Unary_Exp)]
+    T_CFLOAT    reduce using rule 25 (Exp)
+    T_CFLOAT    [reduce using rule 52 (Unary_Exp)]
+    T_COMMA     reduce using rule 25 (Exp)
+    T_COMMA     [reduce using rule 52 (Unary_Exp)]
+    T_CSTR      reduce using rule 25 (Exp)
+    T_CSTR      [reduce using rule 52 (Unary_Exp)]
+    T_EPOP      reduce using rule 52 (Unary_Exp)
+    T_MUL       reduce using rule 52 (Unary_Exp)
+    T_DIV       reduce using rule 52 (Unary_Exp)
+    T_FDIV      reduce using rule 52 (Unary_Exp)
+    T_MOD       reduce using rule 52 (Unary_Exp)
+    T_ADD       reduce using rule 25 (Exp)
+    T_ADD       [reduce using rule 52 (Unary_Exp)]
+    T_SUB       reduce using rule 25 (Exp)
+    T_SUB       [reduce using rule 52 (Unary_Exp)]
+    T_G         reduce using rule 52 (Unary_Exp)
+    T_L         reduce using rule 52 (Unary_Exp)
+    T_GE        reduce using rule 52 (Unary_Exp)
+    T_LE        reduce using rule 52 (Unary_Exp)
+    T_EOP       reduce using rule 52 (Unary_Exp)
+    T_NEOP      reduce using rule 52 (Unary_Exp)
+    T_XOR       reduce using rule 52 (Unary_Exp)
+    T_BAND      reduce using rule 52 (Unary_Exp)
+    T_BOR       reduce using rule 52 (Unary_Exp)
+    T_LPAREN    reduce using rule 25 (Exp)
+    T_LPAREN    [reduce using rule 52 (Unary_Exp)]
+    T_RPAREN    reduce using rule 25 (Exp)
+    T_RPAREN    [reduce using rule 52 (Unary_Exp)]
+    T_LBRACKET  reduce using rule 25 (Exp)
+    T_LBRACKET  [reduce using rule 52 (Unary_Exp)]
+    T_RBRACKET  reduce using rule 25 (Exp)
+    T_RBRACKET  [reduce using rule 52 (Unary_Exp)]
+    T_RANGE     reduce using rule 25 (Exp)
+    T_RANGE     [reduce using rule 52 (Unary_Exp)]
+    T_COLON     reduce using rule 25 (Exp)
+    T_COLON     [reduce using rule 52 (Unary_Exp)]
+    $default    reduce using rule 25 (Exp)
+
+
+State 38
+
+   53 Pow_Exp: Unary_Exp .
+
+    $default  reduce using rule 53 (Pow_Exp)
+
+
+State 39
+
+   26 Exp: Pow_Exp .
+   54 Pow_Exp: Pow_Exp . T_EPOP Unary_Exp
+   55 Mul_Exp: Pow_Exp .
+
+    T_EPOP  shift, and go to state 67
+
+    $end        reduce using rule 26 (Exp)
+    $end        [reduce using rule 55 (Mul_Exp)]
+    error       reduce using rule 26 (Exp)
+    error       [reduce using rule 55 (Mul_Exp)]
+    T_FALSE     reduce using rule 26 (Exp)
+    T_FALSE     [reduce using rule 55 (Mul_Exp)]
+    T_NONE      reduce using rule 26 (Exp)
+    T_NONE      [reduce using rule 55 (Mul_Exp)]
+    T_TRUE      reduce using rule 26 (Exp)
+    T_TRUE      [reduce using rule 55 (Mul_Exp)]
+    T_LAND      reduce using rule 55 (Mul_Exp)
+    T_BREAK     reduce using rule 26 (Exp)
+    T_BREAK     [reduce using rule 55 (Mul_Exp)]
+    T_CONTINUE  reduce using rule 26 (Exp)
+    T_CONTINUE  [reduce using rule 55 (Mul_Exp)]
+    T_ELSE      reduce using rule 26 (Exp)
+    T_ELSE      [reduce using rule 55 (Mul_Exp)]
+    T_FOR       reduce using rule 26 (Exp)
+    T_FOR       [reduce using rule 55 (Mul_Exp)]
+    T_IF        reduce using rule 26 (Exp)
+    T_IF        [reduce using rule 55 (Mul_Exp)]
+    T_IN        reduce using rule 55 (Mul_Exp)
+    T_NOT       reduce using rule 26 (Exp)
+    T_NOT       [reduce using rule 55 (Mul_Exp)]
+    T_LOR       reduce using rule 55 (Mul_Exp)
+    T_INPUT     reduce using rule 26 (Exp)
+    T_INPUT     [reduce using rule 55 (Mul_Exp)]
+    T_PRINT     reduce using rule 26 (Exp)
+    T_PRINT     [reduce using rule 55 (Mul_Exp)]
+    T_INT       reduce using rule 26 (Exp)
+    T_INT       [reduce using rule 55 (Mul_Exp)]
+    T_FLOAT     reduce using rule 26 (Exp)
+    T_FLOAT     [reduce using rule 55 (Mul_Exp)]
+    T_STR       reduce using rule 26 (Exp)
+    T_STR       [reduce using rule 55 (Mul_Exp)]
+    T_LEN       reduce using rule 26 (Exp)
+    T_LEN       [reduce using rule 55 (Mul_Exp)]
+    T_ID        reduce using rule 26 (Exp)
+    T_ID        [reduce using rule 55 (Mul_Exp)]
+    T_CINT      reduce using rule 26 (Exp)
+    T_CINT      [reduce using rule 55 (Mul_Exp)]
+    T_CFLOAT    reduce using rule 26 (Exp)
+    T_CFLOAT    [reduce using rule 55 (Mul_Exp)]
+    T_COMMA     reduce using rule 26 (Exp)
+    T_COMMA     [reduce using rule 55 (Mul_Exp)]
+    T_CSTR      reduce using rule 26 (Exp)
+    T_CSTR      [reduce using rule 55 (Mul_Exp)]
+    T_MUL       reduce using rule 55 (Mul_Exp)
+    T_DIV       reduce using rule 55 (Mul_Exp)
+    T_FDIV      reduce using rule 55 (Mul_Exp)
+    T_MOD       reduce using rule 55 (Mul_Exp)
+    T_ADD       reduce using rule 26 (Exp)
+    T_ADD       [reduce using rule 55 (Mul_Exp)]
+    T_SUB       reduce using rule 26 (Exp)
+    T_SUB       [reduce using rule 55 (Mul_Exp)]
+    T_G         reduce using rule 55 (Mul_Exp)
+    T_L         reduce using rule 55 (Mul_Exp)
+    T_GE        reduce using rule 55 (Mul_Exp)
+    T_LE        reduce using rule 55 (Mul_Exp)
+    T_EOP       reduce using rule 55 (Mul_Exp)
+    T_NEOP      reduce using rule 55 (Mul_Exp)
+    T_XOR       reduce using rule 55 (Mul_Exp)
+    T_BAND      reduce using rule 55 (Mul_Exp)
+    T_BOR       reduce using rule 55 (Mul_Exp)
+    T_LPAREN    reduce using rule 26 (Exp)
+    T_LPAREN    [reduce using rule 55 (Mul_Exp)]
+    T_RPAREN    reduce using rule 26 (Exp)
+    T_RPAREN    [reduce using rule 55 (Mul_Exp)]
+    T_LBRACKET  reduce using rule 26 (Exp)
+    T_LBRACKET  [reduce using rule 55 (Mul_Exp)]
+    T_RBRACKET  reduce using rule 26 (Exp)
+    T_RBRACKET  [reduce using rule 55 (Mul_Exp)]
+    T_RANGE     reduce using rule 26 (Exp)
+    T_RANGE     [reduce using rule 55 (Mul_Exp)]
+    T_COLON     reduce using rule 26 (Exp)
+    T_COLON     [reduce using rule 55 (Mul_Exp)]
+    $default    reduce using rule 26 (Exp)
+
+
+State 40
+
+   27 Exp: Mul_Exp .
+   56 Mul_Exp: Mul_Exp . T_MUL Pow_Exp
+   57        | Mul_Exp . T_DIV Pow_Exp
+   58        | Mul_Exp . T_FDIV Pow_Exp
+   59        | Mul_Exp . T_MOD Pow_Exp
+   60 Add_Exp: Mul_Exp .
+
+    T_MUL   shift, and go to state 68
+    T_DIV   shift, and go to state 69
+    T_FDIV  shift, and go to state 70
+    T_MOD   shift, and go to state 71
+
+    $end        reduce using rule 27 (Exp)
+    $end        [reduce using rule 60 (Add_Exp)]
+    error       reduce using rule 27 (Exp)
+    error       [reduce using rule 60 (Add_Exp)]
+    T_FALSE     reduce using rule 27 (Exp)
+    T_FALSE     [reduce using rule 60 (Add_Exp)]
+    T_NONE      reduce using rule 27 (Exp)
+    T_NONE      [reduce using rule 60 (Add_Exp)]
+    T_TRUE      reduce using rule 27 (Exp)
+    T_TRUE      [reduce using rule 60 (Add_Exp)]
+    T_LAND      reduce using rule 60 (Add_Exp)
+    T_BREAK     reduce using rule 27 (Exp)
+    T_BREAK     [reduce using rule 60 (Add_Exp)]
+    T_CONTINUE  reduce using rule 27 (Exp)
+    T_CONTINUE  [reduce using rule 60 (Add_Exp)]
+    T_ELSE      reduce using rule 27 (Exp)
+    T_ELSE      [reduce using rule 60 (Add_Exp)]
+    T_FOR       reduce using rule 27 (Exp)
+    T_FOR       [reduce using rule 60 (Add_Exp)]
+    T_IF        reduce using rule 27 (Exp)
+    T_IF        [reduce using rule 60 (Add_Exp)]
+    T_IN        reduce using rule 60 (Add_Exp)
+    T_NOT       reduce using rule 27 (Exp)
+    T_NOT       [reduce using rule 60 (Add_Exp)]
+    T_LOR       reduce using rule 60 (Add_Exp)
+    T_INPUT     reduce using rule 27 (Exp)
+    T_INPUT     [reduce using rule 60 (Add_Exp)]
+    T_PRINT     reduce using rule 27 (Exp)
+    T_PRINT     [reduce using rule 60 (Add_Exp)]
+    T_INT       reduce using rule 27 (Exp)
+    T_INT       [reduce using rule 60 (Add_Exp)]
+    T_FLOAT     reduce using rule 27 (Exp)
+    T_FLOAT     [reduce using rule 60 (Add_Exp)]
+    T_STR       reduce using rule 27 (Exp)
+    T_STR       [reduce using rule 60 (Add_Exp)]
+    T_LEN       reduce using rule 27 (Exp)
+    T_LEN       [reduce using rule 60 (Add_Exp)]
+    T_ID        reduce using rule 27 (Exp)
+    T_ID        [reduce using rule 60 (Add_Exp)]
+    T_CINT      reduce using rule 27 (Exp)
+    T_CINT      [reduce using rule 60 (Add_Exp)]
+    T_CFLOAT    reduce using rule 27 (Exp)
+    T_CFLOAT    [reduce using rule 60 (Add_Exp)]
+    T_COMMA     reduce using rule 27 (Exp)
+    T_COMMA     [reduce using rule 60 (Add_Exp)]
+    T_CSTR      reduce using rule 27 (Exp)
+    T_CSTR      [reduce using rule 60 (Add_Exp)]
+    T_ADD       reduce using rule 27 (Exp)
+    T_ADD       [reduce using rule 60 (Add_Exp)]
+    T_SUB       reduce using rule 27 (Exp)
+    T_SUB       [reduce using rule 60 (Add_Exp)]
+    T_G         reduce using rule 60 (Add_Exp)
+    T_L         reduce using rule 60 (Add_Exp)
+    T_GE        reduce using rule 60 (Add_Exp)
+    T_LE        reduce using rule 60 (Add_Exp)
+    T_EOP       reduce using rule 60 (Add_Exp)
+    T_NEOP      reduce using rule 60 (Add_Exp)
+    T_XOR       reduce using rule 60 (Add_Exp)
+    T_BAND      reduce using rule 60 (Add_Exp)
+    T_BOR       reduce using rule 60 (Add_Exp)
+    T_LPAREN    reduce using rule 27 (Exp)
+    T_LPAREN    [reduce using rule 60 (Add_Exp)]
+    T_RPAREN    reduce using rule 27 (Exp)
+    T_RPAREN    [reduce using rule 60 (Add_Exp)]
+    T_LBRACKET  reduce using rule 27 (Exp)
+    T_LBRACKET  [reduce using rule 60 (Add_Exp)]
+    T_RBRACKET  reduce using rule 27 (Exp)
+    T_RBRACKET  [reduce using rule 60 (Add_Exp)]
+    T_RANGE     reduce using rule 27 (Exp)
+    T_RANGE     [reduce using rule 60 (Add_Exp)]
+    T_COLON     reduce using rule 27 (Exp)
+    T_COLON     [reduce using rule 60 (Add_Exp)]
+    $default    reduce using rule 27 (Exp)
+
+
+State 41
+
+   28 Exp: Add_Exp .
+   61 Add_Exp: Add_Exp . T_ADD Mul_Exp
+   62        | Add_Exp . T_SUB Mul_Exp
+   63 Bit_Exp: Add_Exp .
+
+    T_ADD  shift, and go to state 72
+    T_SUB  shift, and go to state 73
+
+    $end        reduce using rule 28 (Exp)
+    $end        [reduce using rule 63 (Bit_Exp)]
+    error       reduce using rule 28 (Exp)
+    error       [reduce using rule 63 (Bit_Exp)]
+    T_FALSE     reduce using rule 28 (Exp)
+    T_FALSE     [reduce using rule 63 (Bit_Exp)]
+    T_NONE      reduce using rule 28 (Exp)
+    T_NONE      [reduce using rule 63 (Bit_Exp)]
+    T_TRUE      reduce using rule 28 (Exp)
+    T_TRUE      [reduce using rule 63 (Bit_Exp)]
+    T_LAND      reduce using rule 63 (Bit_Exp)
+    T_BREAK     reduce using rule 28 (Exp)
+    T_BREAK     [reduce using rule 63 (Bit_Exp)]
+    T_CONTINUE  reduce using rule 28 (Exp)
+    T_CONTINUE  [reduce using rule 63 (Bit_Exp)]
+    T_ELSE      reduce using rule 28 (Exp)
+    T_ELSE      [reduce using rule 63 (Bit_Exp)]
+    T_FOR       reduce using rule 28 (Exp)
+    T_FOR       [reduce using rule 63 (Bit_Exp)]
+    T_IF        reduce using rule 28 (Exp)
+    T_IF        [reduce using rule 63 (Bit_Exp)]
+    T_IN        reduce using rule 63 (Bit_Exp)
+    T_NOT       reduce using rule 28 (Exp)
+    T_NOT       [reduce using rule 63 (Bit_Exp)]
+    T_LOR       reduce using rule 63 (Bit_Exp)
+    T_INPUT     reduce using rule 28 (Exp)
+    T_INPUT     [reduce using rule 63 (Bit_Exp)]
+    T_PRINT     reduce using rule 28 (Exp)
+    T_PRINT     [reduce using rule 63 (Bit_Exp)]
+    T_INT       reduce using rule 28 (Exp)
+    T_INT       [reduce using rule 63 (Bit_Exp)]
+    T_FLOAT     reduce using rule 28 (Exp)
+    T_FLOAT     [reduce using rule 63 (Bit_Exp)]
+    T_STR       reduce using rule 28 (Exp)
+    T_STR       [reduce using rule 63 (Bit_Exp)]
+    T_LEN       reduce using rule 28 (Exp)
+    T_LEN       [reduce using rule 63 (Bit_Exp)]
+    T_ID        reduce using rule 28 (Exp)
+    T_ID        [reduce using rule 63 (Bit_Exp)]
+    T_CINT      reduce using rule 28 (Exp)
+    T_CINT      [reduce using rule 63 (Bit_Exp)]
+    T_CFLOAT    reduce using rule 28 (Exp)
+    T_CFLOAT    [reduce using rule 63 (Bit_Exp)]
+    T_COMMA     reduce using rule 28 (Exp)
+    T_COMMA     [reduce using rule 63 (Bit_Exp)]
+    T_CSTR      reduce using rule 28 (Exp)
+    T_CSTR      [reduce using rule 63 (Bit_Exp)]
+    T_ADD       [reduce using rule 28 (Exp)]
+    T_ADD       [reduce using rule 63 (Bit_Exp)]
+    T_SUB       [reduce using rule 28 (Exp)]
+    T_SUB       [reduce using rule 63 (Bit_Exp)]
+    T_G         reduce using rule 63 (Bit_Exp)
+    T_L         reduce using rule 63 (Bit_Exp)
+    T_GE        reduce using rule 63 (Bit_Exp)
+    T_LE        reduce using rule 63 (Bit_Exp)
+    T_EOP       reduce using rule 63 (Bit_Exp)
+    T_NEOP      reduce using rule 63 (Bit_Exp)
+    T_XOR       reduce using rule 63 (Bit_Exp)
+    T_BAND      reduce using rule 63 (Bit_Exp)
+    T_BOR       reduce using rule 63 (Bit_Exp)
+    T_LPAREN    reduce using rule 28 (Exp)
+    T_LPAREN    [reduce using rule 63 (Bit_Exp)]
+    T_RPAREN    reduce using rule 28 (Exp)
+    T_RPAREN    [reduce using rule 63 (Bit_Exp)]
+    T_LBRACKET  reduce using rule 28 (Exp)
+    T_LBRACKET  [reduce using rule 63 (Bit_Exp)]
+    T_RBRACKET  reduce using rule 28 (Exp)
+    T_RBRACKET  [reduce using rule 63 (Bit_Exp)]
+    T_RANGE     reduce using rule 28 (Exp)
+    T_RANGE     [reduce using rule 63 (Bit_Exp)]
+    T_COLON     reduce using rule 28 (Exp)
+    T_COLON     [reduce using rule 63 (Bit_Exp)]
+    $default    reduce using rule 28 (Exp)
+
+
+State 42
+
+   29 Exp: Bit_Exp .
+   64 Bit_Exp: Bit_Exp . T_XOR Add_Exp
+   65        | Bit_Exp . T_BAND Add_Exp
+   66        | Bit_Exp . T_BOR Add_Exp
+   67 Rel_Exp: Bit_Exp .
+
+    T_XOR   shift, and go to state 74
+    T_BAND  shift, and go to state 75
+    T_BOR   shift, and go to state 76
+
+    $end        reduce using rule 29 (Exp)
+    $end        [reduce using rule 67 (Rel_Exp)]
+    error       reduce using rule 29 (Exp)
+    error       [reduce using rule 67 (Rel_Exp)]
+    T_FALSE     reduce using rule 29 (Exp)
+    T_FALSE     [reduce using rule 67 (Rel_Exp)]
+    T_NONE      reduce using rule 29 (Exp)
+    T_NONE      [reduce using rule 67 (Rel_Exp)]
+    T_TRUE      reduce using rule 29 (Exp)
+    T_TRUE      [reduce using rule 67 (Rel_Exp)]
+    T_LAND      reduce using rule 67 (Rel_Exp)
+    T_BREAK     reduce using rule 29 (Exp)
+    T_BREAK     [reduce using rule 67 (Rel_Exp)]
+    T_CONTINUE  reduce using rule 29 (Exp)
+    T_CONTINUE  [reduce using rule 67 (Rel_Exp)]
+    T_ELSE      reduce using rule 29 (Exp)
+    T_ELSE      [reduce using rule 67 (Rel_Exp)]
+    T_FOR       reduce using rule 29 (Exp)
+    T_FOR       [reduce using rule 67 (Rel_Exp)]
+    T_IF        reduce using rule 29 (Exp)
+    T_IF        [reduce using rule 67 (Rel_Exp)]
+    T_IN        reduce using rule 67 (Rel_Exp)
+    T_NOT       reduce using rule 29 (Exp)
+    T_NOT       [reduce using rule 67 (Rel_Exp)]
+    T_LOR       reduce using rule 67 (Rel_Exp)
+    T_INPUT     reduce using rule 29 (Exp)
+    T_INPUT     [reduce using rule 67 (Rel_Exp)]
+    T_PRINT     reduce using rule 29 (Exp)
+    T_PRINT     [reduce using rule 67 (Rel_Exp)]
+    T_INT       reduce using rule 29 (Exp)
+    T_INT       [reduce using rule 67 (Rel_Exp)]
+    T_FLOAT     reduce using rule 29 (Exp)
+    T_FLOAT     [reduce using rule 67 (Rel_Exp)]
+    T_STR       reduce using rule 29 (Exp)
+    T_STR       [reduce using rule 67 (Rel_Exp)]
+    T_LEN       reduce using rule 29 (Exp)
+    T_LEN       [reduce using rule 67 (Rel_Exp)]
+    T_ID        reduce using rule 29 (Exp)
+    T_ID        [reduce using rule 67 (Rel_Exp)]
+    T_CINT      reduce using rule 29 (Exp)
+    T_CINT      [reduce using rule 67 (Rel_Exp)]
+    T_CFLOAT    reduce using rule 29 (Exp)
+    T_CFLOAT    [reduce using rule 67 (Rel_Exp)]
+    T_COMMA     reduce using rule 29 (Exp)
+    T_COMMA     [reduce using rule 67 (Rel_Exp)]
+    T_CSTR      reduce using rule 29 (Exp)
+    T_CSTR      [reduce using rule 67 (Rel_Exp)]
+    T_ADD       reduce using rule 29 (Exp)
+    T_ADD       [reduce using rule 67 (Rel_Exp)]
+    T_SUB       reduce using rule 29 (Exp)
+    T_SUB       [reduce using rule 67 (Rel_Exp)]
+    T_G         reduce using rule 67 (Rel_Exp)
+    T_L         reduce using rule 67 (Rel_Exp)
+    T_GE        reduce using rule 67 (Rel_Exp)
+    T_LE        reduce using rule 67 (Rel_Exp)
+    T_EOP       reduce using rule 67 (Rel_Exp)
+    T_NEOP      reduce using rule 67 (Rel_Exp)
+    T_LPAREN    reduce using rule 29 (Exp)
+    T_LPAREN    [reduce using rule 67 (Rel_Exp)]
+    T_RPAREN    reduce using rule 29 (Exp)
+    T_RPAREN    [reduce using rule 67 (Rel_Exp)]
+    T_LBRACKET  reduce using rule 29 (Exp)
+    T_LBRACKET  [reduce using rule 67 (Rel_Exp)]
+    T_RBRACKET  reduce using rule 29 (Exp)
+    T_RBRACKET  [reduce using rule 67 (Rel_Exp)]
+    T_RANGE     reduce using rule 29 (Exp)
+    T_RANGE     [reduce using rule 67 (Rel_Exp)]
+    T_COLON     reduce using rule 29 (Exp)
+    T_COLON     [reduce using rule 67 (Rel_Exp)]
+    $default    reduce using rule 29 (Exp)
+
+
+State 43
+
+   30 Exp: Rel_Exp .
+   68 Rel_Exp: Rel_Exp . T_G Bit_Exp
+   69        | Rel_Exp . T_GE Bit_Exp
+   70        | Rel_Exp . T_L Bit_Exp
+   71        | Rel_Exp . T_LE Bit_Exp
+   72 Eq_Exp: Rel_Exp .
+
+    T_G   shift, and go to state 77
+    T_L   shift, and go to state 78
+    T_GE  shift, and go to state 79
+    T_LE  shift, and go to state 80
+
+    $end        reduce using rule 30 (Exp)
+    $end        [reduce using rule 72 (Eq_Exp)]
+    error       reduce using rule 30 (Exp)
+    error       [reduce using rule 72 (Eq_Exp)]
+    T_FALSE     reduce using rule 30 (Exp)
+    T_FALSE     [reduce using rule 72 (Eq_Exp)]
+    T_NONE      reduce using rule 30 (Exp)
+    T_NONE      [reduce using rule 72 (Eq_Exp)]
+    T_TRUE      reduce using rule 30 (Exp)
+    T_TRUE      [reduce using rule 72 (Eq_Exp)]
+    T_LAND      reduce using rule 72 (Eq_Exp)
+    T_BREAK     reduce using rule 30 (Exp)
+    T_BREAK     [reduce using rule 72 (Eq_Exp)]
+    T_CONTINUE  reduce using rule 30 (Exp)
+    T_CONTINUE  [reduce using rule 72 (Eq_Exp)]
+    T_ELSE      reduce using rule 30 (Exp)
+    T_ELSE      [reduce using rule 72 (Eq_Exp)]
+    T_FOR       reduce using rule 30 (Exp)
+    T_FOR       [reduce using rule 72 (Eq_Exp)]
+    T_IF        reduce using rule 30 (Exp)
+    T_IF        [reduce using rule 72 (Eq_Exp)]
+    T_IN        reduce using rule 72 (Eq_Exp)
+    T_NOT       reduce using rule 30 (Exp)
+    T_NOT       [reduce using rule 72 (Eq_Exp)]
+    T_LOR       reduce using rule 72 (Eq_Exp)
+    T_INPUT     reduce using rule 30 (Exp)
+    T_INPUT     [reduce using rule 72 (Eq_Exp)]
+    T_PRINT     reduce using rule 30 (Exp)
+    T_PRINT     [reduce using rule 72 (Eq_Exp)]
+    T_INT       reduce using rule 30 (Exp)
+    T_INT       [reduce using rule 72 (Eq_Exp)]
+    T_FLOAT     reduce using rule 30 (Exp)
+    T_FLOAT     [reduce using rule 72 (Eq_Exp)]
+    T_STR       reduce using rule 30 (Exp)
+    T_STR       [reduce using rule 72 (Eq_Exp)]
+    T_LEN       reduce using rule 30 (Exp)
+    T_LEN       [reduce using rule 72 (Eq_Exp)]
+    T_ID        reduce using rule 30 (Exp)
+    T_ID        [reduce using rule 72 (Eq_Exp)]
+    T_CINT      reduce using rule 30 (Exp)
+    T_CINT      [reduce using rule 72 (Eq_Exp)]
+    T_CFLOAT    reduce using rule 30 (Exp)
+    T_CFLOAT    [reduce using rule 72 (Eq_Exp)]
+    T_COMMA     reduce using rule 30 (Exp)
+    T_COMMA     [reduce using rule 72 (Eq_Exp)]
+    T_CSTR      reduce using rule 30 (Exp)
+    T_CSTR      [reduce using rule 72 (Eq_Exp)]
+    T_ADD       reduce using rule 30 (Exp)
+    T_ADD       [reduce using rule 72 (Eq_Exp)]
+    T_SUB       reduce using rule 30 (Exp)
+    T_SUB       [reduce using rule 72 (Eq_Exp)]
+    T_EOP       reduce using rule 72 (Eq_Exp)
+    T_NEOP      reduce using rule 72 (Eq_Exp)
+    T_LPAREN    reduce using rule 30 (Exp)
+    T_LPAREN    [reduce using rule 72 (Eq_Exp)]
+    T_RPAREN    reduce using rule 30 (Exp)
+    T_RPAREN    [reduce using rule 72 (Eq_Exp)]
+    T_LBRACKET  reduce using rule 30 (Exp)
+    T_LBRACKET  [reduce using rule 72 (Eq_Exp)]
+    T_RBRACKET  reduce using rule 30 (Exp)
+    T_RBRACKET  [reduce using rule 72 (Eq_Exp)]
+    T_RANGE     reduce using rule 30 (Exp)
+    T_RANGE     [reduce using rule 72 (Eq_Exp)]
+    T_COLON     reduce using rule 30 (Exp)
+    T_COLON     [reduce using rule 72 (Eq_Exp)]
+    $default    reduce using rule 30 (Exp)
+
+
+State 44
+
+   31 Exp: Eq_Exp .
+   73 Eq_Exp: Eq_Exp . T_EOP Rel_Exp
+   74       | Eq_Exp . T_NEOP Rel_Exp
+   75 In_Exp: Eq_Exp .
+
+    T_EOP   shift, and go to state 81
+    T_NEOP  shift, and go to state 82
+
+    $end        reduce using rule 31 (Exp)
+    $end        [reduce using rule 75 (In_Exp)]
+    error       reduce using rule 31 (Exp)
+    error       [reduce using rule 75 (In_Exp)]
+    T_FALSE     reduce using rule 31 (Exp)
+    T_FALSE     [reduce using rule 75 (In_Exp)]
+    T_NONE      reduce using rule 31 (Exp)
+    T_NONE      [reduce using rule 75 (In_Exp)]
+    T_TRUE      reduce using rule 31 (Exp)
+    T_TRUE      [reduce using rule 75 (In_Exp)]
+    T_LAND      reduce using rule 75 (In_Exp)
+    T_BREAK     reduce using rule 31 (Exp)
+    T_BREAK     [reduce using rule 75 (In_Exp)]
+    T_CONTINUE  reduce using rule 31 (Exp)
+    T_CONTINUE  [reduce using rule 75 (In_Exp)]
+    T_ELSE      reduce using rule 31 (Exp)
+    T_ELSE      [reduce using rule 75 (In_Exp)]
+    T_FOR       reduce using rule 31 (Exp)
+    T_FOR       [reduce using rule 75 (In_Exp)]
+    T_IF        reduce using rule 31 (Exp)
+    T_IF        [reduce using rule 75 (In_Exp)]
+    T_IN        reduce using rule 75 (In_Exp)
+    T_NOT       reduce using rule 31 (Exp)
+    T_NOT       [reduce using rule 75 (In_Exp)]
+    T_LOR       reduce using rule 75 (In_Exp)
+    T_INPUT     reduce using rule 31 (Exp)
+    T_INPUT     [reduce using rule 75 (In_Exp)]
+    T_PRINT     reduce using rule 31 (Exp)
+    T_PRINT     [reduce using rule 75 (In_Exp)]
+    T_INT       reduce using rule 31 (Exp)
+    T_INT       [reduce using rule 75 (In_Exp)]
+    T_FLOAT     reduce using rule 31 (Exp)
+    T_FLOAT     [reduce using rule 75 (In_Exp)]
+    T_STR       reduce using rule 31 (Exp)
+    T_STR       [reduce using rule 75 (In_Exp)]
+    T_LEN       reduce using rule 31 (Exp)
+    T_LEN       [reduce using rule 75 (In_Exp)]
+    T_ID        reduce using rule 31 (Exp)
+    T_ID        [reduce using rule 75 (In_Exp)]
+    T_CINT      reduce using rule 31 (Exp)
+    T_CINT      [reduce using rule 75 (In_Exp)]
+    T_CFLOAT    reduce using rule 31 (Exp)
+    T_CFLOAT    [reduce using rule 75 (In_Exp)]
+    T_COMMA     reduce using rule 31 (Exp)
+    T_COMMA     [reduce using rule 75 (In_Exp)]
+    T_CSTR      reduce using rule 31 (Exp)
+    T_CSTR      [reduce using rule 75 (In_Exp)]
+    T_ADD       reduce using rule 31 (Exp)
+    T_ADD       [reduce using rule 75 (In_Exp)]
+    T_SUB       reduce using rule 31 (Exp)
+    T_SUB       [reduce using rule 75 (In_Exp)]
+    T_LPAREN    reduce using rule 31 (Exp)
+    T_LPAREN    [reduce using rule 75 (In_Exp)]
+    T_RPAREN    reduce using rule 31 (Exp)
+    T_RPAREN    [reduce using rule 75 (In_Exp)]
+    T_LBRACKET  reduce using rule 31 (Exp)
+    T_LBRACKET  [reduce using rule 75 (In_Exp)]
+    T_RBRACKET  reduce using rule 31 (Exp)
+    T_RBRACKET  [reduce using rule 75 (In_Exp)]
+    T_RANGE     reduce using rule 31 (Exp)
+    T_RANGE     [reduce using rule 75 (In_Exp)]
+    T_COLON     reduce using rule 31 (Exp)
+    T_COLON     [reduce using rule 75 (In_Exp)]
+    $default    reduce using rule 31 (Exp)
+
+
+State 45
+
+   32 Exp: In_Exp .
+   76 In_Exp: In_Exp . T_IN Eq_Exp
+   77 And_Exp: In_Exp .
+
+    T_IN  shift, and go to state 83
+
+    $end        reduce using rule 32 (Exp)
+    $end        [reduce using rule 77 (And_Exp)]
+    error       reduce using rule 32 (Exp)
+    error       [reduce using rule 77 (And_Exp)]
+    T_FALSE     reduce using rule 32 (Exp)
+    T_FALSE     [reduce using rule 77 (And_Exp)]
+    T_NONE      reduce using rule 32 (Exp)
+    T_NONE      [reduce using rule 77 (And_Exp)]
+    T_TRUE      reduce using rule 32 (Exp)
+    T_TRUE      [reduce using rule 77 (And_Exp)]
+    T_LAND      reduce using rule 77 (And_Exp)
+    T_BREAK     reduce using rule 32 (Exp)
+    T_BREAK     [reduce using rule 77 (And_Exp)]
+    T_CONTINUE  reduce using rule 32 (Exp)
+    T_CONTINUE  [reduce using rule 77 (And_Exp)]
+    T_ELSE      reduce using rule 32 (Exp)
+    T_ELSE      [reduce using rule 77 (And_Exp)]
+    T_FOR       reduce using rule 32 (Exp)
+    T_FOR       [reduce using rule 77 (And_Exp)]
+    T_IF        reduce using rule 32 (Exp)
+    T_IF        [reduce using rule 77 (And_Exp)]
+    T_NOT       reduce using rule 32 (Exp)
+    T_NOT       [reduce using rule 77 (And_Exp)]
+    T_LOR       reduce using rule 77 (And_Exp)
+    T_INPUT     reduce using rule 32 (Exp)
+    T_INPUT     [reduce using rule 77 (And_Exp)]
+    T_PRINT     reduce using rule 32 (Exp)
+    T_PRINT     [reduce using rule 77 (And_Exp)]
+    T_INT       reduce using rule 32 (Exp)
+    T_INT       [reduce using rule 77 (And_Exp)]
+    T_FLOAT     reduce using rule 32 (Exp)
+    T_FLOAT     [reduce using rule 77 (And_Exp)]
+    T_STR       reduce using rule 32 (Exp)
+    T_STR       [reduce using rule 77 (And_Exp)]
+    T_LEN       reduce using rule 32 (Exp)
+    T_LEN       [reduce using rule 77 (And_Exp)]
+    T_ID        reduce using rule 32 (Exp)
+    T_ID        [reduce using rule 77 (And_Exp)]
+    T_CINT      reduce using rule 32 (Exp)
+    T_CINT      [reduce using rule 77 (And_Exp)]
+    T_CFLOAT    reduce using rule 32 (Exp)
+    T_CFLOAT    [reduce using rule 77 (And_Exp)]
+    T_COMMA     reduce using rule 32 (Exp)
+    T_COMMA     [reduce using rule 77 (And_Exp)]
+    T_CSTR      reduce using rule 32 (Exp)
+    T_CSTR      [reduce using rule 77 (And_Exp)]
+    T_ADD       reduce using rule 32 (Exp)
+    T_ADD       [reduce using rule 77 (And_Exp)]
+    T_SUB       reduce using rule 32 (Exp)
+    T_SUB       [reduce using rule 77 (And_Exp)]
+    T_LPAREN    reduce using rule 32 (Exp)
+    T_LPAREN    [reduce using rule 77 (And_Exp)]
+    T_RPAREN    reduce using rule 32 (Exp)
+    T_RPAREN    [reduce using rule 77 (And_Exp)]
+    T_LBRACKET  reduce using rule 32 (Exp)
+    T_LBRACKET  [reduce using rule 77 (And_Exp)]
+    T_RBRACKET  reduce using rule 32 (Exp)
+    T_RBRACKET  [reduce using rule 77 (And_Exp)]
+    T_RANGE     reduce using rule 32 (Exp)
+    T_RANGE     [reduce using rule 77 (And_Exp)]
+    T_COLON     reduce using rule 32 (Exp)
+    T_COLON     [reduce using rule 77 (And_Exp)]
+    $default    reduce using rule 32 (Exp)
+
+
+State 46
+
+   33 Exp: And_Exp .
+   78 And_Exp: And_Exp . T_LAND In_Exp
+   79 Or_Exp: And_Exp .
+
+    T_LAND  shift, and go to state 84
+
+    $end        reduce using rule 33 (Exp)
+    $end        [reduce using rule 79 (Or_Exp)]
+    error       reduce using rule 33 (Exp)
+    error       [reduce using rule 79 (Or_Exp)]
+    T_FALSE     reduce using rule 33 (Exp)
+    T_FALSE     [reduce using rule 79 (Or_Exp)]
+    T_NONE      reduce using rule 33 (Exp)
+    T_NONE      [reduce using rule 79 (Or_Exp)]
+    T_TRUE      reduce using rule 33 (Exp)
+    T_TRUE      [reduce using rule 79 (Or_Exp)]
+    T_BREAK     reduce using rule 33 (Exp)
+    T_BREAK     [reduce using rule 79 (Or_Exp)]
+    T_CONTINUE  reduce using rule 33 (Exp)
+    T_CONTINUE  [reduce using rule 79 (Or_Exp)]
+    T_ELSE      reduce using rule 33 (Exp)
+    T_ELSE      [reduce using rule 79 (Or_Exp)]
+    T_FOR       reduce using rule 33 (Exp)
+    T_FOR       [reduce using rule 79 (Or_Exp)]
+    T_IF        reduce using rule 33 (Exp)
+    T_IF        [reduce using rule 79 (Or_Exp)]
+    T_NOT       reduce using rule 33 (Exp)
+    T_NOT       [reduce using rule 79 (Or_Exp)]
+    T_LOR       reduce using rule 79 (Or_Exp)
+    T_INPUT     reduce using rule 33 (Exp)
+    T_INPUT     [reduce using rule 79 (Or_Exp)]
+    T_PRINT     reduce using rule 33 (Exp)
+    T_PRINT     [reduce using rule 79 (Or_Exp)]
+    T_INT       reduce using rule 33 (Exp)
+    T_INT       [reduce using rule 79 (Or_Exp)]
+    T_FLOAT     reduce using rule 33 (Exp)
+    T_FLOAT     [reduce using rule 79 (Or_Exp)]
+    T_STR       reduce using rule 33 (Exp)
+    T_STR       [reduce using rule 79 (Or_Exp)]
+    T_LEN       reduce using rule 33 (Exp)
+    T_LEN       [reduce using rule 79 (Or_Exp)]
+    T_ID        reduce using rule 33 (Exp)
+    T_ID        [reduce using rule 79 (Or_Exp)]
+    T_CINT      reduce using rule 33 (Exp)
+    T_CINT      [reduce using rule 79 (Or_Exp)]
+    T_CFLOAT    reduce using rule 33 (Exp)
+    T_CFLOAT    [reduce using rule 79 (Or_Exp)]
+    T_COMMA     reduce using rule 33 (Exp)
+    T_COMMA     [reduce using rule 79 (Or_Exp)]
+    T_CSTR      reduce using rule 33 (Exp)
+    T_CSTR      [reduce using rule 79 (Or_Exp)]
+    T_ADD       reduce using rule 33 (Exp)
+    T_ADD       [reduce using rule 79 (Or_Exp)]
+    T_SUB       reduce using rule 33 (Exp)
+    T_SUB       [reduce using rule 79 (Or_Exp)]
+    T_LPAREN    reduce using rule 33 (Exp)
+    T_LPAREN    [reduce using rule 79 (Or_Exp)]
+    T_RPAREN    reduce using rule 33 (Exp)
+    T_RPAREN    [reduce using rule 79 (Or_Exp)]
+    T_LBRACKET  reduce using rule 33 (Exp)
+    T_LBRACKET  [reduce using rule 79 (Or_Exp)]
+    T_RBRACKET  reduce using rule 33 (Exp)
+    T_RBRACKET  [reduce using rule 79 (Or_Exp)]
+    T_RANGE     reduce using rule 33 (Exp)
+    T_RANGE     [reduce using rule 79 (Or_Exp)]
+    T_COLON     reduce using rule 33 (Exp)
+    T_COLON     [reduce using rule 79 (Or_Exp)]
+    $default    reduce using rule 33 (Exp)
+
+
+State 47
+
+   24 Exp: Or_Exp .
+   80 Or_Exp: Or_Exp . T_LOR And_Exp
+
+    T_LOR  shift, and go to state 85
+
+    $default  reduce using rule 24 (Exp)
+
+
+State 48
+
+   21 For_stmt: T_FOR T_ID . T_IN Iterable T_COLON T_INDENT Translation_unit
+
+    T_IN  shift, and go to state 86
+
+
+State 49
+
+   41 Primary_Exp: T_ID .
+
+    $default  reduce using rule 41 (Primary_Exp)
+
+
+State 50
+
+   18 If_stmt: T_IF Exp . T_COLON T_INDENT Stmt Else_stmt
+
+    T_COLON  shift, and go to state 87
+
+
+State 51
+
+   51 Unary_Exp: T_NOT Primary_Exp .
+
+    $default  reduce using rule 51 (Unary_Exp)
+
+
+State 52
+
+   40 Const: T_INPUT T_LPAREN . T_RPAREN
+
+    T_RPAREN  shift, and go to state 88
+
+
+State 53
+
+   15 Print_stmt: T_PRINT T_LPAREN . Param_list T_RPAREN
+
+    T_FALSE     shift, and go to state 2
+    T_NONE      shift, and go to state 3
+    T_TRUE      shift, and go to state 4
+    T_NOT       shift, and go to state 9
+    T_INPUT     shift, and go to state 10
+    T_INT       shift, and go to state 12
+    T_FLOAT     shift, and go to state 13
+    T_STR       shift, and go to state 14
+    T_LEN       shift, and go to state 15
+    T_ID        shift, and go to state 49
+    T_CINT      shift, and go to state 17
+    T_CFLOAT    shift, and go to state 18
+    T_CSTR      shift, and go to state 19
+    T_ADD       shift, and go to state 20
+    T_SUB       shift, and go to state 21
+    T_RPAREN    shift, and go to state 22
+    T_LBRACKET  shift, and go to state 23
+    T_RANGE     shift, and go to state 24
+
+    Param_list   go to state 89
+    Iterable     go to state 34
+    Exp          go to state 63
+    Const        go to state 36
+    Primary_Exp  go to state 37
+    Unary_Exp    go to state 38
+    Pow_Exp      go to state 39
+    Mul_Exp      go to state 40
+    Add_Exp      go to state 41
+    Bit_Exp      go to state 42
+    Rel_Exp      go to state 43
+    Eq_Exp       go to state 44
+    In_Exp       go to state 45
+    And_Exp      go to state 46
+    Or_Exp       go to state 47
+
+
+State 54
+
+   46 Primary_Exp: T_INT T_LPAREN . Exp T_RPAREN
+
+    T_FALSE     shift, and go to state 2
+    T_NONE      shift, and go to state 3
+    T_TRUE      shift, and go to state 4
+    T_NOT       shift, and go to state 9
+    T_INPUT     shift, and go to state 10
+    T_INT       shift, and go to state 12
+    T_FLOAT     shift, and go to state 13
+    T_STR       shift, and go to state 14
+    T_LEN       shift, and go to state 15
+    T_ID        shift, and go to state 49
+    T_CINT      shift, and go to state 17
+    T_CFLOAT    shift, and go to state 18
+    T_CSTR      shift, and go to state 19
+    T_ADD       shift, and go to state 20
+    T_SUB       shift, and go to state 21
+    T_RPAREN    shift, and go to state 22
+    T_LBRACKET  shift, and go to state 23
+    T_RANGE     shift, and go to state 24
+
+    Iterable     go to state 34
+    Exp          go to state 90
+    Const        go to state 36
+    Primary_Exp  go to state 37
+    Unary_Exp    go to state 38
+    Pow_Exp      go to state 39
+    Mul_Exp      go to state 40
+    Add_Exp      go to state 41
+    Bit_Exp      go to state 42
+    Rel_Exp      go to state 43
+    Eq_Exp       go to state 44
+    In_Exp       go to state 45
+    And_Exp      go to state 46
+    Or_Exp       go to state 47
+
+
+State 55
+
+   47 Primary_Exp: T_FLOAT T_LPAREN . Exp T_RPAREN
+
+    T_FALSE     shift, and go to state 2
+    T_NONE      shift, and go to state 3
+    T_TRUE      shift, and go to state 4
+    T_NOT       shift, and go to state 9
+    T_INPUT     shift, and go to state 10
+    T_INT       shift, and go to state 12
+    T_FLOAT     shift, and go to state 13
+    T_STR       shift, and go to state 14
+    T_LEN       shift, and go to state 15
+    T_ID        shift, and go to state 49
+    T_CINT      shift, and go to state 17
+    T_CFLOAT    shift, and go to state 18
+    T_CSTR      shift, and go to state 19
+    T_ADD       shift, and go to state 20
+    T_SUB       shift, and go to state 21
+    T_RPAREN    shift, and go to state 22
+    T_LBRACKET  shift, and go to state 23
+    T_RANGE     shift, and go to state 24
+
+    Iterable     go to state 34
+    Exp          go to state 91
+    Const        go to state 36
+    Primary_Exp  go to state 37
+    Unary_Exp    go to state 38
+    Pow_Exp      go to state 39
+    Mul_Exp      go to state 40
+    Add_Exp      go to state 41
+    Bit_Exp      go to state 42
+    Rel_Exp      go to state 43
+    Eq_Exp       go to state 44
+    In_Exp       go to state 45
+    And_Exp      go to state 46
+    Or_Exp       go to state 47
+
+
+State 56
+
+   48 Primary_Exp: T_STR T_LPAREN . Exp T_RPAREN
+
+    T_FALSE     shift, and go to state 2
+    T_NONE      shift, and go to state 3
+    T_TRUE      shift, and go to state 4
+    T_NOT       shift, and go to state 9
+    T_INPUT     shift, and go to state 10
+    T_INT       shift, and go to state 12
+    T_FLOAT     shift, and go to state 13
+    T_STR       shift, and go to state 14
+    T_LEN       shift, and go to state 15
+    T_ID        shift, and go to state 49
+    T_CINT      shift, and go to state 17
+    T_CFLOAT    shift, and go to state 18
+    T_CSTR      shift, and go to state 19
+    T_ADD       shift, and go to state 20
+    T_SUB       shift, and go to state 21
+    T_RPAREN    shift, and go to state 22
+    T_LBRACKET  shift, and go to state 23
+    T_RANGE     shift, and go to state 24
+
+    Iterable     go to state 34
+    Exp          go to state 92
+    Const        go to state 36
+    Primary_Exp  go to state 37
+    Unary_Exp    go to state 38
+    Pow_Exp      go to state 39
+    Mul_Exp      go to state 40
+    Add_Exp      go to state 41
+    Bit_Exp      go to state 42
+    Rel_Exp      go to state 43
+    Eq_Exp       go to state 44
+    In_Exp       go to state 45
+    And_Exp      go to state 46
+    Or_Exp       go to state 47
+
+
+State 57
+
+   45 Primary_Exp: T_LEN T_LPAREN . Iterable T_RPAREN
+
+    T_LBRACKET  shift, and go to state 23
+    T_RANGE     shift, and go to state 24
+
+    Iterable  go to state 93
+
+
+State 58
+
+    6 Assignment_stmt: T_ID T_ASOP . Exp
+
+    T_FALSE     shift, and go to state 2
+    T_NONE      shift, and go to state 3
+    T_TRUE      shift, and go to state 4
+    T_NOT       shift, and go to state 9
+    T_INPUT     shift, and go to state 10
+    T_INT       shift, and go to state 12
+    T_FLOAT     shift, and go to state 13
+    T_STR       shift, and go to state 14
+    T_LEN       shift, and go to state 15
+    T_ID        shift, and go to state 49
+    T_CINT      shift, and go to state 17
+    T_CFLOAT    shift, and go to state 18
+    T_CSTR      shift, and go to state 19
+    T_ADD       shift, and go to state 20
+    T_SUB       shift, and go to state 21
+    T_RPAREN    shift, and go to state 22
+    T_LBRACKET  shift, and go to state 23
+    T_RANGE     shift, and go to state 24
+
+    Iterable     go to state 34
+    Exp          go to state 94
+    Const        go to state 36
+    Primary_Exp  go to state 37
+    Unary_Exp    go to state 38
+    Pow_Exp      go to state 39
+    Mul_Exp      go to state 40
+    Add_Exp      go to state 41
+    Bit_Exp      go to state 42
+    Rel_Exp      go to state 43
+    Eq_Exp       go to state 44
+    In_Exp       go to state 45
+    And_Exp      go to state 46
+    Or_Exp       go to state 47
+
+
+State 59
+
+   50 Unary_Exp: T_ADD Primary_Exp .
+
+    $default  reduce using rule 50 (Unary_Exp)
+
+
+State 60
+
+   49 Unary_Exp: T_SUB Primary_Exp .
+
+    $default  reduce using rule 49 (Unary_Exp)
+
+
+State 61
+
+   43 Primary_Exp: T_RPAREN Exp . T_LPAREN
+
+    T_LPAREN  shift, and go to state 95
+
+
+State 62
+
+   16 Param_list: Param_list . T_COMMA Exp
+   22 Iterable: T_LBRACKET Param_list . T_RBRACKET
+
+    T_COMMA     shift, and go to state 96
+    T_RBRACKET  shift, and go to state 97
+
+
+State 63
+
+   17 Param_list: Exp .
+
+    $default  reduce using rule 17 (Param_list)
+
+
+State 64
+
+   23 Iterable: T_RANGE T_LPAREN . Param_list T_RPAREN
+
+    T_FALSE     shift, and go to state 2
+    T_NONE      shift, and go to state 3
+    T_TRUE      shift, and go to state 4
+    T_NOT       shift, and go to state 9
+    T_INPUT     shift, and go to state 10
+    T_INT       shift, and go to state 12
+    T_FLOAT     shift, and go to state 13
+    T_STR       shift, and go to state 14
+    T_LEN       shift, and go to state 15
+    T_ID        shift, and go to state 49
+    T_CINT      shift, and go to state 17
+    T_CFLOAT    shift, and go to state 18
+    T_CSTR      shift, and go to state 19
+    T_ADD       shift, and go to state 20
+    T_SUB       shift, and go to state 21
+    T_RPAREN    shift, and go to state 22
+    T_LBRACKET  shift, and go to state 23
+    T_RANGE     shift, and go to state 24
+
+    Param_list   go to state 98
+    Iterable     go to state 34
+    Exp          go to state 63
+    Const        go to state 36
+    Primary_Exp  go to state 37
+    Unary_Exp    go to state 38
+    Pow_Exp      go to state 39
+    Mul_Exp      go to state 40
+    Add_Exp      go to state 41
+    Bit_Exp      go to state 42
+    Rel_Exp      go to state 43
+    Eq_Exp       go to state 44
+    In_Exp       go to state 45
+    And_Exp      go to state 46
+    Or_Exp       go to state 47
+
+
+State 65
+
+    0 $accept: Translation_unit $end .
+
+    $default  accept
+
+
+State 66
+
+    1 Translation_unit: Stmt Translation_unit .
+
+    $default  reduce using rule 1 (Translation_unit)
+
+
+State 67
+
+   54 Pow_Exp: Pow_Exp T_EPOP . Unary_Exp
+
+    T_FALSE     shift, and go to state 2
+    T_NONE      shift, and go to state 3
+    T_TRUE      shift, and go to state 4
+    T_NOT       shift, and go to state 9
+    T_INPUT     shift, and go to state 10
+    T_INT       shift, and go to state 12
+    T_FLOAT     shift, and go to state 13
+    T_STR       shift, and go to state 14
+    T_LEN       shift, and go to state 15
+    T_ID        shift, and go to state 49
+    T_CINT      shift, and go to state 17
+    T_CFLOAT    shift, and go to state 18
+    T_CSTR      shift, and go to state 19
+    T_ADD       shift, and go to state 20
+    T_SUB       shift, and go to state 21
+    T_RPAREN    shift, and go to state 22
+    T_LBRACKET  shift, and go to state 23
+    T_RANGE     shift, and go to state 24
+
+    Iterable     go to state 34
+    Const        go to state 36
+    Primary_Exp  go to state 99
+    Unary_Exp    go to state 100
+
+
+State 68
+
+   56 Mul_Exp: Mul_Exp T_MUL . Pow_Exp
+
+    T_FALSE     shift, and go to state 2
+    T_NONE      shift, and go to state 3
+    T_TRUE      shift, and go to state 4
+    T_NOT       shift, and go to state 9
+    T_INPUT     shift, and go to state 10
+    T_INT       shift, and go to state 12
+    T_FLOAT     shift, and go to state 13
+    T_STR       shift, and go to state 14
+    T_LEN       shift, and go to state 15
+    T_ID        shift, and go to state 49
+    T_CINT      shift, and go to state 17
+    T_CFLOAT    shift, and go to state 18
+    T_CSTR      shift, and go to state 19
+    T_ADD       shift, and go to state 20
+    T_SUB       shift, and go to state 21
+    T_RPAREN    shift, and go to state 22
+    T_LBRACKET  shift, and go to state 23
+    T_RANGE     shift, and go to state 24
+
+    Iterable     go to state 34
+    Const        go to state 36
+    Primary_Exp  go to state 99
+    Unary_Exp    go to state 38
+    Pow_Exp      go to state 101
+
+
+State 69
+
+   57 Mul_Exp: Mul_Exp T_DIV . Pow_Exp
+
+    T_FALSE     shift, and go to state 2
+    T_NONE      shift, and go to state 3
+    T_TRUE      shift, and go to state 4
+    T_NOT       shift, and go to state 9
+    T_INPUT     shift, and go to state 10
+    T_INT       shift, and go to state 12
+    T_FLOAT     shift, and go to state 13
+    T_STR       shift, and go to state 14
+    T_LEN       shift, and go to state 15
+    T_ID        shift, and go to state 49
+    T_CINT      shift, and go to state 17
+    T_CFLOAT    shift, and go to state 18
+    T_CSTR      shift, and go to state 19
+    T_ADD       shift, and go to state 20
+    T_SUB       shift, and go to state 21
+    T_RPAREN    shift, and go to state 22
+    T_LBRACKET  shift, and go to state 23
+    T_RANGE     shift, and go to state 24
+
+    Iterable     go to state 34
+    Const        go to state 36
+    Primary_Exp  go to state 99
+    Unary_Exp    go to state 38
+    Pow_Exp      go to state 102
+
+
+State 70
+
+   58 Mul_Exp: Mul_Exp T_FDIV . Pow_Exp
+
+    T_FALSE     shift, and go to state 2
+    T_NONE      shift, and go to state 3
+    T_TRUE      shift, and go to state 4
+    T_NOT       shift, and go to state 9
+    T_INPUT     shift, and go to state 10
+    T_INT       shift, and go to state 12
+    T_FLOAT     shift, and go to state 13
+    T_STR       shift, and go to state 14
+    T_LEN       shift, and go to state 15
+    T_ID        shift, and go to state 49
+    T_CINT      shift, and go to state 17
+    T_CFLOAT    shift, and go to state 18
+    T_CSTR      shift, and go to state 19
+    T_ADD       shift, and go to state 20
+    T_SUB       shift, and go to state 21
+    T_RPAREN    shift, and go to state 22
+    T_LBRACKET  shift, and go to state 23
+    T_RANGE     shift, and go to state 24
+
+    Iterable     go to state 34
+    Const        go to state 36
+    Primary_Exp  go to state 99
+    Unary_Exp    go to state 38
+    Pow_Exp      go to state 103
+
+
+State 71
+
+   59 Mul_Exp: Mul_Exp T_MOD . Pow_Exp
+
+    T_FALSE     shift, and go to state 2
+    T_NONE      shift, and go to state 3
+    T_TRUE      shift, and go to state 4
+    T_NOT       shift, and go to state 9
+    T_INPUT     shift, and go to state 10
+    T_INT       shift, and go to state 12
+    T_FLOAT     shift, and go to state 13
+    T_STR       shift, and go to state 14
+    T_LEN       shift, and go to state 15
+    T_ID        shift, and go to state 49
+    T_CINT      shift, and go to state 17
+    T_CFLOAT    shift, and go to state 18
+    T_CSTR      shift, and go to state 19
+    T_ADD       shift, and go to state 20
+    T_SUB       shift, and go to state 21
+    T_RPAREN    shift, and go to state 22
+    T_LBRACKET  shift, and go to state 23
+    T_RANGE     shift, and go to state 24
+
+    Iterable     go to state 34
+    Const        go to state 36
+    Primary_Exp  go to state 99
+    Unary_Exp    go to state 38
+    Pow_Exp      go to state 104
+
+
+State 72
+
+   61 Add_Exp: Add_Exp T_ADD . Mul_Exp
+
+    T_FALSE     shift, and go to state 2
+    T_NONE      shift, and go to state 3
+    T_TRUE      shift, and go to state 4
+    T_NOT       shift, and go to state 9
+    T_INPUT     shift, and go to state 10
+    T_INT       shift, and go to state 12
+    T_FLOAT     shift, and go to state 13
+    T_STR       shift, and go to state 14
+    T_LEN       shift, and go to state 15
+    T_ID        shift, and go to state 49
+    T_CINT      shift, and go to state 17
+    T_CFLOAT    shift, and go to state 18
+    T_CSTR      shift, and go to state 19
+    T_ADD       shift, and go to state 20
+    T_SUB       shift, and go to state 21
+    T_RPAREN    shift, and go to state 22
+    T_LBRACKET  shift, and go to state 23
+    T_RANGE     shift, and go to state 24
+
+    Iterable     go to state 34
+    Const        go to state 36
+    Primary_Exp  go to state 99
+    Unary_Exp    go to state 38
+    Pow_Exp      go to state 105
+    Mul_Exp      go to state 106
+
+
+State 73
+
+   62 Add_Exp: Add_Exp T_SUB . Mul_Exp
+
+    T_FALSE     shift, and go to state 2
+    T_NONE      shift, and go to state 3
+    T_TRUE      shift, and go to state 4
+    T_NOT       shift, and go to state 9
+    T_INPUT     shift, and go to state 10
+    T_INT       shift, and go to state 12
+    T_FLOAT     shift, and go to state 13
+    T_STR       shift, and go to state 14
+    T_LEN       shift, and go to state 15
+    T_ID        shift, and go to state 49
+    T_CINT      shift, and go to state 17
+    T_CFLOAT    shift, and go to state 18
+    T_CSTR      shift, and go to state 19
+    T_ADD       shift, and go to state 20
+    T_SUB       shift, and go to state 21
+    T_RPAREN    shift, and go to state 22
+    T_LBRACKET  shift, and go to state 23
+    T_RANGE     shift, and go to state 24
+
+    Iterable     go to state 34
+    Const        go to state 36
+    Primary_Exp  go to state 99
+    Unary_Exp    go to state 38
+    Pow_Exp      go to state 105
+    Mul_Exp      go to state 107
+
+
+State 74
+
+   64 Bit_Exp: Bit_Exp T_XOR . Add_Exp
+
+    T_FALSE     shift, and go to state 2
+    T_NONE      shift, and go to state 3
+    T_TRUE      shift, and go to state 4
+    T_NOT       shift, and go to state 9
+    T_INPUT     shift, and go to state 10
+    T_INT       shift, and go to state 12
+    T_FLOAT     shift, and go to state 13
+    T_STR       shift, and go to state 14
+    T_LEN       shift, and go to state 15
+    T_ID        shift, and go to state 49
+    T_CINT      shift, and go to state 17
+    T_CFLOAT    shift, and go to state 18
+    T_CSTR      shift, and go to state 19
+    T_ADD       shift, and go to state 20
+    T_SUB       shift, and go to state 21
+    T_RPAREN    shift, and go to state 22
+    T_LBRACKET  shift, and go to state 23
+    T_RANGE     shift, and go to state 24
+
+    Iterable     go to state 34
+    Const        go to state 36
+    Primary_Exp  go to state 99
+    Unary_Exp    go to state 38
+    Pow_Exp      go to state 105
+    Mul_Exp      go to state 108
+    Add_Exp      go to state 109
+
+
+State 75
+
+   65 Bit_Exp: Bit_Exp T_BAND . Add_Exp
+
+    T_FALSE     shift, and go to state 2
+    T_NONE      shift, and go to state 3
+    T_TRUE      shift, and go to state 4
+    T_NOT       shift, and go to state 9
+    T_INPUT     shift, and go to state 10
+    T_INT       shift, and go to state 12
+    T_FLOAT     shift, and go to state 13
+    T_STR       shift, and go to state 14
+    T_LEN       shift, and go to state 15
+    T_ID        shift, and go to state 49
+    T_CINT      shift, and go to state 17
+    T_CFLOAT    shift, and go to state 18
+    T_CSTR      shift, and go to state 19
+    T_ADD       shift, and go to state 20
+    T_SUB       shift, and go to state 21
+    T_RPAREN    shift, and go to state 22
+    T_LBRACKET  shift, and go to state 23
+    T_RANGE     shift, and go to state 24
+
+    Iterable     go to state 34
+    Const        go to state 36
+    Primary_Exp  go to state 99
+    Unary_Exp    go to state 38
+    Pow_Exp      go to state 105
+    Mul_Exp      go to state 108
+    Add_Exp      go to state 110
+
+
+State 76
+
+   66 Bit_Exp: Bit_Exp T_BOR . Add_Exp
+
+    T_FALSE     shift, and go to state 2
+    T_NONE      shift, and go to state 3
+    T_TRUE      shift, and go to state 4
+    T_NOT       shift, and go to state 9
+    T_INPUT     shift, and go to state 10
+    T_INT       shift, and go to state 12
+    T_FLOAT     shift, and go to state 13
+    T_STR       shift, and go to state 14
+    T_LEN       shift, and go to state 15
+    T_ID        shift, and go to state 49
+    T_CINT      shift, and go to state 17
+    T_CFLOAT    shift, and go to state 18
+    T_CSTR      shift, and go to state 19
+    T_ADD       shift, and go to state 20
+    T_SUB       shift, and go to state 21
+    T_RPAREN    shift, and go to state 22
+    T_LBRACKET  shift, and go to state 23
+    T_RANGE     shift, and go to state 24
+
+    Iterable     go to state 34
+    Const        go to state 36
+    Primary_Exp  go to state 99
+    Unary_Exp    go to state 38
+    Pow_Exp      go to state 105
+    Mul_Exp      go to state 108
+    Add_Exp      go to state 111
+
+
+State 77
+
+   68 Rel_Exp: Rel_Exp T_G . Bit_Exp
+
+    T_FALSE     shift, and go to state 2
+    T_NONE      shift, and go to state 3
+    T_TRUE      shift, and go to state 4
+    T_NOT       shift, and go to state 9
+    T_INPUT     shift, and go to state 10
+    T_INT       shift, and go to state 12
+    T_FLOAT     shift, and go to state 13
+    T_STR       shift, and go to state 14
+    T_LEN       shift, and go to state 15
+    T_ID        shift, and go to state 49
+    T_CINT      shift, and go to state 17
+    T_CFLOAT    shift, and go to state 18
+    T_CSTR      shift, and go to state 19
+    T_ADD       shift, and go to state 20
+    T_SUB       shift, and go to state 21
+    T_RPAREN    shift, and go to state 22
+    T_LBRACKET  shift, and go to state 23
+    T_RANGE     shift, and go to state 24
+
+    Iterable     go to state 34
+    Const        go to state 36
+    Primary_Exp  go to state 99
+    Unary_Exp    go to state 38
+    Pow_Exp      go to state 105
+    Mul_Exp      go to state 108
+    Add_Exp      go to state 112
+    Bit_Exp      go to state 113
+
+
+State 78
+
+   70 Rel_Exp: Rel_Exp T_L . Bit_Exp
+
+    T_FALSE     shift, and go to state 2
+    T_NONE      shift, and go to state 3
+    T_TRUE      shift, and go to state 4
+    T_NOT       shift, and go to state 9
+    T_INPUT     shift, and go to state 10
+    T_INT       shift, and go to state 12
+    T_FLOAT     shift, and go to state 13
+    T_STR       shift, and go to state 14
+    T_LEN       shift, and go to state 15
+    T_ID        shift, and go to state 49
+    T_CINT      shift, and go to state 17
+    T_CFLOAT    shift, and go to state 18
+    T_CSTR      shift, and go to state 19
+    T_ADD       shift, and go to state 20
+    T_SUB       shift, and go to state 21
+    T_RPAREN    shift, and go to state 22
+    T_LBRACKET  shift, and go to state 23
+    T_RANGE     shift, and go to state 24
+
+    Iterable     go to state 34
+    Const        go to state 36
+    Primary_Exp  go to state 99
+    Unary_Exp    go to state 38
+    Pow_Exp      go to state 105
+    Mul_Exp      go to state 108
+    Add_Exp      go to state 112
+    Bit_Exp      go to state 114
+
+
+State 79
+
+   69 Rel_Exp: Rel_Exp T_GE . Bit_Exp
+
+    T_FALSE     shift, and go to state 2
+    T_NONE      shift, and go to state 3
+    T_TRUE      shift, and go to state 4
+    T_NOT       shift, and go to state 9
+    T_INPUT     shift, and go to state 10
+    T_INT       shift, and go to state 12
+    T_FLOAT     shift, and go to state 13
+    T_STR       shift, and go to state 14
+    T_LEN       shift, and go to state 15
+    T_ID        shift, and go to state 49
+    T_CINT      shift, and go to state 17
+    T_CFLOAT    shift, and go to state 18
+    T_CSTR      shift, and go to state 19
+    T_ADD       shift, and go to state 20
+    T_SUB       shift, and go to state 21
+    T_RPAREN    shift, and go to state 22
+    T_LBRACKET  shift, and go to state 23
+    T_RANGE     shift, and go to state 24
+
+    Iterable     go to state 34
+    Const        go to state 36
+    Primary_Exp  go to state 99
+    Unary_Exp    go to state 38
+    Pow_Exp      go to state 105
+    Mul_Exp      go to state 108
+    Add_Exp      go to state 112
+    Bit_Exp      go to state 115
+
+
+State 80
+
+   71 Rel_Exp: Rel_Exp T_LE . Bit_Exp
+
+    T_FALSE     shift, and go to state 2
+    T_NONE      shift, and go to state 3
+    T_TRUE      shift, and go to state 4
+    T_NOT       shift, and go to state 9
+    T_INPUT     shift, and go to state 10
+    T_INT       shift, and go to state 12
+    T_FLOAT     shift, and go to state 13
+    T_STR       shift, and go to state 14
+    T_LEN       shift, and go to state 15
+    T_ID        shift, and go to state 49
+    T_CINT      shift, and go to state 17
+    T_CFLOAT    shift, and go to state 18
+    T_CSTR      shift, and go to state 19
+    T_ADD       shift, and go to state 20
+    T_SUB       shift, and go to state 21
+    T_RPAREN    shift, and go to state 22
+    T_LBRACKET  shift, and go to state 23
+    T_RANGE     shift, and go to state 24
+
+    Iterable     go to state 34
+    Const        go to state 36
+    Primary_Exp  go to state 99
+    Unary_Exp    go to state 38
+    Pow_Exp      go to state 105
+    Mul_Exp      go to state 108
+    Add_Exp      go to state 112
+    Bit_Exp      go to state 116
+
+
+State 81
+
+   73 Eq_Exp: Eq_Exp T_EOP . Rel_Exp
+
+    T_FALSE     shift, and go to state 2
+    T_NONE      shift, and go to state 3
+    T_TRUE      shift, and go to state 4
+    T_NOT       shift, and go to state 9
+    T_INPUT     shift, and go to state 10
+    T_INT       shift, and go to state 12
+    T_FLOAT     shift, and go to state 13
+    T_STR       shift, and go to state 14
+    T_LEN       shift, and go to state 15
+    T_ID        shift, and go to state 49
+    T_CINT      shift, and go to state 17
+    T_CFLOAT    shift, and go to state 18
+    T_CSTR      shift, and go to state 19
+    T_ADD       shift, and go to state 20
+    T_SUB       shift, and go to state 21
+    T_RPAREN    shift, and go to state 22
+    T_LBRACKET  shift, and go to state 23
+    T_RANGE     shift, and go to state 24
+
+    Iterable     go to state 34
+    Const        go to state 36
+    Primary_Exp  go to state 99
+    Unary_Exp    go to state 38
+    Pow_Exp      go to state 105
+    Mul_Exp      go to state 108
+    Add_Exp      go to state 112
+    Bit_Exp      go to state 117
+    Rel_Exp      go to state 118
+
+
+State 82
+
+   74 Eq_Exp: Eq_Exp T_NEOP . Rel_Exp
+
+    T_FALSE     shift, and go to state 2
+    T_NONE      shift, and go to state 3
+    T_TRUE      shift, and go to state 4
+    T_NOT       shift, and go to state 9
+    T_INPUT     shift, and go to state 10
+    T_INT       shift, and go to state 12
+    T_FLOAT     shift, and go to state 13
+    T_STR       shift, and go to state 14
+    T_LEN       shift, and go to state 15
+    T_ID        shift, and go to state 49
+    T_CINT      shift, and go to state 17
+    T_CFLOAT    shift, and go to state 18
+    T_CSTR      shift, and go to state 19
+    T_ADD       shift, and go to state 20
+    T_SUB       shift, and go to state 21
+    T_RPAREN    shift, and go to state 22
+    T_LBRACKET  shift, and go to state 23
+    T_RANGE     shift, and go to state 24
+
+    Iterable     go to state 34
+    Const        go to state 36
+    Primary_Exp  go to state 99
+    Unary_Exp    go to state 38
+    Pow_Exp      go to state 105
+    Mul_Exp      go to state 108
+    Add_Exp      go to state 112
+    Bit_Exp      go to state 117
+    Rel_Exp      go to state 119
+
+
+State 83
+
+   76 In_Exp: In_Exp T_IN . Eq_Exp
+
+    T_FALSE     shift, and go to state 2
+    T_NONE      shift, and go to state 3
+    T_TRUE      shift, and go to state 4
+    T_NOT       shift, and go to state 9
+    T_INPUT     shift, and go to state 10
+    T_INT       shift, and go to state 12
+    T_FLOAT     shift, and go to state 13
+    T_STR       shift, and go to state 14
+    T_LEN       shift, and go to state 15
+    T_ID        shift, and go to state 49
+    T_CINT      shift, and go to state 17
+    T_CFLOAT    shift, and go to state 18
+    T_CSTR      shift, and go to state 19
+    T_ADD       shift, and go to state 20
+    T_SUB       shift, and go to state 21
+    T_RPAREN    shift, and go to state 22
+    T_LBRACKET  shift, and go to state 23
+    T_RANGE     shift, and go to state 24
+
+    Iterable     go to state 34
+    Const        go to state 36
+    Primary_Exp  go to state 99
+    Unary_Exp    go to state 38
+    Pow_Exp      go to state 105
+    Mul_Exp      go to state 108
+    Add_Exp      go to state 112
+    Bit_Exp      go to state 117
+    Rel_Exp      go to state 120
+    Eq_Exp       go to state 121
+
+
+State 84
+
+   78 And_Exp: And_Exp T_LAND . In_Exp
+
+    T_FALSE     shift, and go to state 2
+    T_NONE      shift, and go to state 3
+    T_TRUE      shift, and go to state 4
+    T_NOT       shift, and go to state 9
+    T_INPUT     shift, and go to state 10
+    T_INT       shift, and go to state 12
+    T_FLOAT     shift, and go to state 13
+    T_STR       shift, and go to state 14
+    T_LEN       shift, and go to state 15
+    T_ID        shift, and go to state 49
+    T_CINT      shift, and go to state 17
+    T_CFLOAT    shift, and go to state 18
+    T_CSTR      shift, and go to state 19
+    T_ADD       shift, and go to state 20
+    T_SUB       shift, and go to state 21
+    T_RPAREN    shift, and go to state 22
+    T_LBRACKET  shift, and go to state 23
+    T_RANGE     shift, and go to state 24
+
+    Iterable     go to state 34
+    Const        go to state 36
+    Primary_Exp  go to state 99
+    Unary_Exp    go to state 38
+    Pow_Exp      go to state 105
+    Mul_Exp      go to state 108
+    Add_Exp      go to state 112
+    Bit_Exp      go to state 117
+    Rel_Exp      go to state 120
+    Eq_Exp       go to state 122
+    In_Exp       go to state 123
+
+
+State 85
+
+   80 Or_Exp: Or_Exp T_LOR . And_Exp
+
+    T_FALSE     shift, and go to state 2
+    T_NONE      shift, and go to state 3
+    T_TRUE      shift, and go to state 4
+    T_NOT       shift, and go to state 9
+    T_INPUT     shift, and go to state 10
+    T_INT       shift, and go to state 12
+    T_FLOAT     shift, and go to state 13
+    T_STR       shift, and go to state 14
+    T_LEN       shift, and go to state 15
+    T_ID        shift, and go to state 49
+    T_CINT      shift, and go to state 17
+    T_CFLOAT    shift, and go to state 18
+    T_CSTR      shift, and go to state 19
+    T_ADD       shift, and go to state 20
+    T_SUB       shift, and go to state 21
+    T_RPAREN    shift, and go to state 22
+    T_LBRACKET  shift, and go to state 23
+    T_RANGE     shift, and go to state 24
+
+    Iterable     go to state 34
+    Const        go to state 36
+    Primary_Exp  go to state 99
+    Unary_Exp    go to state 38
+    Pow_Exp      go to state 105
+    Mul_Exp      go to state 108
+    Add_Exp      go to state 112
+    Bit_Exp      go to state 117
+    Rel_Exp      go to state 120
+    Eq_Exp       go to state 122
+    In_Exp       go to state 124
+    And_Exp      go to state 125
+
+
+State 86
+
+   21 For_stmt: T_FOR T_ID T_IN . Iterable T_COLON T_INDENT Translation_unit
+
+    T_LBRACKET  shift, and go to state 23
+    T_RANGE     shift, and go to state 24
+
+    Iterable  go to state 126
+
+
+State 87
+
+   18 If_stmt: T_IF Exp T_COLON . T_INDENT Stmt Else_stmt
+
+    T_INDENT  shift, and go to state 127
+
+
+State 88
+
+   40 Const: T_INPUT T_LPAREN T_RPAREN .
+
+    $default  reduce using rule 40 (Const)
+
+
+State 89
+
+   15 Print_stmt: T_PRINT T_LPAREN Param_list . T_RPAREN
+   16 Param_list: Param_list . T_COMMA Exp
+
+    T_COMMA   shift, and go to state 96
+    T_RPAREN  shift, and go to state 128
+
+
+State 90
+
+   46 Primary_Exp: T_INT T_LPAREN Exp . T_RPAREN
+
+    T_RPAREN  shift, and go to state 129
+
+
+State 91
+
+   47 Primary_Exp: T_FLOAT T_LPAREN Exp . T_RPAREN
+
+    T_RPAREN  shift, and go to state 130
+
+
+State 92
+
+   48 Primary_Exp: T_STR T_LPAREN Exp . T_RPAREN
+
+    T_RPAREN  shift, and go to state 131
+
+
+State 93
+
+   45 Primary_Exp: T_LEN T_LPAREN Iterable . T_RPAREN
+
+    T_RPAREN  shift, and go to state 132
+
+
+State 94
+
+    6 Assignment_stmt: T_ID T_ASOP Exp .
+
+    $default  reduce using rule 6 (Assignment_stmt)
+
+
+State 95
+
+   43 Primary_Exp: T_RPAREN Exp T_LPAREN .
+
+    $default  reduce using rule 43 (Primary_Exp)
+
+
+State 96
+
+   16 Param_list: Param_list T_COMMA . Exp
+
+    T_FALSE     shift, and go to state 2
+    T_NONE      shift, and go to state 3
+    T_TRUE      shift, and go to state 4
+    T_NOT       shift, and go to state 9
+    T_INPUT     shift, and go to state 10
+    T_INT       shift, and go to state 12
+    T_FLOAT     shift, and go to state 13
+    T_STR       shift, and go to state 14
+    T_LEN       shift, and go to state 15
+    T_ID        shift, and go to state 49
+    T_CINT      shift, and go to state 17
+    T_CFLOAT    shift, and go to state 18
+    T_CSTR      shift, and go to state 19
+    T_ADD       shift, and go to state 20
+    T_SUB       shift, and go to state 21
+    T_RPAREN    shift, and go to state 22
+    T_LBRACKET  shift, and go to state 23
+    T_RANGE     shift, and go to state 24
+
+    Iterable     go to state 34
+    Exp          go to state 133
+    Const        go to state 36
+    Primary_Exp  go to state 37
+    Unary_Exp    go to state 38
+    Pow_Exp      go to state 39
+    Mul_Exp      go to state 40
+    Add_Exp      go to state 41
+    Bit_Exp      go to state 42
+    Rel_Exp      go to state 43
+    Eq_Exp       go to state 44
+    In_Exp       go to state 45
+    And_Exp      go to state 46
+    Or_Exp       go to state 47
+
+
+State 97
+
+   22 Iterable: T_LBRACKET Param_list T_RBRACKET .
+
+    $default  reduce using rule 22 (Iterable)
+
+
+State 98
+
+   16 Param_list: Param_list . T_COMMA Exp
+   23 Iterable: T_RANGE T_LPAREN Param_list . T_RPAREN
+
+    T_COMMA   shift, and go to state 96
+    T_RPAREN  shift, and go to state 134
+
+
+State 99
+
+   52 Unary_Exp: Primary_Exp .
+
+    $default  reduce using rule 52 (Unary_Exp)
+
+
+State 100
+
+   54 Pow_Exp: Pow_Exp T_EPOP Unary_Exp .
+
+    $default  reduce using rule 54 (Pow_Exp)
+
+
+State 101
+
+   54 Pow_Exp: Pow_Exp . T_EPOP Unary_Exp
+   56 Mul_Exp: Mul_Exp T_MUL Pow_Exp .
+
+    T_EPOP  shift, and go to state 67
+
+    $default  reduce using rule 56 (Mul_Exp)
+
+
+State 102
+
+   54 Pow_Exp: Pow_Exp . T_EPOP Unary_Exp
+   57 Mul_Exp: Mul_Exp T_DIV Pow_Exp .
+
+    T_EPOP  shift, and go to state 67
+
+    $default  reduce using rule 57 (Mul_Exp)
+
+
+State 103
+
+   54 Pow_Exp: Pow_Exp . T_EPOP Unary_Exp
+   58 Mul_Exp: Mul_Exp T_FDIV Pow_Exp .
+
+    T_EPOP  shift, and go to state 67
+
+    $default  reduce using rule 58 (Mul_Exp)
+
+
+State 104
+
+   54 Pow_Exp: Pow_Exp . T_EPOP Unary_Exp
+   59 Mul_Exp: Mul_Exp T_MOD Pow_Exp .
+
+    T_EPOP  shift, and go to state 67
+
+    $default  reduce using rule 59 (Mul_Exp)
+
+
+State 105
+
+   54 Pow_Exp: Pow_Exp . T_EPOP Unary_Exp
+   55 Mul_Exp: Pow_Exp .
+
+    T_EPOP  shift, and go to state 67
+
+    $default  reduce using rule 55 (Mul_Exp)
+
+
+State 106
+
+   56 Mul_Exp: Mul_Exp . T_MUL Pow_Exp
+   57        | Mul_Exp . T_DIV Pow_Exp
+   58        | Mul_Exp . T_FDIV Pow_Exp
+   59        | Mul_Exp . T_MOD Pow_Exp
+   61 Add_Exp: Add_Exp T_ADD Mul_Exp .
+
+    T_MUL   shift, and go to state 68
+    T_DIV   shift, and go to state 69
+    T_FDIV  shift, and go to state 70
+    T_MOD   shift, and go to state 71
+
+    $default  reduce using rule 61 (Add_Exp)
+
+
+State 107
+
+   56 Mul_Exp: Mul_Exp . T_MUL Pow_Exp
+   57        | Mul_Exp . T_DIV Pow_Exp
+   58        | Mul_Exp . T_FDIV Pow_Exp
+   59        | Mul_Exp . T_MOD Pow_Exp
+   62 Add_Exp: Add_Exp T_SUB Mul_Exp .
+
+    T_MUL   shift, and go to state 68
+    T_DIV   shift, and go to state 69
+    T_FDIV  shift, and go to state 70
+    T_MOD   shift, and go to state 71
+
+    $default  reduce using rule 62 (Add_Exp)
+
+
+State 108
+
+   56 Mul_Exp: Mul_Exp . T_MUL Pow_Exp
+   57        | Mul_Exp . T_DIV Pow_Exp
+   58        | Mul_Exp . T_FDIV Pow_Exp
+   59        | Mul_Exp . T_MOD Pow_Exp
+   60 Add_Exp: Mul_Exp .
+
+    T_MUL   shift, and go to state 68
+    T_DIV   shift, and go to state 69
+    T_FDIV  shift, and go to state 70
+    T_MOD   shift, and go to state 71
+
+    $default  reduce using rule 60 (Add_Exp)
+
+
+State 109
+
+   61 Add_Exp: Add_Exp . T_ADD Mul_Exp
+   62        | Add_Exp . T_SUB Mul_Exp
+   64 Bit_Exp: Bit_Exp T_XOR Add_Exp .
+
+    T_ADD  shift, and go to state 72
+    T_SUB  shift, and go to state 73
+
+    T_ADD     [reduce using rule 64 (Bit_Exp)]
+    T_SUB     [reduce using rule 64 (Bit_Exp)]
+    $default  reduce using rule 64 (Bit_Exp)
+
+
+State 110
+
+   61 Add_Exp: Add_Exp . T_ADD Mul_Exp
+   62        | Add_Exp . T_SUB Mul_Exp
+   65 Bit_Exp: Bit_Exp T_BAND Add_Exp .
+
+    T_ADD  shift, and go to state 72
+    T_SUB  shift, and go to state 73
+
+    T_ADD     [reduce using rule 65 (Bit_Exp)]
+    T_SUB     [reduce using rule 65 (Bit_Exp)]
+    $default  reduce using rule 65 (Bit_Exp)
+
+
+State 111
+
+   61 Add_Exp: Add_Exp . T_ADD Mul_Exp
+   62        | Add_Exp . T_SUB Mul_Exp
+   66 Bit_Exp: Bit_Exp T_BOR Add_Exp .
+
+    T_ADD  shift, and go to state 72
+    T_SUB  shift, and go to state 73
+
+    T_ADD     [reduce using rule 66 (Bit_Exp)]
+    T_SUB     [reduce using rule 66 (Bit_Exp)]
+    $default  reduce using rule 66 (Bit_Exp)
+
+
+State 112
+
+   61 Add_Exp: Add_Exp . T_ADD Mul_Exp
+   62        | Add_Exp . T_SUB Mul_Exp
+   63 Bit_Exp: Add_Exp .
+
+    T_ADD  shift, and go to state 72
+    T_SUB  shift, and go to state 73
+
+    T_ADD     [reduce using rule 63 (Bit_Exp)]
+    T_SUB     [reduce using rule 63 (Bit_Exp)]
+    $default  reduce using rule 63 (Bit_Exp)
+
+
+State 113
+
+   64 Bit_Exp: Bit_Exp . T_XOR Add_Exp
+   65        | Bit_Exp . T_BAND Add_Exp
+   66        | Bit_Exp . T_BOR Add_Exp
+   68 Rel_Exp: Rel_Exp T_G Bit_Exp .
+
+    T_XOR   shift, and go to state 74
+    T_BAND  shift, and go to state 75
+    T_BOR   shift, and go to state 76
+
+    $default  reduce using rule 68 (Rel_Exp)
+
+
+State 114
+
+   64 Bit_Exp: Bit_Exp . T_XOR Add_Exp
+   65        | Bit_Exp . T_BAND Add_Exp
+   66        | Bit_Exp . T_BOR Add_Exp
+   70 Rel_Exp: Rel_Exp T_L Bit_Exp .
+
+    T_XOR   shift, and go to state 74
+    T_BAND  shift, and go to state 75
+    T_BOR   shift, and go to state 76
+
+    $default  reduce using rule 70 (Rel_Exp)
+
+
+State 115
+
+   64 Bit_Exp: Bit_Exp . T_XOR Add_Exp
+   65        | Bit_Exp . T_BAND Add_Exp
+   66        | Bit_Exp . T_BOR Add_Exp
+   69 Rel_Exp: Rel_Exp T_GE Bit_Exp .
+
+    T_XOR   shift, and go to state 74
+    T_BAND  shift, and go to state 75
+    T_BOR   shift, and go to state 76
+
+    $default  reduce using rule 69 (Rel_Exp)
+
+
+State 116
+
+   64 Bit_Exp: Bit_Exp . T_XOR Add_Exp
+   65        | Bit_Exp . T_BAND Add_Exp
+   66        | Bit_Exp . T_BOR Add_Exp
+   71 Rel_Exp: Rel_Exp T_LE Bit_Exp .
+
+    T_XOR   shift, and go to state 74
+    T_BAND  shift, and go to state 75
+    T_BOR   shift, and go to state 76
+
+    $default  reduce using rule 71 (Rel_Exp)
+
+
+State 117
+
+   64 Bit_Exp: Bit_Exp . T_XOR Add_Exp
+   65        | Bit_Exp . T_BAND Add_Exp
+   66        | Bit_Exp . T_BOR Add_Exp
+   67 Rel_Exp: Bit_Exp .
+
+    T_XOR   shift, and go to state 74
+    T_BAND  shift, and go to state 75
+    T_BOR   shift, and go to state 76
+
+    $default  reduce using rule 67 (Rel_Exp)
+
+
+State 118
+
+   68 Rel_Exp: Rel_Exp . T_G Bit_Exp
+   69        | Rel_Exp . T_GE Bit_Exp
+   70        | Rel_Exp . T_L Bit_Exp
+   71        | Rel_Exp . T_LE Bit_Exp
+   73 Eq_Exp: Eq_Exp T_EOP Rel_Exp .
+
+    T_G   shift, and go to state 77
+    T_L   shift, and go to state 78
+    T_GE  shift, and go to state 79
+    T_LE  shift, and go to state 80
+
+    $default  reduce using rule 73 (Eq_Exp)
+
+
+State 119
+
+   68 Rel_Exp: Rel_Exp . T_G Bit_Exp
+   69        | Rel_Exp . T_GE Bit_Exp
+   70        | Rel_Exp . T_L Bit_Exp
+   71        | Rel_Exp . T_LE Bit_Exp
+   74 Eq_Exp: Eq_Exp T_NEOP Rel_Exp .
+
+    T_G   shift, and go to state 77
+    T_L   shift, and go to state 78
+    T_GE  shift, and go to state 79
+    T_LE  shift, and go to state 80
+
+    $default  reduce using rule 74 (Eq_Exp)
+
+
+State 120
+
+   68 Rel_Exp: Rel_Exp . T_G Bit_Exp
+   69        | Rel_Exp . T_GE Bit_Exp
+   70        | Rel_Exp . T_L Bit_Exp
+   71        | Rel_Exp . T_LE Bit_Exp
+   72 Eq_Exp: Rel_Exp .
+
+    T_G   shift, and go to state 77
+    T_L   shift, and go to state 78
+    T_GE  shift, and go to state 79
+    T_LE  shift, and go to state 80
+
+    $default  reduce using rule 72 (Eq_Exp)
+
+
+State 121
+
+   73 Eq_Exp: Eq_Exp . T_EOP Rel_Exp
+   74       | Eq_Exp . T_NEOP Rel_Exp
+   76 In_Exp: In_Exp T_IN Eq_Exp .
+
+    T_EOP   shift, and go to state 81
+    T_NEOP  shift, and go to state 82
+
+    $default  reduce using rule 76 (In_Exp)
+
+
+State 122
+
+   73 Eq_Exp: Eq_Exp . T_EOP Rel_Exp
+   74       | Eq_Exp . T_NEOP Rel_Exp
+   75 In_Exp: Eq_Exp .
+
+    T_EOP   shift, and go to state 81
+    T_NEOP  shift, and go to state 82
+
+    $default  reduce using rule 75 (In_Exp)
+
+
+State 123
+
+   76 In_Exp: In_Exp . T_IN Eq_Exp
+   78 And_Exp: And_Exp T_LAND In_Exp .
+
+    T_IN  shift, and go to state 83
+
+    $default  reduce using rule 78 (And_Exp)
+
+
+State 124
+
+   76 In_Exp: In_Exp . T_IN Eq_Exp
+   77 And_Exp: In_Exp .
+
+    T_IN  shift, and go to state 83
+
+    $default  reduce using rule 77 (And_Exp)
+
+
+State 125
+
+   78 And_Exp: And_Exp . T_LAND In_Exp
+   80 Or_Exp: Or_Exp T_LOR And_Exp .
+
+    T_LAND  shift, and go to state 84
+
+    $default  reduce using rule 80 (Or_Exp)
+
+
+State 126
+
+   21 For_stmt: T_FOR T_ID T_IN Iterable . T_COLON T_INDENT Translation_unit
+
+    T_COLON  shift, and go to state 135
+
+
+State 127
+
+   18 If_stmt: T_IF Exp T_COLON T_INDENT . Stmt Else_stmt
+
+    error       shift, and go to state 1
+    T_FALSE     shift, and go to state 2
+    T_NONE      shift, and go to state 3
+    T_TRUE      shift, and go to state 4
+    T_BREAK     shift, and go to state 5
+    T_CONTINUE  shift, and go to state 6
+    T_FOR       shift, and go to state 7
+    T_IF        shift, and go to state 8
+    T_NOT       shift, and go to state 9
+    T_INPUT     shift, and go to state 10
+    T_PRINT     shift, and go to state 11
+    T_INT       shift, and go to state 12
+    T_FLOAT     shift, and go to state 13
+    T_STR       shift, and go to state 14
+    T_LEN       shift, and go to state 15
+    T_ID        shift, and go to state 16
+    T_CINT      shift, and go to state 17
+    T_CFLOAT    shift, and go to state 18
+    T_CSTR      shift, and go to state 19
+    T_ADD       shift, and go to state 20
+    T_SUB       shift, and go to state 21
+    T_RPAREN    shift, and go to state 22
+    T_LBRACKET  shift, and go to state 23
+    T_RANGE     shift, and go to state 24
+
+    Stmt             go to state 136
+    Assignment_stmt  go to state 27
+    Simple_stmt      go to state 28
+    Compound_stmt    go to state 29
+    Jump_stmt        go to state 30
+    Print_stmt       go to state 31
+    If_stmt          go to state 32
+    For_stmt         go to state 33
+    Iterable         go to state 34
+    Exp              go to state 35
+    Const            go to state 36
+    Primary_Exp      go to state 37
+    Unary_Exp        go to state 38
+    Pow_Exp          go to state 39
+    Mul_Exp          go to state 40
+    Add_Exp          go to state 41
+    Bit_Exp          go to state 42
+    Rel_Exp          go to state 43
+    Eq_Exp           go to state 44
+    In_Exp           go to state 45
+    And_Exp          go to state 46
+    Or_Exp           go to state 47
+
+
+State 128
+
+   15 Print_stmt: T_PRINT T_LPAREN Param_list T_RPAREN .
+
+    $default  reduce using rule 15 (Print_stmt)
+
+
+State 129
+
+   46 Primary_Exp: T_INT T_LPAREN Exp T_RPAREN .
+
+    $default  reduce using rule 46 (Primary_Exp)
+
+
+State 130
+
+   47 Primary_Exp: T_FLOAT T_LPAREN Exp T_RPAREN .
+
+    $default  reduce using rule 47 (Primary_Exp)
+
+
+State 131
+
+   48 Primary_Exp: T_STR T_LPAREN Exp T_RPAREN .
+
+    $default  reduce using rule 48 (Primary_Exp)
+
+
+State 132
+
+   45 Primary_Exp: T_LEN T_LPAREN Iterable T_RPAREN .
+
+    $default  reduce using rule 45 (Primary_Exp)
+
+
+State 133
+
+   16 Param_list: Param_list T_COMMA Exp .
+
+    $default  reduce using rule 16 (Param_list)
+
+
+State 134
+
+   23 Iterable: T_RANGE T_LPAREN Param_list T_RPAREN .
+
+    $default  reduce using rule 23 (Iterable)
+
+
+State 135
+
+   21 For_stmt: T_FOR T_ID T_IN Iterable T_COLON . T_INDENT Translation_unit
+
+    T_INDENT  shift, and go to state 137
+
+
+State 136
+
+   18 If_stmt: T_IF Exp T_COLON T_INDENT Stmt . Else_stmt
+
+    T_ELSE  shift, and go to state 138
+
+    T_ELSE    [reduce using rule 20 (Else_stmt)]
+    $default  reduce using rule 20 (Else_stmt)
+
+    Else_stmt  go to state 139
+
+
+State 137
+
+   21 For_stmt: T_FOR T_ID T_IN Iterable T_COLON T_INDENT . Translation_unit
+
+    error       shift, and go to state 1
+    T_FALSE     shift, and go to state 2
+    T_NONE      shift, and go to state 3
+    T_TRUE      shift, and go to state 4
+    T_BREAK     shift, and go to state 5
+    T_CONTINUE  shift, and go to state 6
+    T_FOR       shift, and go to state 7
+    T_IF        shift, and go to state 8
+    T_NOT       shift, and go to state 9
+    T_INPUT     shift, and go to state 10
+    T_PRINT     shift, and go to state 11
+    T_INT       shift, and go to state 12
+    T_FLOAT     shift, and go to state 13
+    T_STR       shift, and go to state 14
+    T_LEN       shift, and go to state 15
+    T_ID        shift, and go to state 16
+    T_CINT      shift, and go to state 17
+    T_CFLOAT    shift, and go to state 18
+    T_CSTR      shift, and go to state 19
+    T_ADD       shift, and go to state 20
+    T_SUB       shift, and go to state 21
+    T_RPAREN    shift, and go to state 22
+    T_LBRACKET  shift, and go to state 23
+    T_RANGE     shift, and go to state 24
+
+    $end        reduce using rule 2 (Translation_unit)
+    error       [reduce using rule 2 (Translation_unit)]
+    T_FALSE     [reduce using rule 2 (Translation_unit)]
+    T_NONE      [reduce using rule 2 (Translation_unit)]
+    T_TRUE      [reduce using rule 2 (Translation_unit)]
+    T_BREAK     [reduce using rule 2 (Translation_unit)]
+    T_CONTINUE  [reduce using rule 2 (Translation_unit)]
+    T_ELSE      reduce using rule 2 (Translation_unit)
+    T_FOR       [reduce using rule 2 (Translation_unit)]
+    T_IF        [reduce using rule 2 (Translation_unit)]
+    T_NOT       [reduce using rule 2 (Translation_unit)]
+    T_INPUT     [reduce using rule 2 (Translation_unit)]
+    T_PRINT     [reduce using rule 2 (Translation_unit)]
+    T_INT       [reduce using rule 2 (Translation_unit)]
+    T_FLOAT     [reduce using rule 2 (Translation_unit)]
+    T_STR       [reduce using rule 2 (Translation_unit)]
+    T_LEN       [reduce using rule 2 (Translation_unit)]
+    T_ID        [reduce using rule 2 (Translation_unit)]
+    T_CINT      [reduce using rule 2 (Translation_unit)]
+    T_CFLOAT    [reduce using rule 2 (Translation_unit)]
+    T_CSTR      [reduce using rule 2 (Translation_unit)]
+    T_ADD       [reduce using rule 2 (Translation_unit)]
+    T_SUB       [reduce using rule 2 (Translation_unit)]
+    T_RPAREN    [reduce using rule 2 (Translation_unit)]
+    T_LBRACKET  [reduce using rule 2 (Translation_unit)]
+    T_RANGE     [reduce using rule 2 (Translation_unit)]
+
+    Translation_unit  go to state 140
+    Stmt              go to state 26
+    Assignment_stmt   go to state 27
+    Simple_stmt       go to state 28
+    Compound_stmt     go to state 29
+    Jump_stmt         go to state 30
+    Print_stmt        go to state 31
+    If_stmt           go to state 32
+    For_stmt          go to state 33
+    Iterable          go to state 34
+    Exp               go to state 35
+    Const             go to state 36
+    Primary_Exp       go to state 37
+    Unary_Exp         go to state 38
+    Pow_Exp           go to state 39
+    Mul_Exp           go to state 40
+    Add_Exp           go to state 41
+    Bit_Exp           go to state 42
+    Rel_Exp           go to state 43
+    Eq_Exp            go to state 44
+    In_Exp            go to state 45
+    And_Exp           go to state 46
+    Or_Exp            go to state 47
+
+
+State 138
+
+   19 Else_stmt: T_ELSE . T_COLON T_INDENT Stmt
+
+    T_COLON  shift, and go to state 141
+
+
+State 139
+
+   18 If_stmt: T_IF Exp T_COLON T_INDENT Stmt Else_stmt .
+
+    $default  reduce using rule 18 (If_stmt)
+
+
+State 140
+
+   21 For_stmt: T_FOR T_ID T_IN Iterable T_COLON T_INDENT Translation_unit .
+
+    $default  reduce using rule 21 (For_stmt)
+
+
+State 141
+
+   19 Else_stmt: T_ELSE T_COLON . T_INDENT Stmt
+
+    T_INDENT  shift, and go to state 142
+
+
+State 142
+
+   19 Else_stmt: T_ELSE T_COLON T_INDENT . Stmt
+
+    error       shift, and go to state 1
+    T_FALSE     shift, and go to state 2
+    T_NONE      shift, and go to state 3
+    T_TRUE      shift, and go to state 4
+    T_BREAK     shift, and go to state 5
+    T_CONTINUE  shift, and go to state 6
+    T_FOR       shift, and go to state 7
+    T_IF        shift, and go to state 8
+    T_NOT       shift, and go to state 9
+    T_INPUT     shift, and go to state 10
+    T_PRINT     shift, and go to state 11
+    T_INT       shift, and go to state 12
+    T_FLOAT     shift, and go to state 13
+    T_STR       shift, and go to state 14
+    T_LEN       shift, and go to state 15
+    T_ID        shift, and go to state 16
+    T_CINT      shift, and go to state 17
+    T_CFLOAT    shift, and go to state 18
+    T_CSTR      shift, and go to state 19
+    T_ADD       shift, and go to state 20
+    T_SUB       shift, and go to state 21
+    T_RPAREN    shift, and go to state 22
+    T_LBRACKET  shift, and go to state 23
+    T_RANGE     shift, and go to state 24
+
+    Stmt             go to state 143
+    Assignment_stmt  go to state 27
+    Simple_stmt      go to state 28
+    Compound_stmt    go to state 29
+    Jump_stmt        go to state 30
+    Print_stmt       go to state 31
+    If_stmt          go to state 32
+    For_stmt         go to state 33
+    Iterable         go to state 34
+    Exp              go to state 35
+    Const            go to state 36
+    Primary_Exp      go to state 37
+    Unary_Exp        go to state 38
+    Pow_Exp          go to state 39
+    Mul_Exp          go to state 40
+    Add_Exp          go to state 41
+    Bit_Exp          go to state 42
+    Rel_Exp          go to state 43
+    Eq_Exp           go to state 44
+    In_Exp           go to state 45
+    And_Exp          go to state 46
+    Or_Exp           go to state 47
+
+
+State 143
+
+   19 Else_stmt: T_ELSE T_COLON T_INDENT Stmt .
+
+    $default  reduce using rule 19 (Else_stmt)

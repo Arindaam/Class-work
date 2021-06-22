@@ -1,0 +1,12 @@
+a=2
+b=3.0
+c=4-5+a+b
+if a==b:
+	a=b or c > True
+	e=2
+elif True:
+	a=2
+else:
+	a=5
+while True:
+	a=2

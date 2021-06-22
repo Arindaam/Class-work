@@ -1,0 +1,11 @@
+a=2
+b=a-2
+c=4-5+a-2
+if a==b:
+	e= 1 or 0 > True
+elif True:
+	a=2
+else:
+	a=5
+while True:
+	a=2

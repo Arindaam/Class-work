@@ -1,0 +1,5 @@
+#Common sub-expression elimination
+a=2
+b=3
+c=a+b
+d=a+a+b

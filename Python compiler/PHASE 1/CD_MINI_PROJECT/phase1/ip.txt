@@ -1,0 +1,21 @@
+a=9
+bdvs=88
+a=18
+z=True
+#1z=9
+a12=9
+print("hello")
+print    ("Hello")
+
+##comment
+
+for i in range(10):
+	print(i)
+
+for j in range(20):
+	break
+
+if a12==9:
+	print(x, y)	
+else:
+	print("NO")

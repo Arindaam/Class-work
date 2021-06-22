@@ -1,0 +1,23 @@
+#Simple If-elseif structure
+if True:
+	a=2
+elif False:
+	print("Baba")
+else:
+	print("hell")
+	a=2
+xyz="Hi"==2
+print("Hia")
+while True:
+	a=2
+#HII
+'''ghghg
+'''
+Z=2.5
+b=2
+e="abdc"
+c="cd"+"ab"
+y=b+Z
+def hibro(a,b,c):
+	x=2
+hibro(a,b,c)

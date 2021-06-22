@@ -1,0 +1,2128 @@
+State 21 conflicts: 9 reduce/reduce
+State 34 conflicts: 1 shift/reduce
+State 113 conflicts: 2 shift/reduce
+State 128 conflicts: 2 shift/reduce
+State 129 conflicts: 12 shift/reduce
+State 148 conflicts: 2 shift/reduce
+State 152 conflicts: 10 shift/reduce
+State 153 conflicts: 2 shift/reduce
+State 156 conflicts: 12 shift/reduce
+
+
+Grammar
+
+    0 $accept: StartDebugger $end
+
+    1 $@1: %empty
+
+    2 StartDebugger: $@1 StartParse
+
+    3 constant: T_Number
+    4         | T_String
+
+    5 term: T_ID
+    6     | constant
+
+    7 $@2: %empty
+
+    8 StartParse: $@2 finalStatements StartParse
+    9           | T_EndOfFile
+
+   10 Expressions: arith_exp
+   11            | bool_exp
+
+   12 basic_stmt: break_stmt
+   13           | import_stmt
+   14           | assign_stmt
+   15           | Expressions
+   16           | print_stmt
+
+   17 $@3: %empty
+
+   18 arith_exp: term $@3 arith_OP
+   19          | T_OP arith_exp T_CP
+
+   20 $@4: %empty
+
+   21 arith_OP: T_Arop $@4 arith_exp
+   22         | %empty
+
+   23 $@5: %empty
+
+   24 bool_exp: T_Binary $@5 bool_OP
+
+   25 $@6: %empty
+
+   26 bool_exp: T_Not $@6 bool_exp
+   27         | T_OP bool_exp T_CP
+   28         | arith_exp bool_OP
+
+   29 $@7: %empty
+
+   30 bool_OP: T_andor $@7 bool_exp
+
+   31 $@8: %empty
+
+   32 bool_OP: T_eq $@8 bool_exp
+
+   33 $@9: %empty
+
+   34 bool_OP: T_Relop $@9 bool_exp
+   35        | %empty
+
+   36 import_stmt: T_Import T_ID
+
+   37 break_stmt: T_Break
+
+   38 $@10: %empty
+
+   39 $@11: %empty
+
+   40 assign_stmt: T_ID $@10 T_EQL $@11 RHS
+
+   41 RHS: Expressions
+   42    | func_call
+
+   43 print_stmt: T_Print T_OP Recur T_CP
+
+   44 finalStatements: basic_stmt T_NL
+
+   45 $@12: %empty
+
+   46 finalStatements: $@12 cmpd_stmt
+   47                | func_def
+   48                | func_call
+
+   49 Recur: Expressions Recur
+   50      | T_Comma Expressions Recur
+   51      | %empty
+
+   52 cmpd_stmt: if_stmt
+   53          | while_stmt
+
+   54 $@13: %empty
+
+   55 $@14: %empty
+
+   56 $@15: %empty
+
+   57 if_stmt: T_If $@13 bool_exp $@14 T_Cln T_NL T_id final suite $@15 elif_stmts
+
+   58 $@16: %empty
+
+   59 $@17: %empty
+
+   60 $@18: %empty
+
+   61 elif_stmts: T_Elif $@16 bool_exp $@17 T_Cln T_NL T_id final suite $@18 elif_stmts
+
+   62 $@19: %empty
+
+   63 $@20: %empty
+
+   64 elif_stmts: T_Else $@19 T_Cln T_NL T_id final suite $@20 try
+   65           | try
+
+   66 try: final
+   67    | %empty
+
+   68 final: basic_stmt T_NL
+   69      | if_stmt
+   70      | func_call
+
+   71 suite: T_ND final suite
+   72      | T_DD
+   73      | %empty
+
+   74 $@21: %empty
+
+   75 $@22: %empty
+
+   76 while_stmt: T_While $@21 bool_exp $@22 T_Cln T_NL T_id new nsuite
+
+   77 new: basic_stmt T_NL
+   78    | func_call
+
+   79 nsuite: T_ND new nsuite
+   80       | T_DD
+   81       | %empty
+
+   82 $@23: %empty
+
+   83 args_list: T_ID $@23 T_Comma args_list
+   84          | T_ID
+   85          | %empty
+
+   86 $@24: %empty
+
+   87 $@25: %empty
+
+   88 $@26: %empty
+
+   89 func_def: T_Def $@24 T_ID $@25 T_OP args_list $@26 T_CP T_Cln T_NL T_id new nsuite
+
+   90 $@27: %empty
+
+   91 $@28: %empty
+
+   92 func_call: T_ID $@27 T_OP args_list $@28 T_CP T_NL
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    error (256)
+    T_Import (258) 36
+    T_Print (259) 43
+    T_If (260) 57
+    T_While (261) 76
+    T_Break (262) 37
+    T_Else (263) 64
+    T_Cln (264) 57 61 64 76 89
+    T_Relop (265) 34
+    T_Arop (266) 21
+    T_OP (267) 19 27 43 89 92
+    T_CP (268) 19 27 43 89 92
+    T_Comma (269) 50 83
+    T_EQL (270) 40
+    T_Number (271) 3
+    T_ID (272) 5 36 40 83 84 89 92
+    T_String (273) 4
+    T_andor (274) 30
+    T_Binary (275) 24
+    T_Def (276) 89
+    T_Elif (277) 61
+    T_eq (278) 32
+    T_NL (279) 44 57 61 64 68 76 77 89 92
+    T_Not (280) 26
+    T_ND (281) 71 79
+    T_DD (282) 72 80
+    T_id (283) 57 61 64 76 89
+    T_EndOfFile (284) 9
+
+
+Nonterminals, with rules where they appear
+
+    $accept (30)
+        on left: 0
+    StartDebugger (31)
+        on left: 2
+        on right: 0
+    $@1 (32)
+        on left: 1
+        on right: 2
+    constant (33)
+        on left: 3 4
+        on right: 6
+    term (34)
+        on left: 5 6
+        on right: 18
+    StartParse (35)
+        on left: 8 9
+        on right: 2 8
+    $@2 (36)
+        on left: 7
+        on right: 8
+    Expressions (37)
+        on left: 10 11
+        on right: 15 41 49 50
+    basic_stmt (38)
+        on left: 12 13 14 15 16
+        on right: 44 68 77
+    arith_exp (39)
+        on left: 18 19
+        on right: 10 19 21 28
+    $@3 (40)
+        on left: 17
+        on right: 18
+    arith_OP (41)
+        on left: 21 22
+        on right: 18
+    $@4 (42)
+        on left: 20
+        on right: 21
+    bool_exp (43)
+        on left: 24 26 27 28
+        on right: 11 26 27 30 32 34 57 61 76
+    $@5 (44)
+        on left: 23
+        on right: 24
+    $@6 (45)
+        on left: 25
+        on right: 26
+    bool_OP (46)
+        on left: 30 32 34 35
+        on right: 24 28
+    $@7 (47)
+        on left: 29
+        on right: 30
+    $@8 (48)
+        on left: 31
+        on right: 32
+    $@9 (49)
+        on left: 33
+        on right: 34
+    import_stmt (50)
+        on left: 36
+        on right: 13
+    break_stmt (51)
+        on left: 37
+        on right: 12
+    assign_stmt (52)
+        on left: 40
+        on right: 14
+    $@10 (53)
+        on left: 38
+        on right: 40
+    $@11 (54)
+        on left: 39
+        on right: 40
+    RHS (55)
+        on left: 41 42
+        on right: 40
+    print_stmt (56)
+        on left: 43
+        on right: 16
+    finalStatements (57)
+        on left: 44 46 47 48
+        on right: 8
+    $@12 (58)
+        on left: 45
+        on right: 46
+    Recur (59)
+        on left: 49 50 51
+        on right: 43 49 50
+    cmpd_stmt (60)
+        on left: 52 53
+        on right: 46
+    if_stmt (61)
+        on left: 57
+        on right: 52 69
+    $@13 (62)
+        on left: 54
+        on right: 57
+    $@14 (63)
+        on left: 55
+        on right: 57
+    $@15 (64)
+        on left: 56
+        on right: 57
+    elif_stmts (65)
+        on left: 61 64 65
+        on right: 57 61
+    $@16 (66)
+        on left: 58
+        on right: 61
+    $@17 (67)
+        on left: 59
+        on right: 61
+    $@18 (68)
+        on left: 60
+        on right: 61
+    $@19 (69)
+        on left: 62
+        on right: 64
+    $@20 (70)
+        on left: 63
+        on right: 64
+    try (71)
+        on left: 66 67
+        on right: 64 65
+    final (72)
+        on left: 68 69 70
+        on right: 57 61 64 66 71
+    suite (73)
+        on left: 71 72 73
+        on right: 57 61 64 71
+    while_stmt (74)
+        on left: 76
+        on right: 53
+    $@21 (75)
+        on left: 74
+        on right: 76
+    $@22 (76)
+        on left: 75
+        on right: 76
+    new (77)
+        on left: 77 78
+        on right: 76 79 89
+    nsuite (78)
+        on left: 79 80 81
+        on right: 76 79 89
+    args_list (79)
+        on left: 83 84 85
+        on right: 83 89 92
+    $@23 (80)
+        on left: 82
+        on right: 83
+    func_def (81)
+        on left: 89
+        on right: 47
+    $@24 (82)
+        on left: 86
+        on right: 89
+    $@25 (83)
+        on left: 87
+        on right: 89
+    $@26 (84)
+        on left: 88
+        on right: 89
+    func_call (85)
+        on left: 92
+        on right: 42 48 70 78
+    $@27 (86)
+        on left: 90
+        on right: 92
+    $@28 (87)
+        on left: 91
+        on right: 92
+
+
+State 0
+
+    0 $accept: • StartDebugger $end
+
+    $default  reduce using rule 1 ($@1)
+
+    StartDebugger  go to state 1
+    $@1            go to state 2
+
+
+State 1
+
+    0 $accept: StartDebugger • $end
+
+    $end  shift, and go to state 3
+
+
+State 2
+
+    2 StartDebugger: $@1 • StartParse
+
+    T_EndOfFile  shift, and go to state 4
+
+    $default  reduce using rule 7 ($@2)
+
+    StartParse  go to state 5
+    $@2         go to state 6
+
+
+State 3
+
+    0 $accept: StartDebugger $end •
+
+    $default  accept
+
+
+State 4
+
+    9 StartParse: T_EndOfFile •
+
+    $default  reduce using rule 9 (StartParse)
+
+
+State 5
+
+    2 StartDebugger: $@1 StartParse •
+
+    $default  reduce using rule 2 (StartDebugger)
+
+
+State 6
+
+    8 StartParse: $@2 • finalStatements StartParse
+
+    T_Import  shift, and go to state 7
+    T_Print   shift, and go to state 8
+    T_Break   shift, and go to state 9
+    T_OP      shift, and go to state 10
+    T_Number  shift, and go to state 11
+    T_ID      shift, and go to state 12
+    T_String  shift, and go to state 13
+    T_Binary  shift, and go to state 14
+    T_Def     shift, and go to state 15
+    T_Not     shift, and go to state 16
+
+    $default  reduce using rule 45 ($@12)
+
+    constant         go to state 17
+    term             go to state 18
+    Expressions      go to state 19
+    basic_stmt       go to state 20
+    arith_exp        go to state 21
+    bool_exp         go to state 22
+    import_stmt      go to state 23
+    break_stmt       go to state 24
+    assign_stmt      go to state 25
+    print_stmt       go to state 26
+    finalStatements  go to state 27
+    $@12             go to state 28
+    func_def         go to state 29
+    func_call        go to state 30
+
+
+State 7
+
+   36 import_stmt: T_Import • T_ID
+
+    T_ID  shift, and go to state 31
+
+
+State 8
+
+   43 print_stmt: T_Print • T_OP Recur T_CP
+
+    T_OP  shift, and go to state 32
+
+
+State 9
+
+   37 break_stmt: T_Break •
+
+    $default  reduce using rule 37 (break_stmt)
+
+
+State 10
+
+   19 arith_exp: T_OP • arith_exp T_CP
+   27 bool_exp: T_OP • bool_exp T_CP
+
+    T_OP      shift, and go to state 10
+    T_Number  shift, and go to state 11
+    T_ID      shift, and go to state 33
+    T_String  shift, and go to state 13
+    T_Binary  shift, and go to state 14
+    T_Not     shift, and go to state 16
+
+    constant   go to state 17
+    term       go to state 18
+    arith_exp  go to state 34
+    bool_exp   go to state 35
+
+
+State 11
+
+    3 constant: T_Number •
+
+    $default  reduce using rule 3 (constant)
+
+
+State 12
+
+    5 term: T_ID •
+   40 assign_stmt: T_ID • $@10 T_EQL $@11 RHS
+   92 func_call: T_ID • $@27 T_OP args_list $@28 T_CP T_NL
+
+    T_OP      reduce using rule 90 ($@27)
+    T_EQL     reduce using rule 38 ($@10)
+    $default  reduce using rule 5 (term)
+
+    $@10  go to state 36
+    $@27  go to state 37
+
+
+State 13
+
+    4 constant: T_String •
+
+    $default  reduce using rule 4 (constant)
+
+
+State 14
+
+   24 bool_exp: T_Binary • $@5 bool_OP
+
+    $default  reduce using rule 23 ($@5)
+
+    $@5  go to state 38
+
+
+State 15
+
+   89 func_def: T_Def • $@24 T_ID $@25 T_OP args_list $@26 T_CP T_Cln T_NL T_id new nsuite
+
+    $default  reduce using rule 86 ($@24)
+
+    $@24  go to state 39
+
+
+State 16
+
+   26 bool_exp: T_Not • $@6 bool_exp
+
+    $default  reduce using rule 25 ($@6)
+
+    $@6  go to state 40
+
+
+State 17
+
+    6 term: constant •
+
+    $default  reduce using rule 6 (term)
+
+
+State 18
+
+   18 arith_exp: term • $@3 arith_OP
+
+    $default  reduce using rule 17 ($@3)
+
+    $@3  go to state 41
+
+
+State 19
+
+   15 basic_stmt: Expressions •
+
+    $default  reduce using rule 15 (basic_stmt)
+
+
+State 20
+
+   44 finalStatements: basic_stmt • T_NL
+
+    T_NL  shift, and go to state 42
+
+
+State 21
+
+   10 Expressions: arith_exp •
+   28 bool_exp: arith_exp • bool_OP
+
+    T_Relop  shift, and go to state 43
+    T_andor  shift, and go to state 44
+    T_eq     shift, and go to state 45
+
+    T_OP      reduce using rule 10 (Expressions)
+    T_OP      [reduce using rule 35 (bool_OP)]
+    T_CP      reduce using rule 10 (Expressions)
+    T_CP      [reduce using rule 35 (bool_OP)]
+    T_Comma   reduce using rule 10 (Expressions)
+    T_Comma   [reduce using rule 35 (bool_OP)]
+    T_Number  reduce using rule 10 (Expressions)
+    T_Number  [reduce using rule 35 (bool_OP)]
+    T_ID      reduce using rule 10 (Expressions)
+    T_ID      [reduce using rule 35 (bool_OP)]
+    T_String  reduce using rule 10 (Expressions)
+    T_String  [reduce using rule 35 (bool_OP)]
+    T_Binary  reduce using rule 10 (Expressions)
+    T_Binary  [reduce using rule 35 (bool_OP)]
+    T_NL      reduce using rule 10 (Expressions)
+    T_NL      [reduce using rule 35 (bool_OP)]
+    T_Not     reduce using rule 10 (Expressions)
+    T_Not     [reduce using rule 35 (bool_OP)]
+    $default  reduce using rule 10 (Expressions)
+
+    bool_OP  go to state 46
+
+
+State 22
+
+   11 Expressions: bool_exp •
+
+    $default  reduce using rule 11 (Expressions)
+
+
+State 23
+
+   13 basic_stmt: import_stmt •
+
+    $default  reduce using rule 13 (basic_stmt)
+
+
+State 24
+
+   12 basic_stmt: break_stmt •
+
+    $default  reduce using rule 12 (basic_stmt)
+
+
+State 25
+
+   14 basic_stmt: assign_stmt •
+
+    $default  reduce using rule 14 (basic_stmt)
+
+
+State 26
+
+   16 basic_stmt: print_stmt •
+
+    $default  reduce using rule 16 (basic_stmt)
+
+
+State 27
+
+    8 StartParse: $@2 finalStatements • StartParse
+
+    T_EndOfFile  shift, and go to state 4
+
+    $default  reduce using rule 7 ($@2)
+
+    StartParse  go to state 47
+    $@2         go to state 6
+
+
+State 28
+
+   46 finalStatements: $@12 • cmpd_stmt
+
+    T_If     shift, and go to state 48
+    T_While  shift, and go to state 49
+
+    cmpd_stmt   go to state 50
+    if_stmt     go to state 51
+    while_stmt  go to state 52
+
+
+State 29
+
+   47 finalStatements: func_def •
+
+    $default  reduce using rule 47 (finalStatements)
+
+
+State 30
+
+   48 finalStatements: func_call •
+
+    $default  reduce using rule 48 (finalStatements)
+
+
+State 31
+
+   36 import_stmt: T_Import T_ID •
+
+    $default  reduce using rule 36 (import_stmt)
+
+
+State 32
+
+   43 print_stmt: T_Print T_OP • Recur T_CP
+
+    T_OP      shift, and go to state 10
+    T_Comma   shift, and go to state 53
+    T_Number  shift, and go to state 11
+    T_ID      shift, and go to state 33
+    T_String  shift, and go to state 13
+    T_Binary  shift, and go to state 14
+    T_Not     shift, and go to state 16
+
+    $default  reduce using rule 51 (Recur)
+
+    constant     go to state 17
+    term         go to state 18
+    Expressions  go to state 54
+    arith_exp    go to state 21
+    bool_exp     go to state 22
+    Recur        go to state 55
+
+
+State 33
+
+    5 term: T_ID •
+
+    $default  reduce using rule 5 (term)
+
+
+State 34
+
+   19 arith_exp: T_OP arith_exp • T_CP
+   28 bool_exp: arith_exp • bool_OP
+
+    T_Relop  shift, and go to state 43
+    T_CP     shift, and go to state 56
+    T_andor  shift, and go to state 44
+    T_eq     shift, and go to state 45
+
+    T_CP  [reduce using rule 35 (bool_OP)]
+
+    bool_OP  go to state 46
+
+
+State 35
+
+   27 bool_exp: T_OP bool_exp • T_CP
+
+    T_CP  shift, and go to state 57
+
+
+State 36
+
+   40 assign_stmt: T_ID $@10 • T_EQL $@11 RHS
+
+    T_EQL  shift, and go to state 58
+
+
+State 37
+
+   92 func_call: T_ID $@27 • T_OP args_list $@28 T_CP T_NL
+
+    T_OP  shift, and go to state 59
+
+
+State 38
+
+   24 bool_exp: T_Binary $@5 • bool_OP
+
+    T_Relop  shift, and go to state 43
+    T_andor  shift, and go to state 44
+    T_eq     shift, and go to state 45
+
+    $default  reduce using rule 35 (bool_OP)
+
+    bool_OP  go to state 60
+
+
+State 39
+
+   89 func_def: T_Def $@24 • T_ID $@25 T_OP args_list $@26 T_CP T_Cln T_NL T_id new nsuite
+
+    T_ID  shift, and go to state 61
+
+
+State 40
+
+   26 bool_exp: T_Not $@6 • bool_exp
+
+    T_OP      shift, and go to state 10
+    T_Number  shift, and go to state 11
+    T_ID      shift, and go to state 33
+    T_String  shift, and go to state 13
+    T_Binary  shift, and go to state 14
+    T_Not     shift, and go to state 16
+
+    constant   go to state 17
+    term       go to state 18
+    arith_exp  go to state 62
+    bool_exp   go to state 63
+
+
+State 41
+
+   18 arith_exp: term $@3 • arith_OP
+
+    T_Arop  shift, and go to state 64
+
+    $default  reduce using rule 22 (arith_OP)
+
+    arith_OP  go to state 65
+
+
+State 42
+
+   44 finalStatements: basic_stmt T_NL •
+
+    $default  reduce using rule 44 (finalStatements)
+
+
+State 43
+
+   34 bool_OP: T_Relop • $@9 bool_exp
+
+    $default  reduce using rule 33 ($@9)
+
+    $@9  go to state 66
+
+
+State 44
+
+   30 bool_OP: T_andor • $@7 bool_exp
+
+    $default  reduce using rule 29 ($@7)
+
+    $@7  go to state 67
+
+
+State 45
+
+   32 bool_OP: T_eq • $@8 bool_exp
+
+    $default  reduce using rule 31 ($@8)
+
+    $@8  go to state 68
+
+
+State 46
+
+   28 bool_exp: arith_exp bool_OP •
+
+    $default  reduce using rule 28 (bool_exp)
+
+
+State 47
+
+    8 StartParse: $@2 finalStatements StartParse •
+
+    $default  reduce using rule 8 (StartParse)
+
+
+State 48
+
+   57 if_stmt: T_If • $@13 bool_exp $@14 T_Cln T_NL T_id final suite $@15 elif_stmts
+
+    $default  reduce using rule 54 ($@13)
+
+    $@13  go to state 69
+
+
+State 49
+
+   76 while_stmt: T_While • $@21 bool_exp $@22 T_Cln T_NL T_id new nsuite
+
+    $default  reduce using rule 74 ($@21)
+
+    $@21  go to state 70
+
+
+State 50
+
+   46 finalStatements: $@12 cmpd_stmt •
+
+    $default  reduce using rule 46 (finalStatements)
+
+
+State 51
+
+   52 cmpd_stmt: if_stmt •
+
+    $default  reduce using rule 52 (cmpd_stmt)
+
+
+State 52
+
+   53 cmpd_stmt: while_stmt •
+
+    $default  reduce using rule 53 (cmpd_stmt)
+
+
+State 53
+
+   50 Recur: T_Comma • Expressions Recur
+
+    T_OP      shift, and go to state 10
+    T_Number  shift, and go to state 11
+    T_ID      shift, and go to state 33
+    T_String  shift, and go to state 13
+    T_Binary  shift, and go to state 14
+    T_Not     shift, and go to state 16
+
+    constant     go to state 17
+    term         go to state 18
+    Expressions  go to state 71
+    arith_exp    go to state 21
+    bool_exp     go to state 22
+
+
+State 54
+
+   49 Recur: Expressions • Recur
+
+    T_OP      shift, and go to state 10
+    T_Comma   shift, and go to state 53
+    T_Number  shift, and go to state 11
+    T_ID      shift, and go to state 33
+    T_String  shift, and go to state 13
+    T_Binary  shift, and go to state 14
+    T_Not     shift, and go to state 16
+
+    $default  reduce using rule 51 (Recur)
+
+    constant     go to state 17
+    term         go to state 18
+    Expressions  go to state 54
+    arith_exp    go to state 21
+    bool_exp     go to state 22
+    Recur        go to state 72
+
+
+State 55
+
+   43 print_stmt: T_Print T_OP Recur • T_CP
+
+    T_CP  shift, and go to state 73
+
+
+State 56
+
+   19 arith_exp: T_OP arith_exp T_CP •
+
+    $default  reduce using rule 19 (arith_exp)
+
+
+State 57
+
+   27 bool_exp: T_OP bool_exp T_CP •
+
+    $default  reduce using rule 27 (bool_exp)
+
+
+State 58
+
+   40 assign_stmt: T_ID $@10 T_EQL • $@11 RHS
+
+    $default  reduce using rule 39 ($@11)
+
+    $@11  go to state 74
+
+
+State 59
+
+   92 func_call: T_ID $@27 T_OP • args_list $@28 T_CP T_NL
+
+    T_ID  shift, and go to state 75
+
+    $default  reduce using rule 85 (args_list)
+
+    args_list  go to state 76
+
+
+State 60
+
+   24 bool_exp: T_Binary $@5 bool_OP •
+
+    $default  reduce using rule 24 (bool_exp)
+
+
+State 61
+
+   89 func_def: T_Def $@24 T_ID • $@25 T_OP args_list $@26 T_CP T_Cln T_NL T_id new nsuite
+
+    $default  reduce using rule 87 ($@25)
+
+    $@25  go to state 77
+
+
+State 62
+
+   28 bool_exp: arith_exp • bool_OP
+
+    T_Relop  shift, and go to state 43
+    T_andor  shift, and go to state 44
+    T_eq     shift, and go to state 45
+
+    $default  reduce using rule 35 (bool_OP)
+
+    bool_OP  go to state 46
+
+
+State 63
+
+   26 bool_exp: T_Not $@6 bool_exp •
+
+    $default  reduce using rule 26 (bool_exp)
+
+
+State 64
+
+   21 arith_OP: T_Arop • $@4 arith_exp
+
+    $default  reduce using rule 20 ($@4)
+
+    $@4  go to state 78
+
+
+State 65
+
+   18 arith_exp: term $@3 arith_OP •
+
+    $default  reduce using rule 18 (arith_exp)
+
+
+State 66
+
+   34 bool_OP: T_Relop $@9 • bool_exp
+
+    T_OP      shift, and go to state 10
+    T_Number  shift, and go to state 11
+    T_ID      shift, and go to state 33
+    T_String  shift, and go to state 13
+    T_Binary  shift, and go to state 14
+    T_Not     shift, and go to state 16
+
+    constant   go to state 17
+    term       go to state 18
+    arith_exp  go to state 62
+    bool_exp   go to state 79
+
+
+State 67
+
+   30 bool_OP: T_andor $@7 • bool_exp
+
+    T_OP      shift, and go to state 10
+    T_Number  shift, and go to state 11
+    T_ID      shift, and go to state 33
+    T_String  shift, and go to state 13
+    T_Binary  shift, and go to state 14
+    T_Not     shift, and go to state 16
+
+    constant   go to state 17
+    term       go to state 18
+    arith_exp  go to state 62
+    bool_exp   go to state 80
+
+
+State 68
+
+   32 bool_OP: T_eq $@8 • bool_exp
+
+    T_OP      shift, and go to state 10
+    T_Number  shift, and go to state 11
+    T_ID      shift, and go to state 33
+    T_String  shift, and go to state 13
+    T_Binary  shift, and go to state 14
+    T_Not     shift, and go to state 16
+
+    constant   go to state 17
+    term       go to state 18
+    arith_exp  go to state 62
+    bool_exp   go to state 81
+
+
+State 69
+
+   57 if_stmt: T_If $@13 • bool_exp $@14 T_Cln T_NL T_id final suite $@15 elif_stmts
+
+    T_OP      shift, and go to state 10
+    T_Number  shift, and go to state 11
+    T_ID      shift, and go to state 33
+    T_String  shift, and go to state 13
+    T_Binary  shift, and go to state 14
+    T_Not     shift, and go to state 16
+
+    constant   go to state 17
+    term       go to state 18
+    arith_exp  go to state 62
+    bool_exp   go to state 82
+
+
+State 70
+
+   76 while_stmt: T_While $@21 • bool_exp $@22 T_Cln T_NL T_id new nsuite
+
+    T_OP      shift, and go to state 10
+    T_Number  shift, and go to state 11
+    T_ID      shift, and go to state 33
+    T_String  shift, and go to state 13
+    T_Binary  shift, and go to state 14
+    T_Not     shift, and go to state 16
+
+    constant   go to state 17
+    term       go to state 18
+    arith_exp  go to state 62
+    bool_exp   go to state 83
+
+
+State 71
+
+   50 Recur: T_Comma Expressions • Recur
+
+    T_OP      shift, and go to state 10
+    T_Comma   shift, and go to state 53
+    T_Number  shift, and go to state 11
+    T_ID      shift, and go to state 33
+    T_String  shift, and go to state 13
+    T_Binary  shift, and go to state 14
+    T_Not     shift, and go to state 16
+
+    $default  reduce using rule 51 (Recur)
+
+    constant     go to state 17
+    term         go to state 18
+    Expressions  go to state 54
+    arith_exp    go to state 21
+    bool_exp     go to state 22
+    Recur        go to state 84
+
+
+State 72
+
+   49 Recur: Expressions Recur •
+
+    $default  reduce using rule 49 (Recur)
+
+
+State 73
+
+   43 print_stmt: T_Print T_OP Recur T_CP •
+
+    $default  reduce using rule 43 (print_stmt)
+
+
+State 74
+
+   40 assign_stmt: T_ID $@10 T_EQL $@11 • RHS
+
+    T_OP      shift, and go to state 10
+    T_Number  shift, and go to state 11
+    T_ID      shift, and go to state 85
+    T_String  shift, and go to state 13
+    T_Binary  shift, and go to state 14
+    T_Not     shift, and go to state 16
+
+    constant     go to state 17
+    term         go to state 18
+    Expressions  go to state 86
+    arith_exp    go to state 21
+    bool_exp     go to state 22
+    RHS          go to state 87
+    func_call    go to state 88
+
+
+State 75
+
+   83 args_list: T_ID • $@23 T_Comma args_list
+   84          | T_ID •
+
+    T_CP      reduce using rule 84 (args_list)
+    $default  reduce using rule 82 ($@23)
+
+    $@23  go to state 89
+
+
+State 76
+
+   92 func_call: T_ID $@27 T_OP args_list • $@28 T_CP T_NL
+
+    $default  reduce using rule 91 ($@28)
+
+    $@28  go to state 90
+
+
+State 77
+
+   89 func_def: T_Def $@24 T_ID $@25 • T_OP args_list $@26 T_CP T_Cln T_NL T_id new nsuite
+
+    T_OP  shift, and go to state 91
+
+
+State 78
+
+   21 arith_OP: T_Arop $@4 • arith_exp
+
+    T_OP      shift, and go to state 92
+    T_Number  shift, and go to state 11
+    T_ID      shift, and go to state 33
+    T_String  shift, and go to state 13
+
+    constant   go to state 17
+    term       go to state 18
+    arith_exp  go to state 93
+
+
+State 79
+
+   34 bool_OP: T_Relop $@9 bool_exp •
+
+    $default  reduce using rule 34 (bool_OP)
+
+
+State 80
+
+   30 bool_OP: T_andor $@7 bool_exp •
+
+    $default  reduce using rule 30 (bool_OP)
+
+
+State 81
+
+   32 bool_OP: T_eq $@8 bool_exp •
+
+    $default  reduce using rule 32 (bool_OP)
+
+
+State 82
+
+   57 if_stmt: T_If $@13 bool_exp • $@14 T_Cln T_NL T_id final suite $@15 elif_stmts
+
+    $default  reduce using rule 55 ($@14)
+
+    $@14  go to state 94
+
+
+State 83
+
+   76 while_stmt: T_While $@21 bool_exp • $@22 T_Cln T_NL T_id new nsuite
+
+    $default  reduce using rule 75 ($@22)
+
+    $@22  go to state 95
+
+
+State 84
+
+   50 Recur: T_Comma Expressions Recur •
+
+    $default  reduce using rule 50 (Recur)
+
+
+State 85
+
+    5 term: T_ID •
+   92 func_call: T_ID • $@27 T_OP args_list $@28 T_CP T_NL
+
+    T_OP      reduce using rule 90 ($@27)
+    $default  reduce using rule 5 (term)
+
+    $@27  go to state 37
+
+
+State 86
+
+   41 RHS: Expressions •
+
+    $default  reduce using rule 41 (RHS)
+
+
+State 87
+
+   40 assign_stmt: T_ID $@10 T_EQL $@11 RHS •
+
+    $default  reduce using rule 40 (assign_stmt)
+
+
+State 88
+
+   42 RHS: func_call •
+
+    $default  reduce using rule 42 (RHS)
+
+
+State 89
+
+   83 args_list: T_ID $@23 • T_Comma args_list
+
+    T_Comma  shift, and go to state 96
+
+
+State 90
+
+   92 func_call: T_ID $@27 T_OP args_list $@28 • T_CP T_NL
+
+    T_CP  shift, and go to state 97
+
+
+State 91
+
+   89 func_def: T_Def $@24 T_ID $@25 T_OP • args_list $@26 T_CP T_Cln T_NL T_id new nsuite
+
+    T_ID  shift, and go to state 75
+
+    $default  reduce using rule 85 (args_list)
+
+    args_list  go to state 98
+
+
+State 92
+
+   19 arith_exp: T_OP • arith_exp T_CP
+
+    T_OP      shift, and go to state 92
+    T_Number  shift, and go to state 11
+    T_ID      shift, and go to state 33
+    T_String  shift, and go to state 13
+
+    constant   go to state 17
+    term       go to state 18
+    arith_exp  go to state 99
+
+
+State 93
+
+   21 arith_OP: T_Arop $@4 arith_exp •
+
+    $default  reduce using rule 21 (arith_OP)
+
+
+State 94
+
+   57 if_stmt: T_If $@13 bool_exp $@14 • T_Cln T_NL T_id final suite $@15 elif_stmts
+
+    T_Cln  shift, and go to state 100
+
+
+State 95
+
+   76 while_stmt: T_While $@21 bool_exp $@22 • T_Cln T_NL T_id new nsuite
+
+    T_Cln  shift, and go to state 101
+
+
+State 96
+
+   83 args_list: T_ID $@23 T_Comma • args_list
+
+    T_ID  shift, and go to state 75
+
+    $default  reduce using rule 85 (args_list)
+
+    args_list  go to state 102
+
+
+State 97
+
+   92 func_call: T_ID $@27 T_OP args_list $@28 T_CP • T_NL
+
+    T_NL  shift, and go to state 103
+
+
+State 98
+
+   89 func_def: T_Def $@24 T_ID $@25 T_OP args_list • $@26 T_CP T_Cln T_NL T_id new nsuite
+
+    $default  reduce using rule 88 ($@26)
+
+    $@26  go to state 104
+
+
+State 99
+
+   19 arith_exp: T_OP arith_exp • T_CP
+
+    T_CP  shift, and go to state 56
+
+
+State 100
+
+   57 if_stmt: T_If $@13 bool_exp $@14 T_Cln • T_NL T_id final suite $@15 elif_stmts
+
+    T_NL  shift, and go to state 105
+
+
+State 101
+
+   76 while_stmt: T_While $@21 bool_exp $@22 T_Cln • T_NL T_id new nsuite
+
+    T_NL  shift, and go to state 106
+
+
+State 102
+
+   83 args_list: T_ID $@23 T_Comma args_list •
+
+    $default  reduce using rule 83 (args_list)
+
+
+State 103
+
+   92 func_call: T_ID $@27 T_OP args_list $@28 T_CP T_NL •
+
+    $default  reduce using rule 92 (func_call)
+
+
+State 104
+
+   89 func_def: T_Def $@24 T_ID $@25 T_OP args_list $@26 • T_CP T_Cln T_NL T_id new nsuite
+
+    T_CP  shift, and go to state 107
+
+
+State 105
+
+   57 if_stmt: T_If $@13 bool_exp $@14 T_Cln T_NL • T_id final suite $@15 elif_stmts
+
+    T_id  shift, and go to state 108
+
+
+State 106
+
+   76 while_stmt: T_While $@21 bool_exp $@22 T_Cln T_NL • T_id new nsuite
+
+    T_id  shift, and go to state 109
+
+
+State 107
+
+   89 func_def: T_Def $@24 T_ID $@25 T_OP args_list $@26 T_CP • T_Cln T_NL T_id new nsuite
+
+    T_Cln  shift, and go to state 110
+
+
+State 108
+
+   57 if_stmt: T_If $@13 bool_exp $@14 T_Cln T_NL T_id • final suite $@15 elif_stmts
+
+    T_Import  shift, and go to state 7
+    T_Print   shift, and go to state 8
+    T_If      shift, and go to state 48
+    T_Break   shift, and go to state 9
+    T_OP      shift, and go to state 10
+    T_Number  shift, and go to state 11
+    T_ID      shift, and go to state 12
+    T_String  shift, and go to state 13
+    T_Binary  shift, and go to state 14
+    T_Not     shift, and go to state 16
+
+    constant     go to state 17
+    term         go to state 18
+    Expressions  go to state 19
+    basic_stmt   go to state 111
+    arith_exp    go to state 21
+    bool_exp     go to state 22
+    import_stmt  go to state 23
+    break_stmt   go to state 24
+    assign_stmt  go to state 25
+    print_stmt   go to state 26
+    if_stmt      go to state 112
+    final        go to state 113
+    func_call    go to state 114
+
+
+State 109
+
+   76 while_stmt: T_While $@21 bool_exp $@22 T_Cln T_NL T_id • new nsuite
+
+    T_Import  shift, and go to state 7
+    T_Print   shift, and go to state 8
+    T_Break   shift, and go to state 9
+    T_OP      shift, and go to state 10
+    T_Number  shift, and go to state 11
+    T_ID      shift, and go to state 12
+    T_String  shift, and go to state 13
+    T_Binary  shift, and go to state 14
+    T_Not     shift, and go to state 16
+
+    constant     go to state 17
+    term         go to state 18
+    Expressions  go to state 19
+    basic_stmt   go to state 115
+    arith_exp    go to state 21
+    bool_exp     go to state 22
+    import_stmt  go to state 23
+    break_stmt   go to state 24
+    assign_stmt  go to state 25
+    print_stmt   go to state 26
+    new          go to state 116
+    func_call    go to state 117
+
+
+State 110
+
+   89 func_def: T_Def $@24 T_ID $@25 T_OP args_list $@26 T_CP T_Cln • T_NL T_id new nsuite
+
+    T_NL  shift, and go to state 118
+
+
+State 111
+
+   68 final: basic_stmt • T_NL
+
+    T_NL  shift, and go to state 119
+
+
+State 112
+
+   69 final: if_stmt •
+
+    $default  reduce using rule 69 (final)
+
+
+State 113
+
+   57 if_stmt: T_If $@13 bool_exp $@14 T_Cln T_NL T_id final • suite $@15 elif_stmts
+
+    T_ND  shift, and go to state 120
+    T_DD  shift, and go to state 121
+
+    T_ND      [reduce using rule 73 (suite)]
+    T_DD      [reduce using rule 73 (suite)]
+    $default  reduce using rule 73 (suite)
+
+    suite  go to state 122
+
+
+State 114
+
+   70 final: func_call •
+
+    $default  reduce using rule 70 (final)
+
+
+State 115
+
+   77 new: basic_stmt • T_NL
+
+    T_NL  shift, and go to state 123
+
+
+State 116
+
+   76 while_stmt: T_While $@21 bool_exp $@22 T_Cln T_NL T_id new • nsuite
+
+    T_ND  shift, and go to state 124
+    T_DD  shift, and go to state 125
+
+    $default  reduce using rule 81 (nsuite)
+
+    nsuite  go to state 126
+
+
+State 117
+
+   78 new: func_call •
+
+    $default  reduce using rule 78 (new)
+
+
+State 118
+
+   89 func_def: T_Def $@24 T_ID $@25 T_OP args_list $@26 T_CP T_Cln T_NL • T_id new nsuite
+
+    T_id  shift, and go to state 127
+
+
+State 119
+
+   68 final: basic_stmt T_NL •
+
+    $default  reduce using rule 68 (final)
+
+
+State 120
+
+   71 suite: T_ND • final suite
+
+    T_Import  shift, and go to state 7
+    T_Print   shift, and go to state 8
+    T_If      shift, and go to state 48
+    T_Break   shift, and go to state 9
+    T_OP      shift, and go to state 10
+    T_Number  shift, and go to state 11
+    T_ID      shift, and go to state 12
+    T_String  shift, and go to state 13
+    T_Binary  shift, and go to state 14
+    T_Not     shift, and go to state 16
+
+    constant     go to state 17
+    term         go to state 18
+    Expressions  go to state 19
+    basic_stmt   go to state 111
+    arith_exp    go to state 21
+    bool_exp     go to state 22
+    import_stmt  go to state 23
+    break_stmt   go to state 24
+    assign_stmt  go to state 25
+    print_stmt   go to state 26
+    if_stmt      go to state 112
+    final        go to state 128
+    func_call    go to state 114
+
+
+State 121
+
+   72 suite: T_DD •
+
+    $default  reduce using rule 72 (suite)
+
+
+State 122
+
+   57 if_stmt: T_If $@13 bool_exp $@14 T_Cln T_NL T_id final suite • $@15 elif_stmts
+
+    $default  reduce using rule 56 ($@15)
+
+    $@15  go to state 129
+
+
+State 123
+
+   77 new: basic_stmt T_NL •
+
+    $default  reduce using rule 77 (new)
+
+
+State 124
+
+   79 nsuite: T_ND • new nsuite
+
+    T_Import  shift, and go to state 7
+    T_Print   shift, and go to state 8
+    T_Break   shift, and go to state 9
+    T_OP      shift, and go to state 10
+    T_Number  shift, and go to state 11
+    T_ID      shift, and go to state 12
+    T_String  shift, and go to state 13
+    T_Binary  shift, and go to state 14
+    T_Not     shift, and go to state 16
+
+    constant     go to state 17
+    term         go to state 18
+    Expressions  go to state 19
+    basic_stmt   go to state 115
+    arith_exp    go to state 21
+    bool_exp     go to state 22
+    import_stmt  go to state 23
+    break_stmt   go to state 24
+    assign_stmt  go to state 25
+    print_stmt   go to state 26
+    new          go to state 130
+    func_call    go to state 117
+
+
+State 125
+
+   80 nsuite: T_DD •
+
+    $default  reduce using rule 80 (nsuite)
+
+
+State 126
+
+   76 while_stmt: T_While $@21 bool_exp $@22 T_Cln T_NL T_id new nsuite •
+
+    $default  reduce using rule 76 (while_stmt)
+
+
+State 127
+
+   89 func_def: T_Def $@24 T_ID $@25 T_OP args_list $@26 T_CP T_Cln T_NL T_id • new nsuite
+
+    T_Import  shift, and go to state 7
+    T_Print   shift, and go to state 8
+    T_Break   shift, and go to state 9
+    T_OP      shift, and go to state 10
+    T_Number  shift, and go to state 11
+    T_ID      shift, and go to state 12
+    T_String  shift, and go to state 13
+    T_Binary  shift, and go to state 14
+    T_Not     shift, and go to state 16
+
+    constant     go to state 17
+    term         go to state 18
+    Expressions  go to state 19
+    basic_stmt   go to state 115
+    arith_exp    go to state 21
+    bool_exp     go to state 22
+    import_stmt  go to state 23
+    break_stmt   go to state 24
+    assign_stmt  go to state 25
+    print_stmt   go to state 26
+    new          go to state 131
+    func_call    go to state 117
+
+
+State 128
+
+   71 suite: T_ND final • suite
+
+    T_ND  shift, and go to state 120
+    T_DD  shift, and go to state 121
+
+    T_ND      [reduce using rule 73 (suite)]
+    T_DD      [reduce using rule 73 (suite)]
+    $default  reduce using rule 73 (suite)
+
+    suite  go to state 132
+
+
+State 129
+
+   57 if_stmt: T_If $@13 bool_exp $@14 T_Cln T_NL T_id final suite $@15 • elif_stmts
+
+    T_Import  shift, and go to state 7
+    T_Print   shift, and go to state 8
+    T_If      shift, and go to state 48
+    T_Break   shift, and go to state 9
+    T_Else    shift, and go to state 133
+    T_OP      shift, and go to state 10
+    T_Number  shift, and go to state 11
+    T_ID      shift, and go to state 12
+    T_String  shift, and go to state 13
+    T_Binary  shift, and go to state 14
+    T_Elif    shift, and go to state 134
+    T_Not     shift, and go to state 16
+
+    T_Import  [reduce using rule 67 (try)]
+    T_Print   [reduce using rule 67 (try)]
+    T_If      [reduce using rule 67 (try)]
+    T_Break   [reduce using rule 67 (try)]
+    T_Else    [reduce using rule 67 (try)]
+    T_OP      [reduce using rule 67 (try)]
+    T_Number  [reduce using rule 67 (try)]
+    T_ID      [reduce using rule 67 (try)]
+    T_String  [reduce using rule 67 (try)]
+    T_Binary  [reduce using rule 67 (try)]
+    T_Elif    [reduce using rule 67 (try)]
+    T_Not     [reduce using rule 67 (try)]
+    $default  reduce using rule 67 (try)
+
+    constant     go to state 17
+    term         go to state 18
+    Expressions  go to state 19
+    basic_stmt   go to state 111
+    arith_exp    go to state 21
+    bool_exp     go to state 22
+    import_stmt  go to state 23
+    break_stmt   go to state 24
+    assign_stmt  go to state 25
+    print_stmt   go to state 26
+    if_stmt      go to state 112
+    elif_stmts   go to state 135
+    try          go to state 136
+    final        go to state 137
+    func_call    go to state 114
+
+
+State 130
+
+   79 nsuite: T_ND new • nsuite
+
+    T_ND  shift, and go to state 124
+    T_DD  shift, and go to state 125
+
+    $default  reduce using rule 81 (nsuite)
+
+    nsuite  go to state 138
+
+
+State 131
+
+   89 func_def: T_Def $@24 T_ID $@25 T_OP args_list $@26 T_CP T_Cln T_NL T_id new • nsuite
+
+    T_ND  shift, and go to state 124
+    T_DD  shift, and go to state 125
+
+    $default  reduce using rule 81 (nsuite)
+
+    nsuite  go to state 139
+
+
+State 132
+
+   71 suite: T_ND final suite •
+
+    $default  reduce using rule 71 (suite)
+
+
+State 133
+
+   64 elif_stmts: T_Else • $@19 T_Cln T_NL T_id final suite $@20 try
+
+    $default  reduce using rule 62 ($@19)
+
+    $@19  go to state 140
+
+
+State 134
+
+   61 elif_stmts: T_Elif • $@16 bool_exp $@17 T_Cln T_NL T_id final suite $@18 elif_stmts
+
+    $default  reduce using rule 58 ($@16)
+
+    $@16  go to state 141
+
+
+State 135
+
+   57 if_stmt: T_If $@13 bool_exp $@14 T_Cln T_NL T_id final suite $@15 elif_stmts •
+
+    $default  reduce using rule 57 (if_stmt)
+
+
+State 136
+
+   65 elif_stmts: try •
+
+    $default  reduce using rule 65 (elif_stmts)
+
+
+State 137
+
+   66 try: final •
+
+    $default  reduce using rule 66 (try)
+
+
+State 138
+
+   79 nsuite: T_ND new nsuite •
+
+    $default  reduce using rule 79 (nsuite)
+
+
+State 139
+
+   89 func_def: T_Def $@24 T_ID $@25 T_OP args_list $@26 T_CP T_Cln T_NL T_id new nsuite •
+
+    $default  reduce using rule 89 (func_def)
+
+
+State 140
+
+   64 elif_stmts: T_Else $@19 • T_Cln T_NL T_id final suite $@20 try
+
+    T_Cln  shift, and go to state 142
+
+
+State 141
+
+   61 elif_stmts: T_Elif $@16 • bool_exp $@17 T_Cln T_NL T_id final suite $@18 elif_stmts
+
+    T_OP      shift, and go to state 10
+    T_Number  shift, and go to state 11
+    T_ID      shift, and go to state 33
+    T_String  shift, and go to state 13
+    T_Binary  shift, and go to state 14
+    T_Not     shift, and go to state 16
+
+    constant   go to state 17
+    term       go to state 18
+    arith_exp  go to state 62
+    bool_exp   go to state 143
+
+
+State 142
+
+   64 elif_stmts: T_Else $@19 T_Cln • T_NL T_id final suite $@20 try
+
+    T_NL  shift, and go to state 144
+
+
+State 143
+
+   61 elif_stmts: T_Elif $@16 bool_exp • $@17 T_Cln T_NL T_id final suite $@18 elif_stmts
+
+    $default  reduce using rule 59 ($@17)
+
+    $@17  go to state 145
+
+
+State 144
+
+   64 elif_stmts: T_Else $@19 T_Cln T_NL • T_id final suite $@20 try
+
+    T_id  shift, and go to state 146
+
+
+State 145
+
+   61 elif_stmts: T_Elif $@16 bool_exp $@17 • T_Cln T_NL T_id final suite $@18 elif_stmts
+
+    T_Cln  shift, and go to state 147
+
+
+State 146
+
+   64 elif_stmts: T_Else $@19 T_Cln T_NL T_id • final suite $@20 try
+
+    T_Import  shift, and go to state 7
+    T_Print   shift, and go to state 8
+    T_If      shift, and go to state 48
+    T_Break   shift, and go to state 9
+    T_OP      shift, and go to state 10
+    T_Number  shift, and go to state 11
+    T_ID      shift, and go to state 12
+    T_String  shift, and go to state 13
+    T_Binary  shift, and go to state 14
+    T_Not     shift, and go to state 16
+
+    constant     go to state 17
+    term         go to state 18
+    Expressions  go to state 19
+    basic_stmt   go to state 111
+    arith_exp    go to state 21
+    bool_exp     go to state 22
+    import_stmt  go to state 23
+    break_stmt   go to state 24
+    assign_stmt  go to state 25
+    print_stmt   go to state 26
+    if_stmt      go to state 112
+    final        go to state 148
+    func_call    go to state 114
+
+
+State 147
+
+   61 elif_stmts: T_Elif $@16 bool_exp $@17 T_Cln • T_NL T_id final suite $@18 elif_stmts
+
+    T_NL  shift, and go to state 149
+
+
+State 148
+
+   64 elif_stmts: T_Else $@19 T_Cln T_NL T_id final • suite $@20 try
+
+    T_ND  shift, and go to state 120
+    T_DD  shift, and go to state 121
+
+    T_ND      [reduce using rule 73 (suite)]
+    T_DD      [reduce using rule 73 (suite)]
+    $default  reduce using rule 73 (suite)
+
+    suite  go to state 150
+
+
+State 149
+
+   61 elif_stmts: T_Elif $@16 bool_exp $@17 T_Cln T_NL • T_id final suite $@18 elif_stmts
+
+    T_id  shift, and go to state 151
+
+
+State 150
+
+   64 elif_stmts: T_Else $@19 T_Cln T_NL T_id final suite • $@20 try
+
+    $default  reduce using rule 63 ($@20)
+
+    $@20  go to state 152
+
+
+State 151
+
+   61 elif_stmts: T_Elif $@16 bool_exp $@17 T_Cln T_NL T_id • final suite $@18 elif_stmts
+
+    T_Import  shift, and go to state 7
+    T_Print   shift, and go to state 8
+    T_If      shift, and go to state 48
+    T_Break   shift, and go to state 9
+    T_OP      shift, and go to state 10
+    T_Number  shift, and go to state 11
+    T_ID      shift, and go to state 12
+    T_String  shift, and go to state 13
+    T_Binary  shift, and go to state 14
+    T_Not     shift, and go to state 16
+
+    constant     go to state 17
+    term         go to state 18
+    Expressions  go to state 19
+    basic_stmt   go to state 111
+    arith_exp    go to state 21
+    bool_exp     go to state 22
+    import_stmt  go to state 23
+    break_stmt   go to state 24
+    assign_stmt  go to state 25
+    print_stmt   go to state 26
+    if_stmt      go to state 112
+    final        go to state 153
+    func_call    go to state 114
+
+
+State 152
+
+   64 elif_stmts: T_Else $@19 T_Cln T_NL T_id final suite $@20 • try
+
+    T_Import  shift, and go to state 7
+    T_Print   shift, and go to state 8
+    T_If      shift, and go to state 48
+    T_Break   shift, and go to state 9
+    T_OP      shift, and go to state 10
+    T_Number  shift, and go to state 11
+    T_ID      shift, and go to state 12
+    T_String  shift, and go to state 13
+    T_Binary  shift, and go to state 14
+    T_Not     shift, and go to state 16
+
+    T_Import  [reduce using rule 67 (try)]
+    T_Print   [reduce using rule 67 (try)]
+    T_If      [reduce using rule 67 (try)]
+    T_Break   [reduce using rule 67 (try)]
+    T_OP      [reduce using rule 67 (try)]
+    T_Number  [reduce using rule 67 (try)]
+    T_ID      [reduce using rule 67 (try)]
+    T_String  [reduce using rule 67 (try)]
+    T_Binary  [reduce using rule 67 (try)]
+    T_Not     [reduce using rule 67 (try)]
+    $default  reduce using rule 67 (try)
+
+    constant     go to state 17
+    term         go to state 18
+    Expressions  go to state 19
+    basic_stmt   go to state 111
+    arith_exp    go to state 21
+    bool_exp     go to state 22
+    import_stmt  go to state 23
+    break_stmt   go to state 24
+    assign_stmt  go to state 25
+    print_stmt   go to state 26
+    if_stmt      go to state 112
+    try          go to state 154
+    final        go to state 137
+    func_call    go to state 114
+
+
+State 153
+
+   61 elif_stmts: T_Elif $@16 bool_exp $@17 T_Cln T_NL T_id final • suite $@18 elif_stmts
+
+    T_ND  shift, and go to state 120
+    T_DD  shift, and go to state 121
+
+    T_ND      [reduce using rule 73 (suite)]
+    T_DD      [reduce using rule 73 (suite)]
+    $default  reduce using rule 73 (suite)
+
+    suite  go to state 155
+
+
+State 154
+
+   64 elif_stmts: T_Else $@19 T_Cln T_NL T_id final suite $@20 try •
+
+    $default  reduce using rule 64 (elif_stmts)
+
+
+State 155
+
+   61 elif_stmts: T_Elif $@16 bool_exp $@17 T_Cln T_NL T_id final suite • $@18 elif_stmts
+
+    $default  reduce using rule 60 ($@18)
+
+    $@18  go to state 156
+
+
+State 156
+
+   61 elif_stmts: T_Elif $@16 bool_exp $@17 T_Cln T_NL T_id final suite $@18 • elif_stmts
+
+    T_Import  shift, and go to state 7
+    T_Print   shift, and go to state 8
+    T_If      shift, and go to state 48
+    T_Break   shift, and go to state 9
+    T_Else    shift, and go to state 133
+    T_OP      shift, and go to state 10
+    T_Number  shift, and go to state 11
+    T_ID      shift, and go to state 12
+    T_String  shift, and go to state 13
+    T_Binary  shift, and go to state 14
+    T_Elif    shift, and go to state 134
+    T_Not     shift, and go to state 16
+
+    T_Import  [reduce using rule 67 (try)]
+    T_Print   [reduce using rule 67 (try)]
+    T_If      [reduce using rule 67 (try)]
+    T_Break   [reduce using rule 67 (try)]
+    T_Else    [reduce using rule 67 (try)]
+    T_OP      [reduce using rule 67 (try)]
+    T_Number  [reduce using rule 67 (try)]
+    T_ID      [reduce using rule 67 (try)]
+    T_String  [reduce using rule 67 (try)]
+    T_Binary  [reduce using rule 67 (try)]
+    T_Elif    [reduce using rule 67 (try)]
+    T_Not     [reduce using rule 67 (try)]
+    $default  reduce using rule 67 (try)
+
+    constant     go to state 17
+    term         go to state 18
+    Expressions  go to state 19
+    basic_stmt   go to state 111
+    arith_exp    go to state 21
+    bool_exp     go to state 22
+    import_stmt  go to state 23
+    break_stmt   go to state 24
+    assign_stmt  go to state 25
+    print_stmt   go to state 26
+    if_stmt      go to state 112
+    elif_stmts   go to state 157
+    try          go to state 136
+    final        go to state 137
+    func_call    go to state 114
+
+
+State 157
+
+   61 elif_stmts: T_Elif $@16 bool_exp $@17 T_Cln T_NL T_id final suite $@18 elif_stmts •
+
+    $default  reduce using rule 61 (elif_stmts)

@@ -1,0 +1,38 @@
+#Break invalid
+if True:
+	if False:
+		x=1
+		if False:
+			y=2
+			if True:
+				z=3
+			else:
+				print("Hi")
+		elif True:
+			x=2
+			break
+		m=3
+		n=2
+		print("india")
+		print("boi")
+	else:
+		print('Hi')
+else:
+	print("hell")
+	a=2
+xyz="Hi"==2
+break
+print("Hia")
+while True:
+	a=2
+#HII
+'''ghghg
+'''
+Z=2.5
+b=2
+e="abdc"
+c="cd"+"ab"
+y=b+Z
+def hibro(a,b,c):
+	x=2
+hibro(a,b,c,d)
